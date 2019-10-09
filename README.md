@@ -12,3 +12,4 @@
 | päivä | aika | mitä tein  |
 | :----:|:-----| :-----|
 | 9.10  | 2 | Projektin aloitus ja frondend alustus / webpack |
+| 9.10  | 2 | backendin alustus (user- model / controller / utils / dependencies)|

@@ -4,9 +4,7 @@ const webpack = require('webpack')
 const config = (env, argv) => {
   console.log('argv', argv.mode)
 
-  const backend_url = argv.mode === 'production'
-  ? 'X'
-  : 'http://localhost:3001/persons'
+  const backend_url = 'http://localhost:3001'
 
   return {
     entry: ['@babel/polyfill', './src/index.js'],
