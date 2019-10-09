@@ -1,0 +1,31 @@
+{
+    "persons": [
+      {
+        "name": "Timo Tamminen",
+        "status": "looking for...",
+        "id": "1",
+        "skills": [
+            "Java",
+            "JavaScript",
+            "TypeScript",
+            "Python",
+            "NodeJS / Express"
+        ],
+        "projects": [
+            {
+                "title": "Github Finder",
+                "Syntax": "JavaScript",
+                "framework": "",
+                "url": "https://github.com/vaerilius/Github-Finder"
+            },
+            {
+                "title": "Recipe Book",
+                "Syntax": "TypeScript",
+                "framework": "Angular",
+                "url": "..."
+            }
+
+        ]
+      }
+    ]
+  }
