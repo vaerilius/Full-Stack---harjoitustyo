@@ -14,4 +14,5 @@
 | 9.10  | 2 | Projektin aloitus ja frondend alustus / webpack |
 | 9.10  | 2 | backendin alustus (user- model / controller / utils / dependencies)|
 | 9.10  | 1 | bootstrap & fixing backend model problem|
+| 9.10  | 1 | dir structure & landing page & navbar & job reducer and service & jobs / jobList component|
 
