@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import Landing from './components/landing'
+import Navbar from './components/navbar/navbar'
+import Jobs from './components/jobs/jobs'
 
-const useUsers = (url) => {
-  const [users, setUsers] = useState([])
-  useEffect(() => {
-    axios.get(`${url}/api/users`).then(response => {
-      setUsers(response.data)
-    })
-  }, [url])
-  return users
-}
+// const useUsers = (url) => {
+//   const [users, setUsers] = useState([])
+//   useEffect(() => {
+//     axios.get(`${url}/api/users`).then(response => {
+//       setUsers(response.data)
+//     })
+//   }, [url])
+//   return users
+// }
 
 const App = () => {
-  const users = useUsers(BACKEND_URL)
-  console.log(users)
+  // const users = useUsers(BACKEND_URL)
+  // console.log(users)
 
   return (
-    <div className="container mx-auto text-danger">
-      hello Job Book
-      {users.map(p =>
-        <div key={p.name}>
-          <p >{ p.name }</p>
-        </div>
+    <div>
+      <Navbar />
+      <div className="container mx-auto ">
+        <Landing />
+        <Jobs />
+      </div>
 
-      )}
     </div>
+
   )
 }
 
