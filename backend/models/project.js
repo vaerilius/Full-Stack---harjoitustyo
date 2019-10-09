@@ -6,6 +6,7 @@ const projectSchema = mongoose.Schema({
     required: true,
     minlength: 4
   },
+  description: String,
   url: {
     type: String,
     required: true,

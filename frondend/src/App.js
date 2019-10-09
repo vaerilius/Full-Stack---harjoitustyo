@@ -12,11 +12,11 @@ const useUsers = (url) => {
 }
 
 const App = () => {
-
   const users = useUsers(BACKEND_URL)
+  console.log(users)
 
   return (
-    <div>
+    <div className="container mx-auto text-danger">
       hello Job Book
       {users.map(p =>
         <div key={p.name}>
