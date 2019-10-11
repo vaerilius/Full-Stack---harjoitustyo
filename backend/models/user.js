@@ -18,11 +18,16 @@ const userSchema = mongoose.Schema({
     minlength: 4
   },
   status: String,
-  skills: [],
-  projects: [
+  interestingJobs: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Job'
+      }
+  ],
+  jobsProvided: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project'
+      ref: 'Job'
     }
   ],
   passwordHash: String

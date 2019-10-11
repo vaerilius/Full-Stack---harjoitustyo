@@ -15,4 +15,5 @@
 | 9.10  | 2 | backendin alustus (user- model / controller / utils / dependencies)|
 | 9.10  | 1 | bootstrap & fixing backend model problem|
 | 9.10  | 1 | dir structure & landing page & navbar & job reducer and service & jobs / jobList component|
+| 11.10 | 2 | Backend fix, new model & controller Job / user login & auth / modified use model |
 
