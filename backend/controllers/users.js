@@ -5,7 +5,8 @@ const User = require('../models/user')
 usersRouter.get('/', async (request, response) => {
   const users = await User
     .find({})
-    .populate('projects', { title: 1, url: 1 })
+    .populate('job',
+    { title: 1, description: 1 })
 
   response.json(users.map(u => u.toJSON()))
 })
@@ -21,7 +22,8 @@ usersRouter.post('/', async (request, response, next) => {
       username: body.username,
       name: body.name,
       passwordHash,
-      picture: body.picture
+      picture: body.picture,
+      jobProvider: body.jobProvider
     })
 
     const savedUser = await user.save()

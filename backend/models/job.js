@@ -19,8 +19,8 @@ const jobSchema = mongoose.Schema({
         minlength: 4
     },
     jobProvider: {
-        type: Boolean,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 
 })

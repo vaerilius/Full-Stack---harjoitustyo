@@ -16,6 +16,7 @@ const getTokenFrom = request => {
 
 jobsRouter.get('/', async (request, response) => {
   const jobs = await Job.find({})
+  .populate('user', { picture: 1, name: 1, status: 1})
   response.json(jobs.map(job => job.toJSON()))
 
 })
@@ -33,14 +34,15 @@ jobsRouter.post('/', async (request, response, next) => {
 
     }
     const user = await User.findById(decodedToken.id)
-    
     const job = new Job({
         title: body.title,
         description: body.description,
         canditates: [],
         company: body.company,
-        jobProvider: body.jobProvider
+        jobProvider: user.id
     })
+    console.log(job);
+
     const savedJob = await job.save()
     user.jobsProvided.concat(savedJob._id)
     response.json(savedJob.toJSON())

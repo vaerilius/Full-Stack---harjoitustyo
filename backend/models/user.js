@@ -17,6 +17,7 @@ const userSchema = mongoose.Schema({
     required: true,
     minlength: 4
   },
+  jobProvider: Boolean,
   status: String,
   interestingJobs: [
     {
