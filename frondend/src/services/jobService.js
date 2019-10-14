@@ -7,8 +7,8 @@ const getConfig = () => ({
     headers: { Authorization: token }
   })
 const getAll = async () => {
-  const request = await axios.get(baseUrl)
-  return request.then(response => response.data)
+  const response = await axios.get(baseUrl)
+  return response.data
 }
 const addJob = async (newJob) => {
     const response = await axios.post(baseUrl, newJob, getConfig) 
@@ -19,5 +19,4 @@ const addJob = async (newJob) => {
 export default {
   getAll,
   addJob
-
 }

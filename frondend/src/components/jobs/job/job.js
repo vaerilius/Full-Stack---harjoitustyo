@@ -1,15 +1,12 @@
 import React from 'react'
 
-const Job = () => {
+const Job = ({ job }) => {
 
   return (
-<>
-
-  <li className="list-group-item active">Cras justo odio</li>
-  <li className="list-group-item">Dapibus ac facilisis in</li>
-
-</>
+    <div>
+      <h3>{ job.title }</h3>
+      <p>{ job.company }</p>
+    </div>
   )
 }
-
 export default Job

@@ -1,5 +1,7 @@
 const config = require('../utils/config')
 const jobsRouter = require('express').Router()
+const { tokenExtractor } = require('../utils/middleware')
+
 
 const Job = require('../models/job')
 const User = require('../models/user')
@@ -63,6 +65,34 @@ jobsRouter.post('/', async (request, response, next) => {
   } catch (error) {
     next(error)
   }
+})
+
+jobsRouter.delete('/:id', async (request, response, next) => {
+
+  try {
+    const token = getTokenFrom(request)
+    const decodedToken = jwt.verify(token, config.SECRET)
+    const user = await User.findById(decodedToken.id)
+    const job = await Job.findById(request.params.id)
+
+    if (!token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    }
+    if (job.jobProvider.toString() !== user.id.toString()) {
+    return response.status(401).json({ error: 'wrong token' })
+    }
+
+    user.jobsProvided = user.jobsProvided.map(j => j.toString() !== request.params.id ? j : null)
+    user.jobsProvided = user.jobsProvided.filter(j => j !== null)
+    await user.save()
+    await Job.deleteOne({ _id: request.params.id })
+
+    response.status(204).end()
+    
+  } catch (error) {
+    next(error)
+  }
+
 })
 
 

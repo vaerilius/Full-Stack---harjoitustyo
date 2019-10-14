@@ -14,10 +14,9 @@ export const initializeJobs = () => {
     try {
     const jobs = await jobService.getAll()
     dispatch({
-      type: 'INIT_BLOGS',
+      type: 'INIT_JOBS',
       jobs
     })
-    console.log(jobs);
       
     } catch (error) {
       console.log(error.message)
