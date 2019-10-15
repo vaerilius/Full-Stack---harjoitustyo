@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Landing from './components/landing'
+import SignUp from './components/auth/signup'
+
 import Navbar from './components/navbar/navbar'
 import Jobs from './components/jobs/jobs'
 import Job from './components/jobs/job/job'
 
 import { initializeJobs } from './reducers/jobReducer'
+import { initializeUsers } from './reducers/usersReducer'
+
 
 import {
   BrowserRouter as Router,
@@ -26,6 +30,7 @@ const App = (props) => {
 
   useEffect(() => {
     props.initializeJobs()
+    props.initializeUsers()
 
   }, [])
 
@@ -38,11 +43,13 @@ const App = (props) => {
   }
 
   return (
-    <div className="bg ">
+    <div className="bg">
       <Router>
       <Navbar />
       <div className="container pt-5 mx-auto ">
         <Route exact path="/" render={() => <Landing />} />
+        <Route exact path="/signup" render={() => <SignUp />} />
+
         <Route exact path="/jobs" render={() => <Jobs />} />
         <Route exact path="/jobs/:id" render={({ match }) =>
           <Job  job={jobById(match.params.id)} /> 
@@ -60,11 +67,13 @@ const mapStateToProps = state => {
   console.log(state)
   return {
     jobs: state.jobs,
+    users: state.users
 
   }
 }
 
 
 export default connect(mapStateToProps,{
-  initializeJobs
+  initializeJobs,
+  initializeUsers
 })(App)

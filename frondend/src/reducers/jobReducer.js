@@ -1,4 +1,6 @@
 import jobService from '../services/jobService'
+import userService from '../services/usersService'
+
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -24,5 +26,6 @@ export const initializeJobs = () => {
 
   }
 }
+
 
 export default reducer

@@ -6,3 +6,6 @@
     background-size: cover;
     background-image: url("./assest/bg.jpg");
 }
+.logo {
+  background-image: url("./assest/hiring.png");
+}
