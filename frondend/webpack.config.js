@@ -10,12 +10,13 @@ const config = (env, argv) => {
     entry: ['@babel/polyfill', './src/index.js'],
     output: {
       path: path.resolve(__dirname, 'build'),
-      filename: 'main.js'
+      filename: 'main.js',
     },
     devServer: {
       contentBase: path.resolve(__dirname, 'build'),
       compress: true,
       port: 3000,
+      historyApiFallback: true,
     },
     devtool: 'source-map',
     module: {
@@ -31,6 +32,10 @@ const config = (env, argv) => {
           test: /\.css$/,
           loaders: ['style-loader', 'css-loader'],
         },
+        {
+          test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+          loader: 'url-loader?limit=100000'
+        }
       ],
     },
     plugins: [

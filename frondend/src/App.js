@@ -23,6 +23,7 @@ import {
 
 const App = (props) => {
 
+
   useEffect(() => {
     props.initializeJobs()
 
@@ -30,8 +31,14 @@ const App = (props) => {
 
   const jobById = (id) => props.jobs.find(job => job.id = id)
 
+  if (!props.jobs) {
+    return (
+      <div>loading..</div>
+    )
+  }
+
   return (
-    <div>
+    <div className="bg ">
       <Router>
       <Navbar />
       <div className="container pt-5 mx-auto ">

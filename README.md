@@ -19,6 +19,8 @@
 | 11.10 | 0.5h | Backend modify && fix |
 | 12.10 | 1 | Backend: user jobProvided & get job by id |
 | 14.10 | 3 | Backend: delete job (big problem solved). Frondend: Routing & job component |
+| 15.10 | 2 | Frondend: fix webpack & react router problem |
+
 
 
 

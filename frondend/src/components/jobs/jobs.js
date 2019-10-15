@@ -4,6 +4,12 @@ import Job from './jobListItem'
 
 const Jobs = (props) => {
 
+  if (!props.jobs) {
+    return (
+      <div>loading..</div>
+    )
+  }
+
   return (
 <div className="container">
 <ul className="list-group">

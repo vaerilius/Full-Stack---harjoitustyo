@@ -3,13 +3,27 @@ import React from 'react'
 const Landing = () => {
 
   return (
-<div className="jumbotron">
-  <h1 className="display-4">Hello, world!</h1>
-  <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-  <hr className="my-4" />
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-  <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-</div>
+      <div className="row " style={{marginTop: "30%"}}>
+      <div className="col-sm-12">
+        <div className="card bg-white m-5">
+          <div className="card-body">
+        Sign Up as a job seeker
+          </div>
+        </div>
+        <div className="card bg-white m-5">
+          <div className="card-body">
+        Sign Up as a job provider
+          </div>
+        </div>
+        <div className="card bg-white m-5">
+          <div className="card-body">
+        Or login
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   )
 }
 

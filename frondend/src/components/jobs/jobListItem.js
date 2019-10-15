@@ -5,7 +5,7 @@ const JobListItem = ({ job }) => {
 
   return (
 <>
-  <li className="list-group-item">
+  <li className="list-group-item" >
     <Link to={`/jobs/${job.id}` }>{ job.title }</Link>
   
   </li>
