@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const projectSchema = mongoose.Schema({
+const jobSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -11,14 +11,26 @@ const projectSchema = mongoose.Schema({
     required: true,
     minlength: 4
   },
-  url: {
+  company: {
     type: String,
     required: true,
     minlength: 4
-  }
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  candidates: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ]
+
+
 })
 
-projectSchema.set('toJSON', {
+jobSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -26,6 +38,6 @@ projectSchema.set('toJSON', {
   }
 })
 
-const project = mongoose.model('Project', projectSchema)
+const jobs = mongoose.model('Job', jobSchema)
 
-module.exports = project
+module.exports = jobs
