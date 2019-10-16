@@ -5,6 +5,7 @@ const userSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
     minlength: 4
   },
   name: {
@@ -17,12 +18,18 @@ const userSchema = mongoose.Schema({
     required: true,
     minlength: 4
   },
+  jobProvider: Boolean,
   status: String,
-  skills: [],
-  projects: [
+  interestingJobs: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Job'
+      }
+  ],
+  jobsProvided: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project'
+      ref: 'Job'
     }
   ],
   passwordHash: String

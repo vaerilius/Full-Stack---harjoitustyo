@@ -1,4 +1,6 @@
 import jobService from '../services/jobService'
+import userService from '../services/usersService'
+
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -14,10 +16,9 @@ export const initializeJobs = () => {
     try {
     const jobs = await jobService.getAll()
     dispatch({
-      type: 'INIT_BLOGS',
+      type: 'INIT_JOBS',
       jobs
     })
-    console.log(jobs);
       
     } catch (error) {
       console.log(error.message)
@@ -25,5 +26,6 @@ export const initializeJobs = () => {
 
   }
 }
+
 
 export default reducer

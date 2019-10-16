@@ -15,4 +15,16 @@
 | 9.10  | 2 | backendin alustus (user- model / controller / utils / dependencies)|
 | 9.10  | 1 | bootstrap & fixing backend model problem|
 | 9.10  | 1 | dir structure & landing page & navbar & job reducer and service & jobs / jobList component|
+| 11.10 | 2 | Backend fix, new model & controller Job / user login & auth / modified use model |
+| 11.10 | 0.5h | Backend modify && fix |
+| 12.10 | 1 | Backend: user jobProvided & get job by id |
+| 14.10 | 3 | Backend: delete job (big problem solved). Frondend: Routing & job component |
+| 15.10 | 2 | Frondend: fix webpack & react router problem |
+| 15.10 | 2 | Frondend: customise landing component & signup component, users reducer & service |
+| 16.10 | 2 | Frondend: login component, user reducer & service |
+
+
+
+
+
 

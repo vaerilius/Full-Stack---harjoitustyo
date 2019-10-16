@@ -5,6 +5,11 @@ const app = express()
 const cors = require('cors')
 const usersRouter = require('./controllers/users')
 const jobsRouter = require('./controllers/jobs')
+<<<<<<< HEAD
+=======
+const loginRouter = require('./controllers/login')
+
+>>>>>>> a358456164f73b1a39b60495ac85109211932a56
 const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
 const logger = require('./utils/logger')
@@ -25,6 +30,10 @@ app.use(bodyParser.json())
 app.use(middleware.requestLogger)
 
 app.use('/api/users', usersRouter)
+<<<<<<< HEAD
+=======
+app.use('/api/login', loginRouter)
+>>>>>>> a358456164f73b1a39b60495ac85109211932a56
 app.use('/api/jobs', jobsRouter)
 
 app.use(middleware.unknownEndpoint)
