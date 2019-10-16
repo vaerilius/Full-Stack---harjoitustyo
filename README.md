@@ -21,6 +21,8 @@
 | 14.10 | 3 | Backend: delete job (big problem solved). Frondend: Routing & job component |
 | 15.10 | 2 | Frondend: fix webpack & react router problem |
 | 15.10 | 2 | Frondend: customise landing component & signup component, users reducer & service |
+| 16.10 | 2 | Frondend: login component, user reducer & service |
+
 
 
 

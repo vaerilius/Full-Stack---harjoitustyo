@@ -6,9 +6,12 @@ import SignUp from './components/auth/signup'
 import Navbar from './components/navbar/navbar'
 import Jobs from './components/jobs/jobs'
 import Job from './components/jobs/job/job'
+import Login from './components/auth/login'
 
 import { initializeJobs } from './reducers/jobReducer'
 import { initializeUsers } from './reducers/usersReducer'
+import { initializeUser } from './reducers/userReducer'
+
 
 
 import {
@@ -31,6 +34,8 @@ const App = (props) => {
   useEffect(() => {
     props.initializeJobs()
     props.initializeUsers()
+    props.initializeUser()
+
 
   }, [])
 
@@ -49,6 +54,8 @@ const App = (props) => {
       <div className="container pt-5 mx-auto ">
         <Route exact path="/" render={() => <Landing />} />
         <Route exact path="/signup" render={() => <SignUp />} />
+        <Route exact path="/login" render={() => <Login />} />
+
 
         <Route exact path="/jobs" render={() => <Jobs />} />
         <Route exact path="/jobs/:id" render={({ match }) =>
@@ -75,5 +82,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps,{
   initializeJobs,
-  initializeUsers
+  initializeUsers,
+  initializeUser,
 })(App)

@@ -1,6 +1,6 @@
-import userService from '../services/usersService'
+import usersService from '../services/usersService'
 
-const reducer = (state = null, action) => {
+const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_USERS':
       return [...action.users]    
@@ -12,20 +12,18 @@ const reducer = (state = null, action) => {
 }
 export const initializeUsers = () => {
   return async dispatch => {
-      const users = await userService.getAllUsers()
+      const users = await usersService.getAllUsers()
       dispatch({
         type: 'INIT_USERS',
         users
       })
-     
   }
 }
 
 export const signUp = (data) => {
   return async dispatch => {
     try {
-      const newUser = userService.signUpUser(data)
-      console.log(newUser)
+      const newUser = await usersService.signUpUser(data)
       dispatch({
         type: 'ADD_USER',
         newUser

@@ -37,7 +37,9 @@ const SingUp = (props) => {
     <div className="card text-center mt-5">
       <div className="card-body">
         <h5 className="card-title">Sign Up</h5>
-        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <p className="card-text">In Job Book
+        employees can find open vacancies or if you are representing a job provider,
+        you can manage job notifications</p>
         <form onSubmit={handleSubmit}>
           <div className="form-group row">
             <label htmlFor="name" className="col-sm-3 col-form-label">Name</label>
@@ -82,7 +84,7 @@ const SingUp = (props) => {
 
   </div>
 
-    
+
 
   )
 }
@@ -91,6 +93,6 @@ const SingUp = (props) => {
 
 export default connect(null,
   {
-    signUp 
+    signUp
   }
 )(SingUp)
