@@ -8,7 +8,7 @@ const jobSchema = mongoose.Schema({
     minlength: 4
   },
   description: String,
-  canditates: [
+  candidates: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'

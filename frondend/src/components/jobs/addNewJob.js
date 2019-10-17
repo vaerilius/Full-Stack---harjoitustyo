@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../../hooks/formHook'
+import { addNewJob } from '../../reducers/jobReducer'
 
 const NewJob = (props) => {
   const [title, resetTitle] = useField('text')
@@ -15,18 +16,16 @@ const NewJob = (props) => {
       company: company.value,
       description: description.value
     }
-    console.log(newJob)
+    props.addNewJob(newJob)
 
-
-    // props.newJobRef.current.toggleVisibility()
+    props.newJobRef.current.toggleVisibility()
     resetTitle()
     resetCompany()
     resetDescription()
-
   }
 
   return (
-    <form onSubmit={handleSubmit}  className='mb-4 text-white'>
+    <form onSubmit={handleSubmit} className='mb-4 text-white'>
       <div className="form-group">
         <label htmlFor="title">Title</label>
         <input className="form-control" id="title" {...title} />
@@ -50,11 +49,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {
 
-}
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    addNewJob
+  }
 )(NewJob)

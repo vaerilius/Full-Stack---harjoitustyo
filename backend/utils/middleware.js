@@ -27,11 +27,12 @@ const errorHandler = (error, request, response, next) => {
 
   next(error)
 }
-const tokenExtractor = (request, response, next) => {
+const tokenExtractor = request => {
   const authorization = request.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    request.token = authorization.substring(7)
+    return request.token = authorization.substring(7)
   }
+  return null
  
 }
 

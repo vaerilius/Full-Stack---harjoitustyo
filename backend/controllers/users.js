@@ -6,7 +6,7 @@ usersRouter.get('/', async (request, response) => {
   const users = await User
     .find({})
     .populate('job',
-      { title: 1, description: 1 })
+      { title: 1, description: 1, candidates: 1 })
 
   response.json(users.map(u => u.toJSON()))
 })

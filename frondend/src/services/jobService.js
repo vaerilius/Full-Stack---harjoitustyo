@@ -17,15 +17,14 @@ const getAll = async () => {
   const response = await axios.get(baseUrl)
   return response.data
 }
-const addJob = async (newJob) => {
-    const response = await axios.post(baseUrl, newJob, getConfig) 
+const createNewJob = async (newJob) => {
+    const response = await axios.post(baseUrl, newJob, getConfig()) 
     return response.data
 }
 
-
 export default {
   getAll,
-  addJob,
+  createNewJob,
   setToken,
   destroyToken
 }

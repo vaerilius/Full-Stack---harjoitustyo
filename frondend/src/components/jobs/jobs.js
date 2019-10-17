@@ -18,14 +18,14 @@ const Jobs = (props) => {
       <Togglable
       buttonLabel='Create new job advertisement'
       ref={newJobRef}>
-      <AddNewJob />
+      <AddNewJob newJobRef={newJobRef}/>
       </Togglable>
-      <ul className="list-group">
+      <div className="list-group">
         {props.jobs.map(job =>
             <Job key={job.id} job={job} />
           )
         }
-      </ul>
+      </div>
     </div>
   )
 }

@@ -2,7 +2,6 @@ const config = require('../utils/config')
 const jobsRouter = require('express').Router()
 const { tokenExtractor } = require('../utils/middleware')
 
-
 const Job = require('../models/job')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
@@ -44,9 +43,9 @@ jobsRouter.post('/', async (request, response, next) => {
     const job = new Job({
       title: body.title,
       description: body.description,
-      canditates: [],
+      candidates: [],
       company: body.company,
-      jobProvider: user.id
+      jobProvider: user
     })
 
     const savedJob = await job.save()

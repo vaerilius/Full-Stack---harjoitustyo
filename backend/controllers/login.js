@@ -30,11 +30,7 @@ loginRouter.post('/', async (request, response) => {
       token,
       username: user.username,
       name: user.name,
-      picture: user.picture, 
-      jobProvider: user.jobProvider,
-      interestingJobs: user.interestingJobs,
-      jobsProvided: user.jobsProvided
-
+      picture: user.picture
     })
 })
 
