@@ -45,7 +45,8 @@ jobsRouter.post('/', async (request, response, next) => {
       description: body.description,
       candidates: [],
       company: body.company,
-      jobProvider: user
+      jobProvider: user,
+      time: new Date()
     })
 
     const savedJob = await job.save()

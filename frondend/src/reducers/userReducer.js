@@ -17,10 +17,14 @@ const reducer = (state = null, action) => {
 export const initializeUser = () => {
   return async dispatch => {
     const loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'))
-      dispatch({
-        type: 'INIT_USER',
-        loggedUser
-      })
+      if (loggedUser) {
+        jobService.setToken(loggedUser.token)
+        dispatch({
+          type: 'INIT_USER',
+          loggedUser
+        })
+      }
+
   }
 }
 

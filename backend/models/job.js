@@ -23,7 +23,8 @@ const jobSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
-
+}, {
+  timestamps: true
 })
 
 jobSchema.set('toJSON', {

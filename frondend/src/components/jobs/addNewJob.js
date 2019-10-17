@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../../hooks/formHook'
 import { addNewJob } from '../../reducers/jobReducer'
+import { initializeUsers } from '../../reducers/usersReducer'
+
 
 const NewJob = (props) => {
   const [title, resetTitle] = useField('text')
   const [description, resetDescription] = useField('text')
   const [company, resetCompany] = useField('text')
+
+  useEffect(() => {
+    props.initializeUsers()
+  }, [props.jobs])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -54,6 +60,7 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    addNewJob
+    addNewJob,
+    initializeUsers
   }
 )(NewJob)
