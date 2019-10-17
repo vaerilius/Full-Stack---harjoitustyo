@@ -1,47 +1,3 @@
-<<<<<<< HEAD
-const jobsRouter = require('express').Router()
-const Job = require('../models/job')
-const User = require('../models/user')
-
-jobsRouter.get('/', async (request, response, next) => {
-  const jobs = await Job.find({})
-    .populate('user', { username: 1, name: 1 })
-    .populate('candidates', { username: 1, name: 1 })
-
-  response.json(jobs.map(job => job.toJSON()))
-})
-jobsRouter.post('/', async (request, response, next) => {
-
-  const body = request.body
-
-  try {
-    // const decodedToken = jwt.verify(request.token, process.env.SECRET)
-
-    // if (!request.token || !decodedToken.id) {
-    //   response.status(401).json({ error: 'token missing or invalid' })
-    // }
-
-    const user = await User.find({ name: 'aaaa' })
-    console.log(user)
-
-    // const job = new job({
-    //   title: body.title,
-    //   description: body.description,
-    //   company: body.company,
-    //   user: user
-    // })
-
-    // const savedJob = await job.save()
-
-    // user.jobs = user.jobs.concat(savedJob._id)
-    // await user.save()
-    // response.json(savedjob.toJSON())
-  } catch (error) {
-    next(error)
-  }
-})
-
-=======
 const config = require('../utils/config')
 const jobsRouter = require('express').Router()
 const { tokenExtractor } = require('../utils/middleware')
@@ -81,7 +37,7 @@ jobsRouter.get('/:id', async (req, res, next) => {
 
 jobsRouter.post('/', async (request, response, next) => {
   const body = request.body
-  const token = getTokenFrom(request)
+  const token = tokenExtractor(request)
 
   try {
     const decodedToken = jwt.verify(token, config.SECRET)
@@ -114,7 +70,7 @@ jobsRouter.post('/', async (request, response, next) => {
 jobsRouter.delete('/:id', async (request, response, next) => {
 
   try {
-    const token = getTokenFrom(request)
+    const token = tokenExtractor(request)
     const decodedToken = jwt.verify(token, config.SECRET)
     const user = await User.findById(decodedToken.id)
     const job = await Job.findById(request.params.id)
@@ -140,5 +96,4 @@ jobsRouter.delete('/:id', async (request, response, next) => {
 })
 
 
->>>>>>> a358456164f73b1a39b60495ac85109211932a56
 module.exports = jobsRouter

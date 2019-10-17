@@ -5,11 +5,8 @@ const User = require('../models/user')
 usersRouter.get('/', async (request, response) => {
   const users = await User
     .find({})
-<<<<<<< HEAD
-=======
     .populate('job',
-    { title: 1, description: 1 })
->>>>>>> a358456164f73b1a39b60495ac85109211932a56
+      { title: 1, description: 1 })
 
   response.json(users.map(u => u.toJSON()))
 })
