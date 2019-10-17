@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Job from './jobListItem'
+import AddNewJob from './addNewJob'
+import Togglable from '../togglable'
 
 const Jobs = (props) => {
 
@@ -9,17 +11,22 @@ const Jobs = (props) => {
       <div>loading..</div>
     )
   }
+  const newJobRef = React.createRef()
 
   return (
-<div className="container">
-<ul className="list-group">
-    {
-      props.jobs.map(job =>
-        <Job key={job.id} job={job} />
-        )
-    }
-</ul>
-</div>
+    <div className="container">
+      <Togglable
+      buttonLabel='Create new job advertisement'
+      ref={newJobRef}>
+      <AddNewJob />
+      </Togglable>
+      <ul className="list-group">
+        {props.jobs.map(job =>
+            <Job key={job.id} job={job} />
+          )
+        }
+      </ul>
+    </div>
   )
 }
 
@@ -30,7 +37,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(

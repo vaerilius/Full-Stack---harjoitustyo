@@ -7,15 +7,6 @@ const Job = require('../models/job')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
-const getTokenFrom = request => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7)
-  }
-  return null
-}
-
-
 jobsRouter.get('/', async (request, response) => {
   const jobs = await Job.find({})
     .populate('user', { picture: 1, name: 1, status: 1, jobsProvided: 1 })
@@ -79,7 +70,7 @@ jobsRouter.delete('/:id', async (request, response, next) => {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
     if (job.jobProvider.toString() !== user.id.toString()) {
-    return response.status(401).json({ error: 'wrong token' })
+      return response.status(401).json({ error: 'wrong token' })
     }
 
     user.jobsProvided = user.jobsProvided.map(j => j.toString() !== request.params.id ? j : null)
@@ -94,6 +85,5 @@ jobsRouter.delete('/:id', async (request, response, next) => {
   }
 
 })
-
 
 module.exports = jobsRouter

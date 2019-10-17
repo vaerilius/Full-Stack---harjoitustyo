@@ -22,9 +22,9 @@ const userSchema = mongoose.Schema({
   status: String,
   interestingJobs: [
     {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Job'
-      }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Job'
+    }
   ],
   jobsProvided: [
     {

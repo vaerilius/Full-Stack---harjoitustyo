@@ -50,19 +50,25 @@ const App = (props) => {
   return (
     <div className="bg">
       <Router>
-      <Navbar />
-      <div className="container pt-5 mx-auto ">
-        <Route exact path="/" render={() => <Landing />} />
-        <Route exact path="/signup" render={() => <SignUp />} />
-        <Route exact path="/login" render={() => <Login />} />
+        <Navbar />
+        <div className="container pt-5 mx-auto ">
+          <div className="row">
+            <div className=" col-md-12">
+            <Route exact path="/" render={() => <Landing />} />
+            <Route exact path="/signup" render={() => <SignUp />} />
+            <Route exact path="/login" render={() => <Login />} />
 
 
-        <Route exact path="/jobs" render={() => <Jobs />} />
-        <Route exact path="/jobs/:id" render={({ match }) =>
-          <Job  job={jobById(match.params.id)} /> 
-      } />
+            <Route exact path="/jobs" render={() => <Jobs />} />
+            <Route exact path="/jobs/:id" render={({ match }) =>
+              <Job job={jobById(match.params.id)} />
+            } />
 
-      </div>
+            </div>
+
+
+          </div>
+        </div>
       </Router>
 
 
@@ -80,7 +86,7 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps, {
   initializeJobs,
   initializeUsers,
   initializeUser,

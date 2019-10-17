@@ -22,6 +22,7 @@
 | 15.10 | 2 | Frondend: fix webpack & react router problem |
 | 15.10 | 2 | Frondend: customise landing component & signup component, users reducer & service |
 | 16.10 | 2 | Frondend: login component, user reducer & service |
+| 17.10 | 1 | Frondend: toggable, newJob components |
 
 
 

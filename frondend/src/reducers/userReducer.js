@@ -4,9 +4,9 @@ import jobService from '../services/jobService'
 const reducer = (state = null, action) => {
   switch (action.type) {
     case 'INIT_USER':
-      return {...action.loggedUser}
+      return action.loggedUser
     case 'LOGIN_USER':
-      return {...action.loggedUser}
+      return action.loggedUser
     case 'LOGOUT_USER':
       return null
     default:
