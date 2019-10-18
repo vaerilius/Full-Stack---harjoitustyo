@@ -7,7 +7,7 @@ const JobListItem = ({ job }) => {
   const JobCreatedAT = datePalaces[0]
 
   return (
-    <div className="list-group mb-2" key={job.id}>
+    <div className="list-group mb-2" >
       <div className="list-group-item list-group-item-action">
         <Link to={`/jobs/${job.id}`}>
           <div className="d-flex w-100 justify-content-between">
@@ -15,7 +15,6 @@ const JobListItem = ({ job }) => {
             <small> Posted: { JobCreatedAT }</small>
           </div>
           <p className="mb-1">{job.company}</p>
-          <small>{job.description}</small>
         </Link>
       </div>
     </div>

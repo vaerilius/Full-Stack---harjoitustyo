@@ -1,12 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const Job = ({ job }) => {
+const Job = (job) => {
 
   if (!job) {
     return (
       <div>loading..</div>
     )
   }
+  console.log(job)
   return (
 
 <div className="card text-center m-5">
@@ -24,4 +26,11 @@ const Job = ({ job }) => {
 </div>
   )
 }
-export default Job
+
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    blogs: state.blogs
+  }
+}
+export default connect(mapStateToProps)(Job)
