@@ -55,7 +55,6 @@ const App = (props) => {
             <Route exact path="/signup" render={() => <SignUp />} />
             <Route exact path="/login" render={() => <Login />} />
 
-
             <Route exact path="/jobs" render={() => <Jobs />} />
             <Route exact path="/jobs/:id" render={({ match }) =>
               <Job job={jobById(match.params.id)} />
