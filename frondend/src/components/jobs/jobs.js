@@ -32,7 +32,8 @@ const Jobs = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    jobs: state.jobs
+    jobs: state.jobs,
+    user: state.user
   }
 }
 

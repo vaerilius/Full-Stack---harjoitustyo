@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Landing from './components/landing'
 import SignUp from './components/auth/signup'
@@ -11,8 +11,6 @@ import Login from './components/auth/login'
 import { initializeJobs } from './reducers/jobReducer'
 import { initializeUsers } from './reducers/usersReducer'
 import { initializeUser } from './reducers/userReducer'
-
-
 
 import {
   BrowserRouter as Router,
@@ -51,11 +49,14 @@ const App = (props) => {
         <div className="container pt-5 mx-auto ">
           <div className="row">
             <div className=" col-md-12">
+              
             <Route exact path="/" render={() => <Landing />} />
             <Route exact path="/signup" render={() => <SignUp />} />
             <Route exact path="/login" render={() => <Login />} />
-
-            <Route exact path="/jobs" render={() => <Jobs />} />
+            {props.user ? <Route exact path="/jobs" render={() => <Jobs />} />
+            : <Redirect to="/"/>}
+            
+            
             <Route exact path="/jobs/:id" render={({ match }) =>
               <Job job={jobById(match.params.id)} />
             } />
@@ -71,7 +72,8 @@ const mapStateToProps = state => {
   console.log(state)
   return {
     jobs: state.jobs,
-    users: state.users
+    users: state.users,
+    user: state.user
 
   }
 }
