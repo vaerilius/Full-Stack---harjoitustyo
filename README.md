@@ -23,6 +23,7 @@
 | 15.10 | 2 | Frondend: customise landing component & signup component, users reducer & service |
 | 16.10 | 2 | Frondend: login component, user reducer & service |
 | 17.10 | 3 | Frondend: toggable, newJob components, newJob logic (reduser, service) / login bug fix & update users.jobs when add new blog|
+| 18.10 | 4 | Frondend: job component & routing bug..styling|
 
 
 
