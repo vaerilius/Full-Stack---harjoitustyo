@@ -21,7 +21,7 @@ const Landing = () => {
         <div className="card bg-white m-5">
         <Link to="/login">
           <div className="card-body font-weight-bold text-center text-uppercase">
-          Or login
+          Or Sign In
           </div>
         </Link>
         </div>

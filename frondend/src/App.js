@@ -30,13 +30,10 @@ import {
 
 const App = (props) => {
 
-
   useEffect(() => {
     props.initializeJobs()
     props.initializeUsers()
     props.initializeUser()
-
-
   }, [])
 
   const jobById = (id) => props.jobs.find(job => job.id = id)
@@ -63,15 +60,10 @@ const App = (props) => {
             <Route exact path="/jobs/:id" render={({ match }) =>
               <Job job={jobById(match.params.id)} />
             } />
-
             </div>
-
-
           </div>
         </div>
       </Router>
-
-
     </div>
 
   )
