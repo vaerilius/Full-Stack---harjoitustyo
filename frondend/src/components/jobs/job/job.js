@@ -25,13 +25,10 @@ const Job = ({ job, user }) => {
         <p className="card-text">{job.description}</p>
       </div>
       <ul className="list-group list-group-flush">
-        {/* dummy */}
-        <li className="list-group-item">Cras justo odio</li>
-        <li className="list-group-item">Cras justo odio</li>
-        <li className="list-group-item">Cras justo odio</li>
 
-        {job.candidates.map(c =>
-          <li key={c} className="list-group-item">Cras justo odio</li>
+        {job.candidates
+        .map(c =>
+          <li key={c} className="list-group-item">{c}</li>
 
         )}
       </ul>
@@ -53,7 +50,8 @@ const Job = ({ job, user }) => {
 }
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    jobs: state.jobs
   }
 }
 

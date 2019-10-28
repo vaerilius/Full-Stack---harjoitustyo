@@ -50,7 +50,12 @@ jobsRouter.post('/', async (request, response, next) => {
     })
 
     const savedJob = await job.save()
-    user.jobsProvided = user.jobsProvided.concat(savedJob)
+
+    user.jobsProvided = [...user.jobsProvided, {
+      id: savedJob.id,
+      title: savedJob.title,
+      description: savedJob.description
+    }]
     await user.save()
     response.json(savedJob.toJSON())
   } catch (error) {
@@ -79,7 +84,43 @@ jobsRouter.delete('/:id', async (request, response, next) => {
     await Job.deleteOne({ _id: request.params.id })
 
     response.status(204).end()
+
+  } catch (error) {
+    next(error)
+  }
+
+})
+
+jobsRouter.post('/:id/candidates', async (request, response, next) => {
+  const body = request.body
+
+  try {
+    const user = await User.findById(body.candidateID)
     
+    const userData = {
+      id: user.id,
+      username: user.username,
+      picture: user.picture
+    }
+
+    const updatedJob = await Job.findByIdAndUpdate(
+      request.params.id,
+      { $push: { candidates: userData } }, { new: true }
+    )
+      .populate('user', { username: 1 })
+
+    user.interestingJobs = [...user.interestingJobs,
+      {
+        id: user.id,
+        username: user.username,
+        picture: user.picture
+
+      }
+    ]
+
+    const updatedUser = await user.save()
+    // console.log(updatedUser);
+    response.json(updatedJob.toJSON())
   } catch (error) {
     next(error)
   }

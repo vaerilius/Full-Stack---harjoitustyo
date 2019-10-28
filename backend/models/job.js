@@ -9,10 +9,10 @@ const jobSchema = mongoose.Schema({
   },
   description: String,
   candidates: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
+    // {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'User'
+    // }
   ],
   company: {
     type: String,

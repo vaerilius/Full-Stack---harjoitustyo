@@ -20,17 +20,12 @@ const userSchema = mongoose.Schema({
   },
   jobProvider: Boolean,
   status: String,
-  interestingJobs: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Job'
-    }
-  ],
+  interestingJobs: [],
   jobsProvided: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Job'
-    }
+    // {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'Job'
+    // }
   ],
   passwordHash: String
 })
