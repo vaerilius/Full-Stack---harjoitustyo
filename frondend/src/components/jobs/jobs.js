@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Job from './jobListItem'
+import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
 
@@ -22,7 +22,7 @@ const Jobs = (props) => {
       </Togglable>
       <div className="list-group">
         {props.jobs.map(job =>
-            <Job key={job.id} job={job} />
+            <JobListItem key={job.id} job={job} />
           )
         }
       </div>

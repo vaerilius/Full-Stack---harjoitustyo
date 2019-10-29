@@ -34,7 +34,7 @@ const App = (props) => {
     props.initializeUser()
   }, [])
 
-  const jobById = (id) => props.jobs.find(job => job.id = id)
+  const jobById = (id) => props.jobs.find(job => job.id === id)
 
   if (!props.jobs) {
     return (

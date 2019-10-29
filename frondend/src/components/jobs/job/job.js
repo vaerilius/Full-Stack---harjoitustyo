@@ -1,17 +1,22 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { addCandidate } from '../../../reducers/jobReducer'
 
-const Job = ({ job, user }) => {
+const Job = (props) => {
 
-  if (!job) {
+  if (!props.job) {
     return (
       <div>loading..</div>
     )
   }
 
-  const [lastchange, setlastChange] = useState(job.updatedAt)
-  const [createdAt, setCreatedAt] = useState(job.createdAt)
-  console.log(job)
+  const onAddCandidate = () => {
+    props.addCandidate(props.user.id, props.job.id)
+  }
+
+  const [lastchange, setlastChange] = useState(props.job.updatedAt)
+  const [createdAt, setCreatedAt] = useState(props.job.createdAt)
+
   return (
 
     <div className="card">
@@ -19,23 +24,27 @@ const Job = ({ job, user }) => {
         Job advertisement
       </div>
 
-      <img className="card-img-top" alt="..." />
+      <img className="card-img-top" alt="..." src='https://images.unsplash.com/photo-1453814279372-783dc5b638ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80' />
       <div className="card-body">
-        <h5 className="card-title">{job.title}</h5>
-        <p className="card-text">{job.description}</p>
+        <h5 className="card-title">{props.job.title}</h5>
+        <p className="card-text">{props.job.description}</p>
       </div>
       <ul className="list-group list-group-flush">
 
-        {job.candidates
-        .map(c =>
-          <li key={c} className="list-group-item">{c}</li>
+        {props.job.candidates
+          .map(c =>
+            <li key={c} className="list-group-item">{c.username}</li>
 
-        )}
+          )}
       </ul>
       <div className="card-body">
-      <button type="button" className="btn btn-success btn-md btn-block">Add me!</button>
-      <button type="button" className="btn btn-danger btn-md btn-block">Remove Job</button>
-      <button type="button" className="btn btn-primary btn-md btn-block">Add me!</button>
+        <button
+          type="button"
+          className="btn btn-success btn-md btn-block"
+          onClick={onAddCandidate}
+        >Add me!</button>
+        <button type="button" className="btn btn-danger btn-md btn-block">Remove Job</button>
+        <button type="button" className="btn btn-primary btn-md btn-block">Add me!</button>
       </div>
       <div className="card-footer text-muted">
         Created at: {createdAt.split('T')[0]}
@@ -48,13 +57,18 @@ const Job = ({ job, user }) => {
     </div>
   )
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user,
-    jobs: state.jobs
+    job: state.jobs.find(j => j.id === ownProps.job.id),
+    user: state.user
   }
 }
 
 
 
-export default connect(mapStateToProps)(Job)
+export default connect(
+  mapStateToProps,
+  {
+    addCandidate
+  }
+)(Job)

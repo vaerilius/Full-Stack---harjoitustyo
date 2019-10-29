@@ -25,6 +25,7 @@
 | 17.10 | 3 | Frondend: toggable, newJob components, newJob logic (reduser, service) / login bug fix & update users.jobs when add new blog|
 | 18.10 | 4 | Frondend: job component & routing bug..styling|
 | 28.10 | 2 | Backend: backend update - jobController candidate - models modify|
+| 29.10 | 2 | Backend: backend work & frondend: add candidate|
 
 
 

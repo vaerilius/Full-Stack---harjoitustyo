@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+mongoose.set('useFindAndModify', false);
 const jobSchema = mongoose.Schema({
 
   title: {

@@ -45,7 +45,7 @@ jobsRouter.post('/', async (request, response, next) => {
       description: body.description,
       candidates: [],
       company: body.company,
-      jobProvider: user,
+      jobProvider: user.id,
       time: new Date()
     })
 
@@ -88,7 +88,6 @@ jobsRouter.delete('/:id', async (request, response, next) => {
   } catch (error) {
     next(error)
   }
-
 })
 
 jobsRouter.post('/:id/candidates', async (request, response, next) => {
@@ -96,7 +95,14 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
 
   try {
     const user = await User.findById(body.candidateID)
-    
+    const job = await Job.findById(request.params.id)
+    const candidate = job.candidates.find(j => j.id === body.candidateID)
+    console.log(candidate);
+    if (candidate) {
+
+      return response.status(400).json({ error: 'allready added' })
+    }
+
     const userData = {
       id: user.id,
       username: user.username,
@@ -107,15 +113,15 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
       request.params.id,
       { $push: { candidates: userData } }, { new: true }
     )
-      .populate('user', { username: 1 })
+      .populate('user', { username: 1, id: 1, picture: 1 })
 
     user.interestingJobs = [...user.interestingJobs,
-      {
-        id: user.id,
-        username: user.username,
-        picture: user.picture
+    {
+      id: user.id,
+      username: user.username,
+      picture: user.picture
 
-      }
+    }
     ]
 
     const updatedUser = await user.save()

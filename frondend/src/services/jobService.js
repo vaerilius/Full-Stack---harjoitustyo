@@ -21,10 +21,16 @@ const createNewJob = async (newJob) => {
     const response = await axios.post(baseUrl, newJob, getConfig()) 
     return response.data
 }
+const pushCandidate = async ( userId, blogID) => {
+  const response = await axios.post(`${baseUrl}/${blogID}/candidates`, userId, getConfig())
+  console.log(response);
+  return response.data
+}
 
 export default {
   getAll,
   createNewJob,
   setToken,
-  destroyToken
+  destroyToken,
+  pushCandidate
 }

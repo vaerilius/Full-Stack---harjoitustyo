@@ -30,7 +30,8 @@ loginRouter.post('/', async (request, response) => {
       token,
       username: user.username,
       name: user.name,
-      picture: user.picture
+      picture: user.picture,
+      id: user._id
     })
 })
 

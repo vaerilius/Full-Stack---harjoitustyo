@@ -7,6 +7,10 @@ const reducer = (state = [], action) => {
       return [...action.jobs]
     case 'CREATE_JOB':
       return [...state, action.newJob]
+    case 'ADD_CANDIDATE':
+      return [...state]
+        .map(job => job.id === action.updatedJob.id
+          ? action.updatedJob : job)
     default:
       return state
   }
@@ -40,6 +44,24 @@ export const addNewJob = (inputData) => {
       console.log(error.message)
     }
 
+  }
+}
+
+export const addCandidate = (userID, jobID) => {
+  return async dispatch => {
+    try {
+
+      const updatedJob = await jobService.pushCandidate({
+        candidateID: userID
+      }, jobID)
+
+      dispatch({
+        type: 'ADD_CANDIDATE',
+        updatedJob
+      })
+    } catch (error) {
+      console.error(error.message)
+    }
   }
 }
 
