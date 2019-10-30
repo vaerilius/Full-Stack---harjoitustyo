@@ -26,6 +26,7 @@
 | 18.10 | 4 | Frondend: job component & routing bug..styling|
 | 28.10 | 2 | Backend: backend update - jobController candidate - models modify|
 | 29.10 | 2 | Backend: backend work & frondend: add candidate|
+| 30.10 | 2 | Backend: Initialize test (Jest & supertest)|
 
 
 

@@ -70,7 +70,9 @@ jobsRouter.delete('/:id', async (request, response, next) => {
     const decodedToken = jwt.verify(token, config.SECRET)
     const user = await User.findById(decodedToken.id)
     const job = await Job.findById(request.params.id)
-
+    // console.log(token)
+    // console.log(user)
+    console.log(job.jobProvider.toString(), user.id.toString())
     if (!token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
@@ -83,7 +85,7 @@ jobsRouter.delete('/:id', async (request, response, next) => {
     await user.save()
     await Job.deleteOne({ _id: request.params.id })
 
-    response.status(204).end()
+    response.status(204).json({ message: 'job removed' })
 
   } catch (error) {
     next(error)
@@ -104,16 +106,15 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
     }
 
     const userData = {
-      id: user.id,
-      username: user.username,
-      picture: user.picture
+      id: job.id,
+      title: job.title,
     }
 
     const updatedJob = await Job.findByIdAndUpdate(
       request.params.id,
       { $push: { candidates: userData } }, { new: true }
     )
-      .populate('user', { username: 1, id: 1, picture: 1 })
+      // .populate('user', { username: 1, id: 1, picture: 1 })
 
     user.interestingJobs = [...user.interestingJobs,
     {
