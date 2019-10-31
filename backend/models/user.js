@@ -20,7 +20,16 @@ const userSchema = mongoose.Schema({
   },
   jobProvider: Boolean,
   status: String,
-  interestingJobs: [],
+  phone: {
+    type: String,
+    minlength: 6
+  },
+  interestingJobs: [
+    // {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'Job'
+    // }
+  ],
   jobsProvided: [
     // {
     //   type: mongoose.Schema.Types.ObjectId,

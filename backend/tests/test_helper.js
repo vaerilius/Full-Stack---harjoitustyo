@@ -3,7 +3,13 @@ const User = require('../models/user')
 
 const initialJobs = [
   {
-    candidates: [],
+    candidates: [
+      {
+        id: '5db7d899493dc526590658e4',
+        username: 'aaaa',
+        picture: 'aaaa',
+      }
+    ],
     title: 'roskakuski 2.0',
     description: 'apumies',
     company: 'Lassila ja Tikanoja OY',

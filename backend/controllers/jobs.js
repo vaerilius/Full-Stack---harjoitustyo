@@ -35,6 +35,8 @@ jobsRouter.post('/', async (request, response, next) => {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
     const user = await User.findById(decodedToken.id)
+    // const user = await User.deleteMany({})
+    // await Job.deleteMany({})
 
     if (!user.jobProvider) {
       response.status(401).json({ error: 'Only job provider can add job advertisement' })
@@ -45,17 +47,17 @@ jobsRouter.post('/', async (request, response, next) => {
       description: body.description,
       candidates: [],
       company: body.company,
-      jobProvider: user.id,
+      jobProvider: {
+        id: user.id,
+        username: user.username,
+        picture: user.picture
+      },
       time: new Date()
     })
 
     const savedJob = await job.save()
 
-    user.jobsProvided = [...user.jobsProvided, {
-      id: savedJob.id,
-      title: savedJob.title,
-      description: savedJob.description
-    }]
+    user.jobsProvided = [...user.jobsProvided, savedJob]
     await user.save()
     response.json(savedJob.toJSON())
   } catch (error) {
@@ -98,31 +100,29 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
   try {
     const user = await User.findById(body.candidateID)
     const job = await Job.findById(request.params.id)
+    // console.log(job);
+    // console.log(user);
     const candidate = job.candidates.find(j => j.id === body.candidateID)
-    console.log(candidate);
+    // console.log(candidate);
     if (candidate) {
 
       return response.status(400).json({ error: 'allready added' })
     }
-
+    // console.log(user);
     const userData = {
-      id: job.id,
-      title: job.title,
+      id: user.id,
+      username: user.username,
+      picture: user.picture
     }
 
     const updatedJob = await Job.findByIdAndUpdate(
       request.params.id,
       { $push: { candidates: userData } }, { new: true }
     )
-      // .populate('user', { username: 1, id: 1, picture: 1 })
+      .populate('user', { username: 1, picture: 1 })
 
     user.interestingJobs = [...user.interestingJobs,
-    {
-      id: user.id,
-      username: user.username,
-      picture: user.picture
-
-    }
+      userData
     ]
 
     const updatedUser = await user.save()
