@@ -27,6 +27,7 @@
 | 28.10 | 2 | Backend: backend update - jobController candidate - models modify|
 | 29.10 | 2 | Backend: backend work & frondend: add candidate|
 | 30.10 | 2 | Backend: Initialize test (Jest & supertest)|
+| 31.10 | 3 | Backend: Users testing (and try to set controlles to use models)|
 
 
 

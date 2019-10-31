@@ -69,6 +69,13 @@ const initialUsers = [
     id: '5db7d899493dc526590658e4'
   },
 ]
+const user = {
+  username: 'testaaja',
+  password: 'timo',
+  name: 'timo',
+  picture: 'qqqq',
+  jobProvider: true,
+  phone: '12341234' }
 
 
 const jobsInDb = async () => {
@@ -80,5 +87,17 @@ const usersInDb = async () => {
   const users = await User.find({})
   return users.map(u => u.toJSON())
 }
+const userInDb = async (name) => {
+  const user = await User.find({})
 
-module.exports = { initialJobs, initialUsers, jobsInDb, usersInDb }
+  return user.toJSON()
+}
+
+module.exports = {
+  initialJobs,
+  initialUsers,
+  jobsInDb,
+  usersInDb,
+  user,
+  userInDb
+}

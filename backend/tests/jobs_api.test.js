@@ -36,3 +36,9 @@ describe('initialize database', () => {
   })
 })
 
+describe('Name of the group', () => {
+  
+});
+
+
+
