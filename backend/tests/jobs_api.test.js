@@ -31,14 +31,39 @@ describe('initialize database', () => {
     expect(response.body.length).toBe(helper.initialJobs.length)
   })
 
+  describe('when addition job', () => {
+    test('when create new job, the job should be on list ', async () => {
+
+      const loggeduser = await api
+        .post('/api/login/')
+        .send({ username: 'testaaja', password: 'timo' })
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      const job = helper.job
+      const token = helper.auth
+      token.headers.Authorization = `bearer ${loggeduser.body.token}`
+      console.log(token)
+
+      const newJob = await api
+        .post('/api/jobs')
+        .send(job)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      console.log(newJob.body)
+      const response = await api.get('/api/jobs')
+      expect(response.body.length).toBe(helper.initialJobs.length + 1)
+    })
+  })
+
+
   afterAll(() => {
     mongoose.connection.close()
   })
 })
 
-describe('Name of the group', () => {
-  
-});
 
 
 

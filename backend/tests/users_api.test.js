@@ -48,6 +48,8 @@ describe('initialize database', () => {
       .send(user)
       .expect(200)
       .expect('Content-Type', /application\/json/)
+    const usersAtEnd = await api.get('/api/users')
+    expect(usersAtEnd.body.length).toBe(helper.initialUsers.length + 1)
 
     try {
       await api
@@ -55,22 +57,8 @@ describe('initialize database', () => {
         .send(user)
         .expect(400)
     } catch (error) {
-      console.log(error.message);
       expect(error.message).toBe('User validation failed: username: Error, expected `username` to be unique. Value: `testaaja`')
     }
-
-
-
-
-    // expect(response.body.username).toBe('testaaja')
-
-    // const response = api
-    //   .post('/api/users/')
-    //   .send(user)
-    //   .expect(200)
-
-
-    //   expect(response)
 
   })
 

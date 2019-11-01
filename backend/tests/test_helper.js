@@ -45,6 +45,7 @@ const initialUsers = [
     ],
     interestingJobs: [],
     username: 'timo',
+    password: 'timo',
     name: 'timo',
     picture: 'XXXX',
     jobProvider: true,
@@ -62,6 +63,7 @@ const initialUsers = [
     ],
     username: 'aaaa',
     name: 'aaaa',
+    password: 'aaaa',
     picture: 'aaaa',
     jobProvider: false,
     createdAt: '2019-10-29T06:13:45.530Z',
@@ -75,7 +77,19 @@ const user = {
   name: 'timo',
   picture: 'qqqq',
   jobProvider: true,
-  phone: '12341234' }
+  phone: '12341234'
+}
+
+const job = {
+  candidates: [],
+  title: 'frondend developer',
+  description: 'React, JS',
+  company: 'Yhtiö',
+  jobProvider: '5db7d899493dc526590658e4',
+  createdAt: '2019-10-30T05:48:42.433Z',
+  updatedAt: '2019-10-30T05:48:42.433Z',
+  id: '5db7d8cd493dc526590658e6'
+}
 
 
 const jobsInDb = async () => {
@@ -93,11 +107,17 @@ const userInDb = async (name) => {
   return user.toJSON()
 }
 
+const auth = {
+  headers: { Authorization: '' }
+}
+
 module.exports = {
   initialJobs,
   initialUsers,
   jobsInDb,
   usersInDb,
   user,
-  userInDb
+  userInDb,
+  job,
+  auth
 }
