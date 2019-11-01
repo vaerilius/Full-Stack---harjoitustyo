@@ -43,7 +43,7 @@ describe('initialize database', () => {
       const job = helper.job
       const token = helper.auth
       token.headers.Authorization = `bearer ${loggeduser.body.token}`
-      console.log(token)
+      // console.log(token)
 
       const newJob = await api
         .post('/api/jobs')
@@ -52,12 +52,59 @@ describe('initialize database', () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
+      // console.log(newJob.body)
+      const jobsAtEnd = await api.get('/api/jobs')
+
+      expect(jobsAtEnd.body.length).toBe(helper.initialJobs.length + 1)
+
+      expect(newJob.body.title).toContain('frondend developer')
+
+      const jobsTitles = jobsAtEnd.body.map(job => job.title)
+      expect(jobsTitles).toContain('frondend developer')
+    })
+  })
+  describe('when you delete a job notice', () => {
+    test('should job notice be deleted', async () => {
+      const loggeduser = await api
+        .post('/api/login/')
+        .send({ username: 'testaaja', password: 'timo' })
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+      const job = helper.job
+
+      const newJob = await api
+        .post('/api/jobs')
+        .send(job)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
       console.log(newJob.body)
-      const response = await api.get('/api/jobs')
-      expect(response.body.length).toBe(helper.initialJobs.length + 1)
+
+      const jobsAtStart = await helper.jobsInDb()
+      expect(jobsAtStart.length).toBe(helper.initialJobs.length + 1)
+
+
+      await api.delete(`/api/jobs/${newJob.body.id}`)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(204)
+
+      const jobsAtEnd = await helper.jobsInDb()
+
+      expect(jobsAtEnd.length).toBe(helper.initialJobs.length)
+      
+      const ids = jobsAtEnd.map(j => j.id)
+
+      expect(ids).not.toContain(newJob.id)
+
+
     })
   })
 
+  // describe('when addition new candidate', () => {
+  //   test('should ', async () => {
+
+  //   });
+  // })
 
   afterAll(() => {
     mongoose.connection.close()

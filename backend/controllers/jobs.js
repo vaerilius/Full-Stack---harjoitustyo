@@ -31,7 +31,7 @@ jobsRouter.post('/', async (request, response, next) => {
 
   try {
     const decodedToken = jwt.verify(token, config.SECRET)
-    if (!token || !decodedToken.id) {
+    if (!token || !decodedToken) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
     const user = await User.findById(decodedToken.id)
@@ -57,7 +57,10 @@ jobsRouter.post('/', async (request, response, next) => {
 
     const savedJob = await job.save()
 
-    user.jobsProvided = [...user.jobsProvided, savedJob]
+    user.jobsProvided = [...user.jobsProvided, {
+      title: savedJob.title,
+      description: savedJob.description,
+      id: savedJob.id}]
     await user.save()
     response.json(savedJob.toJSON())
   } catch (error) {
@@ -74,16 +77,18 @@ jobsRouter.delete('/:id', async (request, response, next) => {
     const job = await Job.findById(request.params.id)
     // console.log(token)
     // console.log(user)
-    console.log(job.jobProvider.toString(), user.id.toString())
+    console.log(job.jobProvider.id.toString(), user.id.toString())
+
     if (!token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
-    if (job.jobProvider.toString() !== user.id.toString()) {
+    if (job.jobProvider.id.toString() !== user.id.toString()) {
       return response.status(401).json({ error: 'wrong token' })
     }
 
     user.jobsProvided = user.jobsProvided.map(j => j.toString() !== request.params.id ? j : null)
     user.jobsProvided = user.jobsProvided.filter(j => j !== null)
+
     await user.save()
     await Job.deleteOne({ _id: request.params.id })
 

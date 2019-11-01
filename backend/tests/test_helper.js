@@ -101,7 +101,7 @@ const usersInDb = async () => {
   const users = await User.find({})
   return users.map(u => u.toJSON())
 }
-const userInDb = async (name) => {
+const userInDb = async () => {
   const user = await User.find({})
 
   return user.toJSON()
