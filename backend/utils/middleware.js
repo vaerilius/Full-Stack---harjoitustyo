@@ -14,6 +14,7 @@ const unknownEndpoint = (request, response) => {
 
 const errorHandler = (error, request, response, next) => {
   logger.error(error.message)
+  logger.error(error.name)
 
   if (error.name === 'CastError' && error.kind === 'ObjectId') {
     return response.status(400).send({ error: 'malformatted id' })
@@ -23,6 +24,12 @@ const errorHandler = (error, request, response, next) => {
     return response.status(401).json({
       error: 'invalid token'
     })
+  }
+  else if (error.name === 'Error') {
+    return response.status(400).json({ error: error.message })
+  }
+  else if (error.name === 'TypeError') {
+    return response.status(400).json({ error: 'invalid input data' })
   }
 
   next(error)
