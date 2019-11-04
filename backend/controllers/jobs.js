@@ -77,7 +77,7 @@ jobsRouter.delete('/:id', async (request, response, next) => {
     const job = await Job.findById(request.params.id)
     // console.log(token)
     // console.log(user)
-    console.log(job.jobProvider.id.toString(), user.id.toString())
+    // console.log(job.jobProvider.id.toString(), user.id.toString())
 
     if (!token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })
@@ -107,7 +107,7 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
     const job = await Job.findById(request.params.id)
     // console.log(job);
     // console.log(user);
-    const candidate = job.candidates.find(j => j.id === body.candidateID)
+    const candidate = job.candidates.find(k => k.id === body.candidateID)
     // console.log(candidate);
     if (candidate) {
 

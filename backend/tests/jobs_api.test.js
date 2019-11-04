@@ -15,6 +15,8 @@ describe('initialize database', () => {
       const promiseArray = jobs.map(j => j.save())
       await Promise.all(promiseArray)
 
+
+
     } catch (error) {
       console.log(error.message)
 
@@ -78,7 +80,6 @@ describe('initialize database', () => {
         .set('Authorization', 'Bearer ' + loggeduser.body.token)
         .expect(200)
         .expect('Content-Type', /application\/json/)
-      console.log(newJob.body)
 
       const jobsAtStart = await helper.jobsInDb()
       expect(jobsAtStart.length).toBe(helper.initialJobs.length + 1)
@@ -91,20 +92,61 @@ describe('initialize database', () => {
       const jobsAtEnd = await helper.jobsInDb()
 
       expect(jobsAtEnd.length).toBe(helper.initialJobs.length)
-      
+
       const ids = jobsAtEnd.map(j => j.id)
 
       expect(ids).not.toContain(newJob.id)
 
 
     })
+
+    describe('when addition a candidate', () => {
+      test('should candidate added to job candidate list', async () => {
+
+        const loggeduser = await api
+          .post('/api/login/')
+          .send({ username: 'testaaja', password: 'timo' })
+          .expect(200)
+
+        const job = await helper.jobsInDb()
+        const token = helper.auth
+        token.headers.Authorization = `bearer ${loggeduser.body.token}`
+        console.log(job[0].id, loggeduser.body.id)
+
+        const response = await api
+          .post(`/api/jobs/${job[0].id}/candidates`)
+          .send({ candidateID: loggeduser.body.id })
+          .set('Authorization', 'Bearer ' + loggeduser.body.token)
+          .expect(200)
+          .expect('Content-Type', /application\/json/)
+
+        const jobsAtEnd = await helper.jobsInDb()
+        expect(jobsAtEnd[0].candidates.length).toBe(2)
+
+        const ids = jobsAtEnd[0].candidates.map(j => j.id)
+
+        expect(ids).toContain(loggeduser.body.id)
+
+        const errorResponse = await api
+          .post(`/api/jobs/${job[0].id}/candidates`)
+          .send({ candidateID: loggeduser.body.id })
+          .set('Authorization', 'Bearer ' + loggeduser.body.token)
+          .expect(400)
+          .expect('Content-Type', /application\/json/)
+
+        // console.log(response.body)
+        // console.log(errorResponse.body)
+
+        expect(errorResponse.body.error).toBe('allready added')
+
+
+      })
+
+
+    })
   })
 
-  // describe('when addition new candidate', () => {
-  //   test('should ', async () => {
 
-  //   });
-  // })
 
   afterAll(() => {
     mongoose.connection.close()
