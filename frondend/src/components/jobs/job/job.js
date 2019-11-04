@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { addCandidate } from '../../../reducers/jobReducer'
+import { Link } from 'react-router-dom'
 
 const Job = (props) => {
 
@@ -9,9 +10,23 @@ const Job = (props) => {
       <div>loading..</div>
     )
   }
+  const ids = props.job.candidates.map(k => k.id)
+  const addStyle =  ids.includes(props.user.id) ? 'btn btn-success disabled btn-md btn-block' : 
+  'btn btn-success  btn-md btn-block'
+  
+
+  
+    // ? 
+    // : 'btn btn-success btn-md btn-block'
+    
+  
+  
 
   const onAddCandidate = () => {
     props.addCandidate(props.user.id, props.job.id)
+  }
+  const handleRemove = () => {
+    console.log('click');
   }
 
   const [lastchange, setlastChange] = useState(props.job.updatedAt)
@@ -24,7 +39,8 @@ const Job = (props) => {
         Job advertisement
       </div>
 
-      <img className="card-img-top" alt="..." src='https://images.unsplash.com/photo-1453814279372-783dc5b638ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80' />
+      <img className="card-img-top" alt="..."
+        src='https://images.unsplash.com/photo-1453814279372-783dc5b638ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80' />
       <div className="card-body">
         <h5 className="card-title">{props.job.title}</h5>
         <p className="card-text">{props.job.description}</p>
@@ -33,18 +49,24 @@ const Job = (props) => {
 
         {props.job.candidates
           .map(c =>
-            <li key={c} className="list-group-item">{c.username}</li>
+            <li key={c.id} className="list-group-item">{c.username}</li>
 
           )}
       </ul>
       <div className="card-body">
         <button
           type="button"
-          className="btn btn-success btn-md btn-block"
-          onClick={onAddCandidate}
-        >Add me!</button>
-        <button type="button" className="btn btn-danger btn-md btn-block">Remove Job</button>
-        <button type="button" className="btn btn-primary btn-md btn-block">Add me!</button>
+          className={addStyle}
+          onClick={onAddCandidate}>Add me!</button>
+        {props.user === props.job.jobProvider ?
+          <button type="button"
+            className="btn btn-danger btn-md btn-block"
+            onClick={handleRemove}
+          >Remove Job</button>
+          :
+          null
+        }
+
       </div>
       <div className="card-footer text-muted">
         Created at: {createdAt.split('T')[0]}
@@ -52,7 +74,13 @@ const Job = (props) => {
       <div className="card-footer text-muted">
         last update: {lastchange.split('T')[0]}
       </div>
-      <button type="button" className="btn btn-primary btn-md btn-block">Back to jobs</button>
+
+      <Link to={'/jobs/'}>
+        <button type="button"
+          className="btn btn-primary btn-md btn-block">
+          Back to jobs</button>
+      </Link>
+
 
     </div>
   )

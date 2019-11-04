@@ -16,6 +16,8 @@ import {
   BrowserRouter as Router,
   Route, Link, Redirect, withRouter
 } from 'react-router-dom'
+import Users from './components/users/users'
+import User from './components/users/user/user'
 // const useUsers = (url) => {
 //   const [users, setUsers] = useState([])
 //   useEffect(() => {
@@ -35,12 +37,8 @@ const App = (props) => {
   }, [])
 
   const jobById = (id) => props.jobs.find(job => job.id === id)
+  const userById = (id) => props.users.find(u => u.id === id)
 
-  if (!props.jobs) {
-    return (
-      <div>loading..</div>
-    )
-  }
 
   return (
     <div className="bg">
@@ -49,17 +47,25 @@ const App = (props) => {
         <div className="container pt-5 mx-auto ">
           <div className="row">
             <div className=" col-md-12">
-              
-            <Route exact path="/" render={() => <Landing />} />
-            <Route exact path="/signup" render={() => <SignUp />} />
-            <Route exact path="/login" render={() => <Login />} />
-            {props.user ? <Route exact path="/jobs" render={() => <Jobs />} />
-            : <Redirect to="/"/>}
-            
-            
-            <Route exact path="/jobs/:id" render={({ match }) =>
-              <Job job={jobById(match.params.id)} />
-            } />
+
+              <Route exact path="/" render={() => <Landing />} />
+              <Route exact path="/signup" render={() => <SignUp />} />
+              <Route exact path="/login" render={() => <Login />} />
+              {props.user ? <Route exact path="/jobs" render={() => <Jobs />} />
+                : <Redirect to="/" />}
+
+
+              <Route exact path="/jobs/:id" render={({ match }) =>
+                <Job job={jobById(match.params.id)} />
+              } />
+
+              {props.user ? <Route exact path="/users" render={() => <Users />} />
+                : <Redirect to="/" />}
+
+
+              <Route exact path="/users/:id" render={({ match }) =>
+                <User user={userById(match.params.id)} />
+              } />
             </div>
           </div>
         </div>

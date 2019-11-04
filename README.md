@@ -29,6 +29,7 @@
 | 30.10 | 2 | Backend: Initialize test (Jest & supertest)|
 | 31.10 | 3 | Backend: Users testing (and try to set controlles to use models)|
 | 1.11 | 3 | Backend: Users testing & jobs testing|
+| 4.11 | 3 | Backend: Login testing & jobs candidate testing, Frondend Users, user component|
 
 
 

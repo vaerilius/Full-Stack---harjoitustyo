@@ -20,7 +20,7 @@ const Navbar = (props) => {
               <Link to="/jobs">
                 <div className="nav-link" >Jobs</div>
               </Link>
-              : <Link to="/singup">
+              : <Link to="/signup">
                 <div className="nav-link" >Sign up</div>
               </Link>}
 
@@ -36,6 +36,18 @@ const Navbar = (props) => {
               <Link to="/login">
                 <div className="nav-link">Sign in</div>
               </Link>
+            }
+          </li>
+          <li className="nav-item">
+            {props.user
+              ? <Link to='/users'>
+                <div className="nav-link">
+                  users
+                  </div>
+              </Link>
+              :
+              <Redirect to="/" />
+           
             }
           </li>
         </ul>
