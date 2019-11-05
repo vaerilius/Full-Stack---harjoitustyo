@@ -23,7 +23,10 @@ const createNewJob = async (newJob) => {
 }
 const pushCandidate = async ( userId, blogID) => {
   const response = await axios.post(`${baseUrl}/${blogID}/candidates`, userId, getConfig())
-  console.log(response);
+  return response.data
+}
+const handleRemoveJobAdversement = async ( blogID) => {
+  const response = await axios.delete(`${baseUrl}/${blogID}`, getConfig())
   return response.data
 }
 
@@ -32,5 +35,6 @@ export default {
   createNewJob,
   setToken,
   destroyToken,
-  pushCandidate
+  pushCandidate,
+  handleRemoveJobAdversement
 }

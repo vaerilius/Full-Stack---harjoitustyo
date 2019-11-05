@@ -39,7 +39,6 @@ const App = (props) => {
   const jobById = (id) => props.jobs.find(job => job.id === id)
   const userById = (id) => props.users.find(u => u.id === id)
 
-
   return (
     <div className="bg">
       <Router>

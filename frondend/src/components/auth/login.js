@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { useField } from '../../hooks/formHook'
-import { login } from '../../reducers/userReducer';
+import { login } from '../../reducers/userReducer'
 
 
 const Login = (props) => {
@@ -16,6 +17,12 @@ const Login = (props) => {
     })
     resetUsername()
     resetPassword()
+  }
+
+  if (props.user) {
+    return(
+    <Redirect to="/jobs/" />
+    )
   }
 
   return (
@@ -44,7 +51,9 @@ const Login = (props) => {
   )
 }
 
-export default connect(null,
+const mapStateToProps = (state) => {return { user: state.user }}
+
+export default connect(mapStateToProps,
   {
     login
   }

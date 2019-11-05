@@ -1,6 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-const Landing = () => {
+import { Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+const Landing = ({ user }) => {
+
+  if (user) {
+    return (
+      <Redirect to="/jobs/" />
+    )
+  }
 
   return (
       <div className="row " style={{marginTop: "30%"}}>
@@ -30,5 +37,9 @@ const Landing = () => {
 
   )
 }
-
-export default Landing
+const mapStateToprops = state => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToprops)(Landing)

@@ -30,6 +30,7 @@
 | 31.10 | 3 | Backend: Users testing (and try to set controlles to use models)|
 | 1.11 | 3 | Backend: Users testing & jobs testing|
 | 4.11 | 3 | Backend: Login testing & jobs candidate testing, Frondend Users, user component|
+| 5.11 | 2 | Frondend: job remove & some UI-logic|
 
 
 

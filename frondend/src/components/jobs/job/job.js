@@ -1,36 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { addCandidate } from '../../../reducers/jobReducer'
+import { addCandidate, removeJobAdversement } from '../../../reducers/jobReducer'
 import { Link } from 'react-router-dom'
 
 const Job = (props) => {
+
 
   if (!props.job) {
     return (
       <div>loading..</div>
     )
   }
-  const ids = props.job.candidates.map(k => k.id)
-  const addStyle =  ids.includes(props.user.id) ? 'btn btn-success disabled btn-md btn-block' : 
-  'btn btn-success  btn-md btn-block'
-  
-
-  
-    // ? 
-    // : 'btn btn-success btn-md btn-block'
-    
-  
-  
-
-  const onAddCandidate = () => {
-    props.addCandidate(props.user.id, props.job.id)
-  }
-  const handleRemove = () => {
-    console.log('click');
-  }
 
   const [lastchange, setlastChange] = useState(props.job.updatedAt)
   const [createdAt, setCreatedAt] = useState(props.job.createdAt)
+
+  useEffect(() => {
+    setlastChange(props.job.updatedAt)
+  }, [props.job.updatedAt])
+
+  const ids = props.job.candidates.map(k => k.id)
+  const addStyle = ids.includes(props.user.id) ? 'btn btn-success disabled btn-md btn-block' :
+    'btn btn-success  btn-md btn-block'
+
+
+  const isJobProvider = () => props.user.id === props.job.jobProvider.id ? true : false
+
+
+  const onAddCandidate = () => {
+    props.addCandidate(props.user.id, props.job.id)
+    // setlastChange(...props.job.)  
+  }
+  const onRemoveJobAdversement = () => {
+    props.removeJobAdversement(props.job.id)
+  }
+
 
   return (
 
@@ -54,15 +58,34 @@ const Job = (props) => {
           )}
       </ul>
       <div className="card-body">
-        <button
-          type="button"
-          className={addStyle}
-          onClick={onAddCandidate}>Add me!</button>
-        {props.user === props.job.jobProvider ?
-          <button type="button"
-            className="btn btn-danger btn-md btn-block"
-            onClick={handleRemove}
-          >Remove Job</button>
+        {!isJobProvider()
+          ?
+          <button
+            type="button"
+            className={addStyle}
+            onClick={onAddCandidate}>Add me!</button>
+          : null
+
+        }
+        {isJobProvider()
+          ?
+          <button
+            type="button"
+            className='btn btn-danger btn-md btn-block'
+          >Manage</button>
+          : null
+
+        }
+
+        {isJobProvider()
+          ?
+          <Link to={'/jobs/'}>
+            <button type="button"
+              className="btn btn-danger btn-md btn-block mt-2"
+              onClick={onRemoveJobAdversement}
+            >Remove Job</button>
+          </Link>
+
           :
           null
         }
@@ -72,7 +95,7 @@ const Job = (props) => {
         Created at: {createdAt.split('T')[0]}
       </div>
       <div className="card-footer text-muted">
-        last update: {lastchange.split('T')[0]}
+        last update: {lastchange.split('T')[0]} : {lastchange.split('T')[1].split('.')[0]}
       </div>
 
       <Link to={'/jobs/'}>
@@ -97,6 +120,7 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   {
-    addCandidate
+    addCandidate,
+    removeJobAdversement
   }
 )(Job)

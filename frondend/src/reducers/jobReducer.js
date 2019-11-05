@@ -11,6 +11,8 @@ const reducer = (state = [], action) => {
       return [...state]
         .map(job => job.id === action.updatedJob.id
           ? action.updatedJob : job)
+    case 'REMOVE_JOB':
+      return [...state].filter(job => job.id !== action.jobID)
     default:
       return state
   }
@@ -61,6 +63,22 @@ export const addCandidate = (userID, jobID) => {
       })
     } catch (error) {
       console.error(error.message)
+    }
+  }
+}
+
+export const removeJobAdversement = (jobID) => {
+  return async dispatch => {
+    try {
+      await jobService.handleRemoveJobAdversement(jobID)
+      dispatch({
+        type: 'REMOVE_JOB',
+        jobID
+      })
+
+    } catch (error) {
+      console.error(error.message)
+
     }
   }
 }
