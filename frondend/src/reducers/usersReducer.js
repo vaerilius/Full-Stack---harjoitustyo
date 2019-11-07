@@ -4,7 +4,7 @@ import { setNotification } from './notificationReducer'
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_USERS':
-      return [...action.users]    
+      return [...action.users]
     case 'ADD_USER':
       return [...state, action.newUser]
     default:
@@ -13,11 +13,11 @@ const reducer = (state = [], action) => {
 }
 export const initializeUsers = () => {
   return async dispatch => {
-      const users = await usersService.getAllUsers()
-      dispatch({
-        type: 'INIT_USERS',
-        users
-      })
+    const users = await usersService.getAllUsers()
+    dispatch({
+      type: 'INIT_USERS',
+      users
+    })
   }
 }
 

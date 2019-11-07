@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../../hooks/formHook'
-import { signUp } from '../../reducers/usersReducer';
+import { signUp } from '../../reducers/usersReducer'
 
 
 const SingUp = (props) => {
@@ -15,7 +15,7 @@ const SingUp = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const data ={
+    const data = {
       username: username.value,
       password: password.value,
       picture: picture.value,
@@ -47,42 +47,42 @@ const SingUp = (props) => {
               <input {...name} className="form-control" id="name" />
             </div>
           </div>
-      <div className="form-group row">
-        <label htmlFor="username" className="col-sm-3 col-form-label">Username</label>
-        <div className="col-sm-9">
-          <input {...username} className="form-control" id="username" />
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="password" className="col-sm-3 col-form-label">Password</label>
-        <div className="col-sm-9">
-          <input {...password} className="form-control" id="password" />
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="picture" className="col-sm-3 col-form-label">Picture url</label>
-        <div className="col-sm-9">
-          <input {...picture} className="form-control" id="picture" />
-        </div>
-      </div>
-      <div className="form-group">
-    <div className="form-check">
-      <input className="form-check-input"
-      type="checkbox"
-      checked={checkbox}
-      onChange={() => setCheckBox(!checkbox)}
-      id="gridCheck"
-      />
-      <label className="form-check-label" htmlFor="gridCheck">
-        Job Provider
+          <div className="form-group row">
+            <label htmlFor="username" className="col-sm-3 col-form-label">Username</label>
+            <div className="col-sm-9">
+              <input {...username} className="form-control" id="username" />
+            </div>
+          </div>
+          <div className="form-group row">
+            <label htmlFor="password" className="col-sm-3 col-form-label">Password</label>
+            <div className="col-sm-9">
+              <input {...password} className="form-control" id="password" />
+            </div>
+          </div>
+          <div className="form-group row">
+            <label htmlFor="picture" className="col-sm-3 col-form-label">Picture url</label>
+            <div className="col-sm-9">
+              <input {...picture} className="form-control" id="picture" />
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="form-check">
+              <input className="form-check-input"
+                type="checkbox"
+                checked={checkbox}
+                onChange={() => setCheckBox(!checkbox)}
+                id="gridCheck"
+              />
+              <label className="form-check-label" htmlFor="gridCheck">
+                Job Provider
       </label>
-    </div>
-  </div>
-  <button type="submit" className="btn btn-primary">Sign in</button>
-    </form>
-  </div>
+            </div>
+          </div>
+          <button type="submit" className="btn btn-primary">Sign in</button>
+        </form>
+      </div>
 
-  </div>
+    </div>
 
 
 

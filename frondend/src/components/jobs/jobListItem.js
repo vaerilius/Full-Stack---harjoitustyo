@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const JobListItem = ({ job }) => {
-  
   const datePalaces = job.createdAt.split('T')
   const JobCreatedAT = datePalaces[0]
 

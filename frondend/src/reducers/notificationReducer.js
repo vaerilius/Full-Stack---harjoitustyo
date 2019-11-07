@@ -1,5 +1,5 @@
 
-const reducer = (state = { class: 'alert alert-primary', message: null  }, action) => {
+const reducer = (state = { class: 'alert alert-primary', message: null }, action) => {
 
   switch (action.type) {
     case 'SET_NOTIFICATION':

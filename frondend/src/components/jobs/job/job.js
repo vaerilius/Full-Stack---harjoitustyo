@@ -20,7 +20,7 @@ const Job = (props) => {
   }, [props.job.updatedAt])
 
   const ids = props.job.candidates.map(k => k.id)
-  const isDisabled= ids.includes(props.user.id) ? true: false
+  const isDisabled = ids.includes(props.user.id) ? true : false
 
 
   const isJobProvider = () => props.user.id === props.job.jobProvider.id ? true : false
@@ -60,7 +60,7 @@ const Job = (props) => {
           ?
           <button
             type="button"
-            disabled={ isDisabled }
+            disabled={isDisabled}
             className='btn btn-success  btn-md btn-block'
             onClick={onAddCandidate}>Add me!</button>
           : null

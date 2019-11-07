@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux';
-import { login, logout } from '../../reducers/userReducer';
-
+import { connect } from 'react-redux'
+import { login, logout } from '../../reducers/userReducer'
 
 const Navbar = (props) => {
 
@@ -37,7 +36,7 @@ const Navbar = (props) => {
 
         </ul>
         <ul className="navbar-nav justify-content-end">
-        <li className="nav-item">
+          <li className="nav-item">
             {props.user
               ? <Link to='/'>
                 <div className="nav-link" onClick={() => props.logout()}>

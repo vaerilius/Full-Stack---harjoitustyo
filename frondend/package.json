@@ -4,7 +4,8 @@
     "description": "job hunting",
     "scripts": {
         "build": "webpack --mode=production --history-api-fallback",
-        "start": "webpack-dev-server --mode development --history-api-fallback"
+        "start": "webpack-dev-server --mode development --history-api-fallback",
+        "lint": "eslint ."
     },
     "proxy": "http://localhost:3001",
     "license": "MIT",
@@ -15,6 +16,10 @@
         "@babel/preset-react": "^7.6.3",
         "babel-loader": "^8.0.6",
         "css-loader": "^3.2.0",
+        "eslint": "^6.6.0",
+        "eslint-plugin-jest": "^23.0.2",
+        "eslint-plugin-react": "^7.16.0",
+        "eslint-plugin-react-hooks": "^2.2.0",
         "style-loader": "^1.0.0",
         "webpack": "^4.41.1",
         "webpack-cli": "^3.3.9",

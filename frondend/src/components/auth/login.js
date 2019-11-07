@@ -20,8 +20,8 @@ const Login = (props) => {
   }
 
   if (props.user) {
-    return(
-    <Redirect to="/jobs/" />
+    return (
+      <Redirect to="/jobs/" />
     )
   }
 
@@ -34,24 +34,24 @@ const Login = (props) => {
         <form onSubmit={handleLogin}>
           <div className="form-group row">
             <label htmlFor="username" className="col-sm-3 col-form-label">Username</label>
-              <div className="col-sm-9">
-                <input {...username} className="form-control" id="username" />
-             </div>
+            <div className="col-sm-9">
+              <input {...username} className="form-control" id="username" />
+            </div>
           </div>
           <div className="form-group row">
             <label htmlFor="password" className="col-sm-3 col-form-label">Password</label>
             <div className="col-sm-9">
               <input {...password} className="form-control" id="password" />
             </div>
-            </div>
+          </div>
           <button type="submit" className="btn btn-primary">Login</button>
-          </form>
-        </div>
+        </form>
       </div>
+    </div>
   )
 }
 
-const mapStateToProps = (state) => {return { user: state.user }}
+const mapStateToProps = (state) => { return { user: state.user } }
 
 export default connect(mapStateToProps,
   {

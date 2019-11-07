@@ -17,7 +17,7 @@ import { initializeUser } from './reducers/userReducer'
 
 import {
   BrowserRouter as Router,
-  Route, Link, Redirect, withRouter
+  Route, Redirect
 } from 'react-router-dom'
 
 // const useUsers = (url) => {
@@ -48,11 +48,11 @@ const App = (props) => {
         <div className="container pt-5 mx-auto ">
           <div className="row">
             <div className=" col-md-12">
-              { props.notification.message
-              ? <Notification />
-              : null
+              {props.notification.message
+                ? <Notification />
+                : null
               }
-              
+
 
               <Route exact path="/" render={() => <Landing />} />
               <Route exact path="/signup" render={() => <SignUp />} />
