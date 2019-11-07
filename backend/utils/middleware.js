@@ -40,7 +40,6 @@ const tokenExtractor = request => {
     return request.token = authorization.substring(7)
   }
   return null
- 
 }
 
 module.exports = {

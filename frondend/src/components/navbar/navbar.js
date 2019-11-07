@@ -7,7 +7,7 @@ import { login, logout } from '../../reducers/userReducer';
 const Navbar = (props) => {
 
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-transparent">
       <Link to="/"><div className="navbar-brand">Job Book</div></Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
@@ -20,12 +20,24 @@ const Navbar = (props) => {
               <Link to="/jobs">
                 <div className="nav-link" >Jobs</div>
               </Link>
-              : <Link to="/signup">
-                <div className="nav-link" >Sign up</div>
-              </Link>}
+              : null}
 
           </li>
           <li className="nav-item">
+            {props.user
+              ? <Link to='/users'>
+                <div className="nav-link">
+                  users
+                  </div>
+              </Link>
+              :
+              <Redirect to="/" />
+            }
+          </li>
+
+        </ul>
+        <ul className="navbar-nav justify-content-end">
+        <li className="nav-item">
             {props.user
               ? <Link to='/'>
                 <div className="nav-link" onClick={() => props.logout()}>
@@ -38,18 +50,7 @@ const Navbar = (props) => {
               </Link>
             }
           </li>
-          <li className="nav-item">
-            {props.user
-              ? <Link to='/users'>
-                <div className="nav-link">
-                  users
-                  </div>
-              </Link>
-              :
-              <Redirect to="/" />
-           
-            }
-          </li>
+
         </ul>
       </div>
     </nav>

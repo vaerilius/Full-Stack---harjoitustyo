@@ -4,9 +4,12 @@ import Landing from './components/landing'
 import SignUp from './components/auth/signup'
 
 import Navbar from './components/navbar/navbar'
+import Notification from './components/notification'
 import Jobs from './components/jobs/jobs'
 import Job from './components/jobs/job/job'
 import Login from './components/auth/login'
+import Users from './components/users/users'
+import User from './components/users/user/user'
 
 import { initializeJobs } from './reducers/jobReducer'
 import { initializeUsers } from './reducers/usersReducer'
@@ -16,8 +19,7 @@ import {
   BrowserRouter as Router,
   Route, Link, Redirect, withRouter
 } from 'react-router-dom'
-import Users from './components/users/users'
-import User from './components/users/user/user'
+
 // const useUsers = (url) => {
 //   const [users, setUsers] = useState([])
 //   useEffect(() => {
@@ -46,6 +48,11 @@ const App = (props) => {
         <div className="container pt-5 mx-auto ">
           <div className="row">
             <div className=" col-md-12">
+              { props.notification.message
+              ? <Notification />
+              : null
+              }
+              
 
               <Route exact path="/" render={() => <Landing />} />
               <Route exact path="/signup" render={() => <SignUp />} />
@@ -78,7 +85,8 @@ const mapStateToProps = state => {
   return {
     jobs: state.jobs,
     users: state.users,
-    user: state.user
+    user: state.user,
+    notification: state.notification
 
   }
 }

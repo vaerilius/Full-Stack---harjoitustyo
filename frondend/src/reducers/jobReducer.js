@@ -1,5 +1,5 @@
 import jobService from '../services/jobService'
-
+import { setNotification } from './notificationReducer'
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -29,6 +29,10 @@ export const initializeJobs = () => {
 
     } catch (error) {
       console.log(error.message)
+      dispatch(setNotification({
+        class: 'alert alert-danger',
+        message: error.message
+      }))
     }
 
   }
@@ -41,9 +45,16 @@ export const addNewJob = (inputData) => {
         type: 'CREATE_JOB',
         newJob
       })
+      dispatch(setNotification({
+        class: 'alert alert-success',
+        message: `Job ${newJob.title} added to job list`
+      }))
 
     } catch (error) {
-      console.log(error.message)
+      dispatch(setNotification({
+        class: 'alert alert-danger',
+        message: 'Something went wrong, try again please!'
+      }))
     }
 
   }
@@ -61,8 +72,15 @@ export const addCandidate = (userID, jobID) => {
         type: 'ADD_CANDIDATE',
         updatedJob
       })
+      dispatch(setNotification({
+        class: 'alert alert-success',
+        message: 'Now you are candidate of this job, good luck'
+      }))
     } catch (error) {
-      console.error(error.message)
+      dispatch(setNotification({
+        class: 'alert alert-danger',
+        message: 'Something went wrong!'
+      }))
     }
   }
 }
@@ -75,10 +93,17 @@ export const removeJobAdversement = (jobID) => {
         type: 'REMOVE_JOB',
         jobID
       })
+      dispatch(setNotification({
+        class: 'alert alert-success',
+        message: 'Job has been removed from job list'
+      }))
 
     } catch (error) {
       console.error(error.message)
-
+      dispatch(setNotification({
+        class: 'alert alert-danger',
+        message: 'Job has been removed already'
+      }))
     }
   }
 }

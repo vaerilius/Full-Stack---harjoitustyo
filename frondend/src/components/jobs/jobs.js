@@ -15,15 +15,19 @@ const Jobs = (props) => {
 
   return (
     <div className="container">
-      <Togglable
-      buttonLabel='Create new job advertisement'
-      ref={newJobRef}>
-      <AddNewJob newJobRef={newJobRef}/>
-      </Togglable>
+      {props.user.jobProvider
+        ? <Togglable
+          buttonLabel='Create new job advertisement'
+          ref={newJobRef}>
+          <AddNewJob newJobRef={newJobRef} />
+        </Togglable>
+        : null
+      }
+
       <div className="list-group">
         {props.jobs.map(job =>
-            <JobListItem key={job.id} job={job} />
-          )
+          <JobListItem key={job.id} job={job} />
+        )
         }
       </div>
     </div>

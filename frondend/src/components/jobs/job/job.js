@@ -20,8 +20,7 @@ const Job = (props) => {
   }, [props.job.updatedAt])
 
   const ids = props.job.candidates.map(k => k.id)
-  const addStyle = ids.includes(props.user.id) ? 'btn btn-success disabled btn-md btn-block' :
-    'btn btn-success  btn-md btn-block'
+  const isDisabled= ids.includes(props.user.id) ? true: false
 
 
   const isJobProvider = () => props.user.id === props.job.jobProvider.id ? true : false
@@ -34,7 +33,6 @@ const Job = (props) => {
   const onRemoveJobAdversement = () => {
     props.removeJobAdversement(props.job.id)
   }
-
 
   return (
 
@@ -62,17 +60,18 @@ const Job = (props) => {
           ?
           <button
             type="button"
-            className={addStyle}
+            disabled={ isDisabled }
+            className='btn btn-success  btn-md btn-block'
             onClick={onAddCandidate}>Add me!</button>
           : null
 
         }
         {isJobProvider()
           ?
-          <button
+          <a
             type="button"
             className='btn btn-danger btn-md btn-block'
-          >Manage</button>
+          >Manage</a>
           : null
 
         }

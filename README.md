@@ -31,6 +31,7 @@
 | 1.11 | 3 | Backend: Users testing & jobs testing|
 | 4.11 | 3 | Backend: Login testing & jobs candidate testing, Frondend Users, user component|
 | 5.11 | 2 | Frondend: job remove & some UI-logic|
+| 7.11 | 2 | Frondend: Notification logic a  && some UI-logic |
 
 
 

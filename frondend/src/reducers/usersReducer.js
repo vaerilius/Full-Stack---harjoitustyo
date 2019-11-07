@@ -1,4 +1,5 @@
 import usersService from '../services/usersService'
+import { setNotification } from './notificationReducer'
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -28,8 +29,19 @@ export const signUp = (data) => {
         type: 'ADD_USER',
         newUser
       })
+      dispatch(setNotification(
+        {
+          class: 'alert alert-success',
+          message: `user: ${newUser.username} signed Up successfully`
+        }
+      ))
     } catch (error) {
-      console.log(error)
+      dispatch(setNotification(
+        {
+          class: 'alert alert-danger',
+          message: 'ValidationError: username to be unique'
+        }
+      ))
     }
   }
 }

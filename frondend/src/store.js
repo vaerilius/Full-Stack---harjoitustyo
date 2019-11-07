@@ -5,11 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import jobsReducer from './reducers/jobReducer'
 import usersReducer from './reducers/usersReducer'
 import userReducer from './reducers/userReducer'
+import notificationReducer from './reducers/notificationReducer'
 
 const reducer = combineReducers({
   jobs: jobsReducer,
   users: usersReducer,
-  user: userReducer
+  user: userReducer,
+  notification: notificationReducer
 })
 
 const store = createStore(
