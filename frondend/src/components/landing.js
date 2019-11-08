@@ -10,7 +10,7 @@ const Landing = ({ user }) => {
   }
 
   return (
-    <div className="row " style={{ marginTop: "5%" }}>
+    <div className="row landing" style={{ marginTop: '5%' }}>
       <div className="col-sm-12">
         <div className="card">
           <h1>Job Book</h1>

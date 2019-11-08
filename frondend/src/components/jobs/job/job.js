@@ -28,7 +28,7 @@ const Job = (props) => {
 
   const onAddCandidate = () => {
     props.addCandidate(props.user.id, props.job.id)
-    // setlastChange(...props.job.)  
+    // setlastChange(...props.job.)
   }
   const onRemoveJobAdversement = () => {
     props.removeJobAdversement(props.job.id)
