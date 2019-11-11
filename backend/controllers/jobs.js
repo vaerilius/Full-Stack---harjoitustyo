@@ -127,7 +127,10 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
       .populate('user', { username: 1, picture: 1 })
 
     user.interestingJobs = [...user.interestingJobs,
-      userData
+      {
+        id: updatedJob.id,
+        title: updatedJob.title
+      }
     ]
 
     const updatedUser = await user.save()

@@ -15,13 +15,13 @@ describe('When logout', function () {
     cy.get('#logout').click()
     cy.contains('user logged out successfully')
     cy.contains('Job Book')
-    
+
   })
   it('user should logout', () => {
     cy.get('#logout').click()
     cy.clearLocalStorage(/loggedUser/).then((ls) => {
       expect(ls.getItem('loggedUser')).to.be.null
     })
-    
+
   })
 })
