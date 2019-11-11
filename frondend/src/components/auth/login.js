@@ -44,7 +44,7 @@ const Login = (props) => {
               <input {...password} className="form-control" id="password" />
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">Login</button>
+          <button type="submit" className="btn btn-primary">sign in</button>
         </form>
       </div>
     </div>

@@ -1,13 +1,14 @@
-module.export = {
-  roots: ['<rootDir>/src'],
+const { defaults } = require('jest-config');
+module.exports = {
   transform: {
     '\\.(js|jsx)?$': 'babel-jest',
   },
-  testMatch: ['<rootDir>/src/**/>(*.)test.{js, jsx}'], // finds test
-  moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
+  bail: 1,
+  verbose: true,
+
+  moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
   testPathIgnorePatterns: ['/node_modules/', '/build/'],
   setupFilesAfterEnv: [
-    '@testing-library/jest-dom/extend-expect',
     '@testing-library/react/cleanup-after-each'
-  ] // setupFiles before the tests are ran
+  ]
 }

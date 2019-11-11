@@ -22,7 +22,7 @@ const config = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.(js|jsx)$/,
           loader: 'babel-loader',
           query: {
             presets: ['@babel/preset-env', '@babel/preset-react'],

@@ -1,9 +1,16 @@
-// import { render, cleanup } from '@testing-library/react'
-// import React from 'react'
-// import { prettyDOM } from '@testing-library/dom'
-// import Job from './job'
-// not working
+import React from 'react'
 
+import { render, cleanup } from '@testing-library/react'
+// import index from '../../../index'
+import { prettyDOM } from '@testing-library/dom'
+import Job from './job'
+// not workin
+
+afterEach(cleanup)
+
+// test("Index exists", () => {
+//   expect(Job).toBeDefined();
+// });
 
 describe('job tests', () => {
   test('should renderd right content', () => {
@@ -21,14 +28,14 @@ describe('job tests', () => {
       title: 'ẗesting with Jest',
       updatedAt: '2019-11-07T06:49:41.960Z'
     }
-    // const component = render(
-    //   <Job job={job} />
-    // )
+    const component = render(
+      <Job job={job} />
+    )
 
-    // const card = component.container.querySelector('.card')
-    // expect(card).toHaveTextContent(
-    //   'test company'
-    // )
+    const card = component.container.querySelector('.card')
+    expect(card).toHaveTextContent(
+      'test company'
+    )
     expect(true).toBe(true)
   })
 })
