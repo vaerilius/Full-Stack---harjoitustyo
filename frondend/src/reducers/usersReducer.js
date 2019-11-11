@@ -39,7 +39,7 @@ export const signUp = (data) => {
       dispatch(setNotification(
         {
           class: 'alert alert-danger',
-          message: 'ValidationError: username to be unique'
+          message: 'ValidationError'
         }
       ))
     }

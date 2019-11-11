@@ -51,7 +51,7 @@ const Navbar = (props) => {
           <li className="nav-item">
             {props.user
               ? <Link to='/'>
-                <div className="nav-link" onClick={() => props.logout()}>
+                <div className="nav-link" id='logout' onClick={() => props.logout()}>
                   logout
                 </div>
               </Link>

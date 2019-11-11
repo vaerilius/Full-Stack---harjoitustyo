@@ -42,7 +42,7 @@ const NewJob = (props) => {
       </div>
       <div className="form-group">
         <label htmlFor="Description">Description</label>
-        <textarea className="form-control" id="Description" rows="3" {...description} ></textarea>
+        <textarea className="form-control" id="description" rows="3" {...description} ></textarea>
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>

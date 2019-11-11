@@ -78,7 +78,7 @@ const SingUp = (props) => {
       </label>
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">Sign in</button>
+          <button type="submit" className="btn btn-primary">Sign up</button>
         </form>
       </div>
 

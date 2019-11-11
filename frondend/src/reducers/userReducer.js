@@ -65,7 +65,7 @@ export const logout = () => {
     dispatch(setNotification(
       {
         class: 'alert alert-success',
-        message: `user logged out successfully`
+        message: 'user logged out successfully'
       }
     ))
 

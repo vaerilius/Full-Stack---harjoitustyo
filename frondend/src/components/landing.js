@@ -10,12 +10,12 @@ const Landing = ({ user }) => {
   }
 
   return (
-    <div className="row landing" style={{ marginTop: '5%' }}>
-      <div className="col-sm-12">
-        <div className="card">
-          <h1>Job Book</h1>
+    <div className="row landing mx-5" style={{ marginTop: '5%' }}>
+      <div className="col-sm-12 mx-2">
+        <div className="card ">
+          <h1 className="mx-auto">Job Book</h1>
           <img src={require('../assest/hiring.png')}
-            className="card-img-top"
+            className="rounded mx-auto d-block"
             alt="..."
           />
         </div>
