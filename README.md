@@ -32,6 +32,7 @@
 | 4.11 | 3 | Backend: Login testing & jobs candidate testing, Frondend Users, user component|
 | 5.11 | 2 | Frondend: job remove & some UI-logic|
 | 7.11 | 3 | Frondend: Notification logic a  && some UI-logic && eslint |
+| 8 - 10.11 | 4 | Frondend: implement E2E testing with cypress & some UI-logic & unit test with react-testing-library, config issues |
 
 
 
