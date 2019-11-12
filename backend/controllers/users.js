@@ -85,13 +85,13 @@ usersRouter.post('/provider', async (request, response, next) => {
 usersRouter.post('/candidate', async (request, response, next) => {
   try {
     const body = request.body
-
+    
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
     let user
 
-    if (body.jobProvider) {
+    if (!body.jobProvider) {
       user = new Candidate({
         username: body.username,
         name: body.name,

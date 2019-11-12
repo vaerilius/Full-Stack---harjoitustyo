@@ -3,14 +3,14 @@ const jobsRouter = require('express').Router()
 const { tokenExtractor } = require('../utils/middleware')
 
 const Job = require('../models/job')
-const User = require('../models/user')
+const Candidate = require('../models/candidate')
 const Provider = require('../models/provider')
 const jwt = require('jsonwebtoken')
 
 jobsRouter.get('/', async (request, response) => {
   const jobs = await Job.find({})
     .populate('jobProvider', { username: 1, name: 1, picture: 1 })
-  // .populate('candidates', { picture: 1, name: 1 })
+  .populate('candidates', { username: 1, name: 1, picture: 1 })
   response.json(jobs.map(job => job.toJSON()))
 
 })
@@ -28,7 +28,7 @@ jobsRouter.get('/:id', async (req, res, next) => {
 })
 
 jobsRouter.post('/', async (request, response, next) => {
-  const body = request.body
+  // const body = request.body
   const job = new Job({
     ...request.body
   })
@@ -105,12 +105,13 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
   const body = request.body
 
   try {
-    const user = await User.findById(body.candidateID)
+    const user = await Candidate.findById(body.candidateID)
     const job = await Job.findById(request.params.id)
     // console.log(job);
     // console.log(user);
-    const candidate = job.candidates.find(k => k.id === body.candidateID)
-    // console.log(candidate);
+    const candidate = job.candidates
+      .find(k => k.id === body.candidateID)
+    // console.log(candidate)
     if (candidate) {
 
       return response.status(400).json({ error: 'allready added' })
@@ -122,21 +123,17 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
       picture: user.picture
     }
 
+
+
+    user.interestingJobs = [...user.interestingJobs, job]
+
+    await user.save()
     const updatedJob = await Job.findByIdAndUpdate(
       request.params.id,
-      { $push: { candidates: userData } }, { new: true }
+      { $push: { candidates: user } }, { new: true }
     )
-      .populate('user', { username: 1, picture: 1 })
+      .populate('candidates', { username: 1, picture: 1 })
 
-    user.interestingJobs = [...user.interestingJobs,
-    {
-      id: updatedJob.id,
-      title: updatedJob.title
-    }
-    ]
-
-    const updatedUser = await user.save()
-    // console.log(updatedUser);
     response.json(updatedJob.toJSON())
   } catch (error) {
     next(error)
