@@ -9,8 +9,8 @@ const jwt = require('jsonwebtoken')
 
 jobsRouter.get('/', async (request, response) => {
   const jobs = await Job.find({})
-    .populate('provider', { picture: 1, name: 1 })
-    .populate('candidate', { picture: 1, name: 1 })
+    .populate('jobProvider', { username: 1, name: 1, picture: 1 })
+  // .populate('candidates', { picture: 1, name: 1 })
   response.json(jobs.map(job => job.toJSON()))
 
 })
@@ -29,6 +29,9 @@ jobsRouter.get('/:id', async (req, res, next) => {
 
 jobsRouter.post('/', async (request, response, next) => {
   const body = request.body
+  const job = new Job({
+    ...request.body
+  })
   const token = tokenExtractor(request)
 
   try {
@@ -37,40 +40,31 @@ jobsRouter.post('/', async (request, response, next) => {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
     const user = await Provider.findById(decodedToken.id)
-    // const user = await User.deleteMany({})
-    // await Job.deleteMany({})
 
     if (!user.jobProvider) {
       response.status(401).json({ error: 'Only job provider can add job advertisement' })
     }
-    console.log(user)
-    const job = new Job({
-      title: body.title,
-      description: body.description,
-      company: body.company,
-      jobProvider: user._id,
-      time: new Date()
-    })
 
-    const savedJob = await job.save()
 
-    // const updatedUser = await Provider.findByIdAndUpdate(
-    //   user._id,
-    //   { $push: { jobsProvided: { job: savedJob } } }, { new: true }
-    //   // .populate('jobs', { title: 1 })
-    // )
-    // console.log(updatedUser)
+    job.jobProvider = user.id
+    await job.save()
+
     user.jobsProvided = [...user.jobsProvided,
-      {
-        title: savedJob.title,
-        id: savedJob.id
-      }]
+      // {
+      //   id: job.id,
+      //   title: job.title,
+      //   description: job.description,
+      //   company: job.company
+      // }
+      job
+    ]
     await user.save()
-    const data = {
-      job: savedJob.toJSON(),
-      user: user.toJSON()
-    }
-    response.json(data)
+
+    const result = await Job.findById(job.id)
+      .populate('jobProvider', { username: 1, name: 1 })
+
+
+    response.status(201).json(result)
   } catch (error) {
     next(error)
   }

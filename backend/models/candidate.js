@@ -30,10 +30,10 @@ const candidateSchema = mongoose.Schema({
     minlength: 6
   },
   interestingJobs: [
-    // {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Job'
-    // }
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Job'
+    }
   ],
   passwordHash: String
 })

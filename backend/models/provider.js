@@ -29,10 +29,10 @@ const providerSchema = mongoose.Schema({
     minlength: 6
   },
   jobsProvided: [
-    // {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Job'
-    // }
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Job'
+    }
   ],
   passwordHash: String
 }, {timestamps: true})
