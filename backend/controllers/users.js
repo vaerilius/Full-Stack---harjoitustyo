@@ -1,15 +1,26 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
-const User = require('../models/user')
+const Provider = require('../models/provider')
+// const Candidate = require('../models/candidate')
 
-usersRouter.get('/', async (request, response) => {
-  const users = await User
+usersRouter.get('/providers', async (request, response) => {
+  const providers = await Provider
     .find({})
-    // .populate('job',
-    //   { title: 1, description: 1, candidates: 1 })
+    .populate('jobs',
+      { title: 1, description: 1, candidates: 1 })
+    .populate('candidates',
+      { name: 1, picture: 1 })
 
-  response.json(users.map(u => u.toJSON()))
+  response.json(providers.map(p => p.toJSON()))
 })
+// usersRouter.get('/candidates', async (request, response) => {
+//   const users = await Candidate
+//     .find({})
+//     .populate('jobs',
+//       { title: 1, description: 1, interestingJobs: 1 })
+
+//   response.json(users.map(u => u.toJSON()))
+// })
 
 usersRouter.get('/:id', async (req, res, next) => {
   try {
@@ -24,22 +35,27 @@ usersRouter.get('/:id', async (req, res, next) => {
   }
 })
 
-usersRouter.post('/', async (request, response, next) => {
+usersRouter.post('/provider', async (request, response, next) => {
   try {
     const body = request.body
 
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
-    const user = new User({
-      username: body.username,
-      name: body.name,
-      passwordHash,
-      picture: body.picture,
-      jobProvider: body.jobProvider,
-      phone: body.phone
-      
-    })
+    let user
+
+    if (body.jobProvider) {
+      user = new Provider({
+        username: body.username,
+        name: body.name,
+        passwordHash,
+        picture: body.picture,
+        jobProvider: body.jobProvider,
+        phone: body.phone,
+        email: body.email
+
+      })
+    } 
 
     const savedUser = await user.save()
 

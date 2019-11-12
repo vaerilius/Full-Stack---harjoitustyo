@@ -4,11 +4,13 @@ const { tokenExtractor } = require('../utils/middleware')
 
 const Job = require('../models/job')
 const User = require('../models/user')
+const Provider = require('../models/provider')
 const jwt = require('jsonwebtoken')
 
 jobsRouter.get('/', async (request, response) => {
   const jobs = await Job.find({})
-    .populate('user', { picture: 1, name: 1, status: 1, jobsProvided: 1 })
+    .populate('provider', { picture: 1, name: 1 })
+    .populate('candidate', { picture: 1, name: 1 })
   response.json(jobs.map(job => job.toJSON()))
 
 })
@@ -34,35 +36,41 @@ jobsRouter.post('/', async (request, response, next) => {
     if (!token || !decodedToken) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
-    const user = await User.findById(decodedToken.id)
+    const user = await Provider.findById(decodedToken.id)
     // const user = await User.deleteMany({})
     // await Job.deleteMany({})
 
     if (!user.jobProvider) {
       response.status(401).json({ error: 'Only job provider can add job advertisement' })
     }
-
+    console.log(user)
     const job = new Job({
       title: body.title,
       description: body.description,
-      candidates: [],
       company: body.company,
-      jobProvider: {
-        id: user.id,
-        username: user.username,
-        picture: user.picture
-      },
+      jobProvider: user._id,
       time: new Date()
     })
 
     const savedJob = await job.save()
 
-    user.jobsProvided = [...user.jobsProvided, {
-      title: savedJob.title,
-      description: savedJob.description,
-      id: savedJob.id}]
+    // const updatedUser = await Provider.findByIdAndUpdate(
+    //   user._id,
+    //   { $push: { jobsProvided: { job: savedJob } } }, { new: true }
+    //   // .populate('jobs', { title: 1 })
+    // )
+    // console.log(updatedUser)
+    user.jobsProvided = [...user.jobsProvided,
+      {
+        title: savedJob.title,
+        id: savedJob.id
+      }]
     await user.save()
-    response.json(savedJob.toJSON())
+    const data = {
+      job: savedJob.toJSON(),
+      user: user.toJSON()
+    }
+    response.json(data)
   } catch (error) {
     next(error)
   }
@@ -127,10 +135,10 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
       .populate('user', { username: 1, picture: 1 })
 
     user.interestingJobs = [...user.interestingJobs,
-      {
-        id: updatedJob.id,
-        title: updatedJob.title
-      }
+    {
+      id: updatedJob.id,
+      title: updatedJob.title
+    }
     ]
 
     const updatedUser = await user.save()

@@ -34,6 +34,7 @@
 | 7.11 | 3 | Frondend: Notification logic a  && some UI-logic && eslint |
 | 8 - 10.11 | 4 | Frondend: implement E2E testing with cypress & some UI-logic & unit test with react-testing-library, config issues |
 | 11.11 | 4 | E2E test, User component |
+| 12.11 | 2 | Backend update, split user model to candidate and provider |
 
 
 

@@ -9,10 +9,10 @@ const jobSchema = mongoose.Schema({
   },
   description: String,
   candidates: [
-    // {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'User'
-    // }
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Candidate'
+    }
   ],
   company: {
     type: String,
@@ -20,8 +20,8 @@ const jobSchema = mongoose.Schema({
     minlength: 4
   },
   jobProvider: {
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: 'User'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Provider'
   }
 }, {
   timestamps: true

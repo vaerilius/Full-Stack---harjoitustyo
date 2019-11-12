@@ -3,12 +3,15 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
+const Provider = require('../models/provider')
 
 loginRouter.post('/', async (request, response, next) => {
   const body = request.body
 
   try {
-    const user = await User.findOne({ username: body.username })
+    let user
+
+    user = await Provider.findOne({ username: body.username })
 
     const passwordCorrect = user === null
       ? false
@@ -34,7 +37,7 @@ loginRouter.post('/', async (request, response, next) => {
         name: user.name,
         picture: user.picture,
         id: user._id,
-        jobProvider: user.jobProvider
+        jobProvider: user.jobProvider,
       })
   } catch (error) {
     next(error)

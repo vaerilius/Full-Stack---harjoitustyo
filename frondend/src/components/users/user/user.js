@@ -45,7 +45,7 @@ const User = (props) => {
         <div className="col-md-6">
           {props.user.interestingJobs.length > 0
             ?
-            <h5 className="card-title text-center">Jobs provided</h5>
+            <h5 className="card-title text-center">Candidate for: </h5>
             :
             <h5 className="card-title text-center">No interesting Jobs</h5>
 
