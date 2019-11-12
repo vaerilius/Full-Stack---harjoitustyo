@@ -41,7 +41,7 @@ jobsRouter.post('/', async (request, response, next) => {
     }
     const user = await Provider.findById(decodedToken.id)
 
-    if (!user.jobProvider) {
+    if (!user) {
       response.status(401).json({ error: 'Only job provider can add job advertisement' })
     }
 
@@ -110,20 +110,14 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
     // console.log(job);
     // console.log(user);
     const candidate = job.candidates
-      .find(k => k.id === body.candidateID)
-    // console.log(candidate)
+      .find(k => k === user.id)
+
+      
+    console.log(candidate)
     if (candidate) {
 
       return response.status(400).json({ error: 'allready added' })
     }
-    // console.log(user);
-    const userData = {
-      id: user.id,
-      username: user.username,
-      picture: user.picture
-    }
-
-
 
     user.interestingJobs = [...user.interestingJobs, job]
 

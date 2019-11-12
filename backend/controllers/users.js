@@ -7,9 +7,10 @@ usersRouter.get('/providers', async (request, response) => {
   const providers = await Provider
     .find({})
     .populate('jobsProvided',
-      { title: 1, description: 1, company: 1, candidates: 1 })
-    .populate('candidates',
-      { name: 1, picture: 1, username: 1 })
+      { title: 1, description: 1, company: 1})
+    // .populate('candidates',
+    //   { name: 1, picture: 1, username: 1 })
+      // korjaa
 
   response.json(providers.map(p => p.toJSON()))
 })
