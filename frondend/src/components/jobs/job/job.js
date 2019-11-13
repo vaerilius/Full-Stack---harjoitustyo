@@ -22,10 +22,6 @@ const Job = (props) => {
   const ids = props.job.candidates.map(k => k.id)
   const isDisabled = ids.includes(props.user.id) ? true : false
 
-
-  const isJobProvider = () => props.user.id === props.job.jobProvider.id ? true : false
-
-
   const onAddCandidate = () => {
     props.addCandidate(props.user.id, props.job.id)
     // setlastChange(...props.job.)
@@ -56,7 +52,7 @@ const Job = (props) => {
           )}
       </ul>
       <div className="card-body">
-        {!isJobProvider()
+        {!props.user.jobProvider
           ?
           <button
             type="button"
@@ -66,7 +62,7 @@ const Job = (props) => {
           : null
 
         }
-        {isJobProvider()
+        {props.user.jobProvider
           ?
           <a
             type="button"
@@ -76,7 +72,7 @@ const Job = (props) => {
 
         }
 
-        {isJobProvider()
+        {props.user.jobProvider
           ?
           <Link to={'/jobs/'}>
             <button type="button"

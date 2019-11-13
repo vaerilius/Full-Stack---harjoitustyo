@@ -35,7 +35,7 @@
 | 8 - 10.11 | 4 | Frondend: implement E2E testing with cypress & some UI-logic & unit test with react-testing-library, config issues |
 | 11.11 | 4 | E2E test, User component |
 | 12.11 | 5 | Backend update, split user model to candidate and provider, fix huge 'bug' in populate() function, push candidate|
-| 13.11 | 2 | Backend issue with populate() nested & update remove|
+| 13.11 | 3 | Backend issue with populate() nested & update remove,, frondend: transform|
 
 
 
