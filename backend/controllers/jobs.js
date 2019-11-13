@@ -10,13 +10,15 @@ const jwt = require('jsonwebtoken')
 jobsRouter.get('/', async (request, response) => {
   const jobs = await Job.find({})
     .populate('jobProvider', { username: 1, name: 1, picture: 1 })
-  .populate('candidates', { username: 1, name: 1, picture: 1 })
+    .populate('candidates', { username: 1, name: 1, picture: 1 })
   response.json(jobs.map(job => job.toJSON()))
 
 })
 jobsRouter.get('/:id', async (req, res, next) => {
   try {
     const job = await Job.findById(req.params.id)
+      .populate('jobProvider', { username: 1, name: 1, picture: 1 })
+      .populate('candidates', { username: 1, name: 1, picture: 1 })
     if (job) {
       res.json(job.toJSON())
     } else {
@@ -49,20 +51,11 @@ jobsRouter.post('/', async (request, response, next) => {
     job.jobProvider = user.id
     await job.save()
 
-    user.jobsProvided = [...user.jobsProvided,
-      // {
-      //   id: job.id,
-      //   title: job.title,
-      //   description: job.description,
-      //   company: job.company
-      // }
-      job
-    ]
+    user.jobsProvided = [...user.jobsProvided, job]
     await user.save()
 
     const result = await Job.findById(job.id)
       .populate('jobProvider', { username: 1, name: 1 })
-
 
     response.status(201).json(result)
   } catch (error) {
@@ -75,16 +68,16 @@ jobsRouter.delete('/:id', async (request, response, next) => {
   try {
     const token = tokenExtractor(request)
     const decodedToken = jwt.verify(token, config.SECRET)
-    const user = await User.findById(decodedToken.id)
+    const user = await Provider.findById(decodedToken.id)
     const job = await Job.findById(request.params.id)
-    // console.log(token)
-    // console.log(user)
-    // console.log(job.jobProvider.id.toString(), user.id.toString())
+    // console.log(token)§
+    // console.log(job.jobProvider)
+    console.log(job.jobProvider, user.id)
 
     if (!token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
-    if (job.jobProvider.id.toString() !== user.id.toString()) {
+    if (job.jobProvider.toString() !== user.id) {
       return response.status(401).json({ error: 'wrong token' })
     }
 
@@ -93,8 +86,10 @@ jobsRouter.delete('/:id', async (request, response, next) => {
 
     await user.save()
     await Job.deleteOne({ _id: request.params.id })
-
-    response.status(204).json({ message: 'job removed' })
+ 
+    response.status(204).json({
+      message: 'job removed'
+    })
 
   } catch (error) {
     next(error)
@@ -126,7 +121,7 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
       request.params.id,
       { $push: { candidates: user } }, { new: true }
     )
-      .populate('candidates', { username: 1, picture: 1 })
+      .populate('candidates', { username: 1, picture: 1, name: 1 })
 
     response.json(updatedJob.toJSON())
   } catch (error) {

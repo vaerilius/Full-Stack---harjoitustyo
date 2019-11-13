@@ -4,21 +4,18 @@ const Provider = require('../models/provider')
 const Candidate = require('../models/candidate')
 
 usersRouter.get('/providers', async (request, response) => {
-  const providers = await Provider
-    .find({})
-    .populate('jobsProvided',
-      { title: 1, description: 1, company: 1})
-    // .populate('candidates',
-    //   { name: 1, picture: 1, username: 1 })
-      // korjaa
+  const providers = await Provider.find({})
 
+    .populate('jobsProvided',{ title: 1, description: 1, company: 1 })
+    // .populate('candidates', { username: 1, name: 1, picture: 1, })
+    // ei toimi, korjaa tämä
   response.json(providers.map(p => p.toJSON()))
 })
 usersRouter.get('/providers/:id', async (req, res, next) => {
   try {
     const user = await Provider.findById(req.params.id)
       .populate('jobsProvided',
-        { title: 1, description: 1, company: 1, candidates: 1 })
+        { title: 1, description: 1, company: 1 })
     if (user) {
       res.json(user.toJSON())
     } else {
