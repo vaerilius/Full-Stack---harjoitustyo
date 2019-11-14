@@ -7,6 +7,7 @@ const signUpCandidate = async (newUser) => {
 }
 const getAllCandidates = async () => {
   const response = await axios.get(`${baseUrl}/candidates`)
+
   return response.data
 }
 

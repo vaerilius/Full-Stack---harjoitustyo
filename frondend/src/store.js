@@ -4,12 +4,16 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import jobsReducer from './reducers/jobReducer'
 import candidatesReducer from './reducers/candidatesReducer'
+import providersReducer from './reducers/providersReducer'
+
 import userReducer from './reducers/userReducer'
 import notificationReducer from './reducers/notificationReducer'
+
 
 const reducer = combineReducers({
   jobs: jobsReducer,
   candidates: candidatesReducer,
+  providers: providersReducer,
   user: userReducer,
   notification: notificationReducer
 })

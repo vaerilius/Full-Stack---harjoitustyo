@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../../hooks/formHook'
 import { signUpCandidate } from '../../reducers/candidatesReducer'
+import { onSignUpProvider } from '../../reducers/providersReducer'
+
 
 
 const SingUp = (props) => {
@@ -22,7 +24,8 @@ const SingUp = (props) => {
       name: name.value,
       jobProvider: checkbox
     }
-    props.signUpCandidate(data)
+    data.jobProvider ? props.onSignUpProvider(data) : props.signUpCandidate(data)
+   
 
     resetName()
     resetPassword()
@@ -87,6 +90,7 @@ const SingUp = (props) => {
 
 export default connect(null,
   {
-    signUpCandidate
+    signUpCandidate,
+    onSignUpProvider
   }
 )(SingUp)

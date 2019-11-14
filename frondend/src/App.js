@@ -14,6 +14,8 @@ import User from './components/users/user/user'
 import { initializeJobs } from './reducers/jobReducer'
 import { initializeUser } from './reducers/userReducer'
 import { initializeCandidates } from './reducers/candidatesReducer'
+import { initializeProviders } from './reducers/providersReducer'
+
 
 import {
   BrowserRouter as Router,
@@ -35,6 +37,8 @@ const App = (props) => {
   useEffect(() => {
     props.initializeJobs()
     props.initializeCandidates()
+    props.initializeProviders()
+
     props.initializeUser()
   }, [])
 
@@ -85,6 +89,7 @@ const mapStateToProps = state => {
   return {
     jobs: state.jobs,
     candidates: state.candidates,
+    providers: state.providers,
     user: state.user,
     notification: state.notification
 
@@ -95,4 +100,5 @@ export default connect(mapStateToProps, {
   initializeJobs,
   initializeCandidates,
   initializeUser,
+  initializeProviders
 })(App)

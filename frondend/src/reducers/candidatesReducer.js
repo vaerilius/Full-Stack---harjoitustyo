@@ -6,7 +6,6 @@ const reducer = (state = [], action) => {
     case 'INIT_CANDIDATES':
       return [...action.candidates]
     case 'SIGNUP_CANDIDATE':
-      console.log(action.createdCandidate)
       return [...state, action.createdCandidate]  
     default:
       return [...state]
@@ -26,7 +25,6 @@ export const signUpCandidate = (data) => {
   return async dispatch => {
     try {
       const createdCandidate = await candidateService.signUpCandidate(data)
-      // console.log(createdCandidate)
       dispatch({
         type: 'SIGNUP_CANDIDATE',
         createdCandidate
