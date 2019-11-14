@@ -1,8 +1,13 @@
+import candidateService from '../services/candidateService'
+import { setNotification } from './notificationReducer'
 
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_CANDIDATES':
       return [...action.candidates]
+    case 'SIGNUP_CANDIDATE':
+      console.log(action.createdCandidate)
+      return [...state, action.createdCandidate]  
     default:
       return [...state]
   }
@@ -10,8 +15,36 @@ const reducer = (state = [], action) => {
 
 export const initializeCandidates = () => {
   return async dispatch => {
-    const candidates = await candidateService.getAll()
-    console.log(candidates)
+    const candidates = await candidateService.getAllCandidates()
+    dispatch({
+      type: 'INIT_CANDIDATES',
+      candidates
+    })
+  }
+}
+export const signUpCandidate = (data) => {
+  return async dispatch => {
+    try {
+      const createdCandidate = await candidateService.signUpCandidate(data)
+      // console.log(createdCandidate)
+      dispatch({
+        type: 'SIGNUP_CANDIDATE',
+        createdCandidate
+      })
+      dispatch(setNotification(
+        {
+          class: 'alert alert-success',
+          message: `user: ${createdCandidate.username} signed Up successfully`
+        }
+      ))
+    } catch (error) {
+      dispatch(setNotification(
+        {
+          class: 'alert alert-danger',
+          message: 'ValidationError'
+        }
+      ))
+    }
   }
 }
 

@@ -96,8 +96,8 @@ usersRouter.post('/candidate', async (request, response, next) => {
         passwordHash,
         picture: body.picture,
         jobProvider: body.jobProvider,
-        phone: body.phone,
-        email: body.email
+        phone: null,
+        email: null
 
       })
     }

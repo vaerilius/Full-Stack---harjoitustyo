@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../../hooks/formHook'
-import { signUp } from '../../reducers/usersReducer'
+import { signUpCandidate } from '../../reducers/candidatesReducer'
 
 
 const SingUp = (props) => {
@@ -22,7 +22,7 @@ const SingUp = (props) => {
       name: name.value,
       jobProvider: checkbox
     }
-    props.signUp(data)
+    props.signUpCandidate(data)
 
     resetName()
     resetPassword()
@@ -81,18 +81,12 @@ const SingUp = (props) => {
           <button type="submit" className="btn btn-primary">Sign up</button>
         </form>
       </div>
-
     </div>
-
-
-
   )
 }
 
-
-
 export default connect(null,
   {
-    signUp
+    signUpCandidate
   }
 )(SingUp)

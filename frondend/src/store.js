@@ -3,13 +3,13 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import jobsReducer from './reducers/jobReducer'
-import usersReducer from './reducers/usersReducer'
+import candidatesReducer from './reducers/candidatesReducer'
 import userReducer from './reducers/userReducer'
 import notificationReducer from './reducers/notificationReducer'
 
 const reducer = combineReducers({
   jobs: jobsReducer,
-  users: usersReducer,
+  candidates: candidatesReducer,
   user: userReducer,
   notification: notificationReducer
 })
