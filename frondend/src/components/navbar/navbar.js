@@ -35,13 +35,18 @@ const Navbar = (props) => {
 
           </li>
           <li className="nav-item">
-            {props.user
-              ? <Link to='/users'>
-                <div className="nav-link">
-                  users
-                </div>
-              </Link>
-              :
+            {props.user ?
+              <Link to='/candidates'>
+                <div className="nav-link">Candidates</div>
+              </Link> :
+              <Redirect to="/" />
+            }
+          </li>
+          <li className="nav-item">
+            {props.user ?
+              <Link to='/providers'>
+                <div className="nav-link">Providers</div>
+              </Link> :
               <Redirect to="/" />
             }
           </li>
