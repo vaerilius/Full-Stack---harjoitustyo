@@ -6,7 +6,7 @@ const JobListItem = ({ job }) => {
   const JobCreatedAT = datePalaces[0]
 
   return (
-    <div className="list-group mb-2" >
+    <div className="list-group mb-4 shadow" >
       <div className="list-group-item list-group-item-action">
         <Link to={`/jobs/${job.id}`}>
           <div className="d-flex w-100 justify-content-between">

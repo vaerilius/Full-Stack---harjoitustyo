@@ -5,6 +5,17 @@ import { Link } from 'react-router-dom'
 
 const Job = (props) => {
 
+  const [lastchange, setlastChange] = useState(null)
+  const [createdAt, setCreatedAt] = useState(null)
+
+  useEffect(() => {
+    console.log('updateAT')
+    setlastChange(props.job.updatedAt.split('T')[0])
+  }, [props.job.candidates])
+  useEffect(() => {
+    setCreatedAt(props.job.createdAt.split('T')[0])
+  }, [])
+
 
   if (!props.job) {
     return (
@@ -12,12 +23,7 @@ const Job = (props) => {
     )
   }
 
-  const [lastchange, setlastChange] = useState(props.job.updatedAt)
-  const [createdAt, setCreatedAt] = useState(props.job.createdAt)
 
-  useEffect(() => {
-    setlastChange(props.job.updatedAt)
-  }, [props.job.updatedAt])
 
   const ids = props.job.candidates.map(k => k.id)
   const isDisabled = ids.includes(props.user.id) ? true : false
@@ -32,25 +38,32 @@ const Job = (props) => {
 
   return (
 
-    <div className="card">
+    <div className="card m-5 card-hover">
       <div className="card-header">
         Job advertisement
       </div>
 
       <img className="card-img-top" alt="..."
-        src='https://images.unsplash.com/photo-1453814279372-783dc5b638ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80' />
+        src='https://images.unsplash.com/photo-1453814279372-783dc5b638ae?ixlib=rb-1.2.1' />
       <div className="card-body">
         <h5 className="card-title">{props.job.title}</h5>
         <p className="card-text">{props.job.description}</p>
       </div>
-      <ul className="list-group list-group-flush">
+      <div className="list-group list-group-flush">
 
         {props.job.candidates
           .map(c =>
-            <li key={c.id} className="list-group-item">{c.username}</li>
-
+            <div key={c.id} className="list-group-item list-group-item-action">
+              <Link to={`/candidates/${c.id}`}>
+                <div className="d-flex w-100 justify-content-between">
+                  <h5 className="m-3">{c.name}</h5>
+                  <img src={c.picture}
+                    className="m-3 " style={{ height: '2rem' }} alt={c.name} />
+                </div>
+              </Link>
+            </div>
           )}
-      </ul>
+      </div>
       <div className="card-body">
         {!props.user.jobProvider
           ?
@@ -87,10 +100,11 @@ const Job = (props) => {
 
       </div>
       <div className="card-footer text-muted">
-        Created at: {createdAt.split('T')[0]}
+
+        Created at: {createdAt}
       </div>
       <div className="card-footer text-muted">
-        last update: {lastchange.split('T')[0]} : {lastchange.split('T')[1].split('.')[0]}
+        last update: {lastchange}
       </div>
 
       <Link to={'/jobs/'}>

@@ -15,7 +15,7 @@ const Candidates = (props) => {
                   <h5 className="my-auto">{c.name}</h5>
                   <p className="my-auto"> Joined: {c.createdAt.split('T')[0]} </p>
                   <img src={c.picture}
-                    className="ml-3 mb-1 rounded-circle" style={{ height: '4rem' }} alt={c.name} />
+                    className="my-auto" style={{ height: '4rem' }} alt={c.name} />
                 </div>
                 {/* <p className="mb-1"> Joined: {user.createdAt.split('T')[0]} </p> */}
               </Link>
