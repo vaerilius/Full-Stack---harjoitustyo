@@ -37,6 +37,7 @@
 | 12.11 | 5 | Backend update, split user model to candidate and provider, fix huge 'bug' in populate() function, push candidate|
 | 13.11 | 3 | Backend issue with populate() nested & update remove,, frondend: transform|
 | 14.11 | 4 | Frondend update: reducers, services, components..|
+| 16.11 | 2 | Frondend update: reducers, services, components..|
 
 
 
