@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = `${ BACKEND_URL }/api/users/`
+const baseUrl = `${ BACKEND_URL }/api/users`
 
 const signUpProvider = async (newUser) => {
   const response = await axios.post(`${baseUrl}/provider`, newUser)

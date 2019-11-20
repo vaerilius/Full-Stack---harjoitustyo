@@ -1,31 +1,37 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { useField } from '../../hooks/formHook'
+import { useField, useFileField } from '../../hooks/formHook'
 import { signUpCandidate } from '../../reducers/candidatesReducer'
 import { onSignUpProvider } from '../../reducers/providersReducer'
-
 
 
 const SingUp = (props) => {
   const [username, resetUsername] = useField('text')
   const [name, resetName] = useField('text')
-  const [picture, resetPicture] = useField('text')
+  const [picture, resetPicture] = useFileField('file')
   const [password, resetPassword] = useField('password')
   const [checkbox, setCheckBox] = useState(false)
 
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const formData = new FormData()
+    formData.append('profileImg', picture)
+    formData.append('username', username.value)
+    formData.append('name', name.value)
+    formData.append('password', password.value)
+    formData.append('checkbox', checkbox)
+    // console.log(picture)
 
-    const data = {
-      username: username.value,
-      password: password.value,
-      picture: picture.value,
-      name: name.value,
-      jobProvider: checkbox
-    }
-    data.jobProvider ? props.onSignUpProvider(data) : props.signUpCandidate(data)
-   
+    // const data = {
+    //   username: username.value,
+    //   password: password.value,
+    //   picture: picture.value,
+    //   name: name.value,
+    //   jobProvider: checkbox
+    // }
+    // data.jobProvider ? props.onSignUpProvider(data) : props.signUpCandidate(data)
+    checkbox ? props.onSignUpProvider(formData) : props.signUpCandidate(formData)
 
     resetName()
     resetPassword()
@@ -33,7 +39,6 @@ const SingUp = (props) => {
     resetUsername()
     setCheckBox(false)
   }
-
 
   return (
 

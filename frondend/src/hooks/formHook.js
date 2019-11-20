@@ -17,3 +17,22 @@ export const useField = (type) => {
     onChange,
   }, reset]
 }
+
+export const useFileField = (type) => {
+  const [file, setFile] = useState(null)
+
+  const onChange = (event) => {
+    setFile(event.target.files[0])
+  }
+
+  const resetFile = () => {
+    setFile(null)
+
+  }
+
+  return [{
+    type,
+    file,
+    onChange,
+  }, resetFile]
+}
