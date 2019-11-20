@@ -1,4 +1,4 @@
-import providerservice from '../services/providerService '
+import providerservice from '../services/providerService'
 import { setNotification } from './notificationReducer'
 
 const reducer = (state = [], action) => {
@@ -6,7 +6,7 @@ const reducer = (state = [], action) => {
     case 'INIT_PROVIDERS':
       return [...action.providers]
     case 'SIGNUP_CANDIDATE':
-      return [...state, action.createdProvider]  
+      return [...state, action.createdProvider]
     default:
       return [...state]
   }

@@ -7,6 +7,28 @@ const Candidate = require('../models/candidate')
 const Provider = require('../models/provider')
 const jwt = require('jsonwebtoken')
 
+const multer = require('multer')
+const multerS3 = require('multer-s3')
+const AWS = require('../utils/aws-config')
+const uuidv4 = require('uuid/v4')
+
+let imageName = ''
+
+const upload = multer({
+  fileFilter: AWS.fileFilter,
+  storage: multerS3({
+    acl: 'public-read',
+    s3: AWS.s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    key: function (req, file, cb) {
+      console.log(file.mimetype.split('/')[1])
+      imageName = 'jobs/' + uuidv4() + '-' + file.originalname.toLowerCase().split(' ').join('-');
+      cb(null, imageName)
+    }
+  })
+})
+
 jobsRouter.get('/', async (request, response) => {
   const jobs = await Job.find({})
     .populate('jobProvider', { username: 1, name: 1, picture: 1 })
@@ -29,14 +51,17 @@ jobsRouter.get('/:id', async (req, res, next) => {
   }
 })
 
-jobsRouter.post('/', async (request, response, next) => {
+jobsRouter.post('/', upload.single('jobImg'), async (request, response, next) => {
   // const body = request.body
-  const job = new Job({
-    ...request.body
-  })
-  const token = tokenExtractor(request)
 
   try {
+    const job = new Job({
+      ...request.body,
+      picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`
+    })
+    imageName = ''
+  
+    const token = tokenExtractor(request)
     const decodedToken = jwt.verify(token, config.SECRET)
     if (!token || !decodedToken) {
       return response.status(401).json({ error: 'token missing or invalid' })
@@ -46,7 +71,6 @@ jobsRouter.post('/', async (request, response, next) => {
     if (!user) {
       response.status(401).json({ error: 'Only job provider can add job advertisement' })
     }
-
 
     job.jobProvider = user.id
     await job.save()

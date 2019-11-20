@@ -38,7 +38,7 @@
 | 13.11 | 3 | Backend issue with populate() nested & update remove,, frondend: transform|
 | 14.11 | 4 | Frondend update: reducers, services, components..|
 | 16.11 | 2 | Frondend update: reducers, services, components..|
-| 20.11 | 2 | try to implement aws s3 storage to the app|
+| 20.11 | 4 | implement aws s3 storage for application images(provider, candidate, job)|
 
 
 

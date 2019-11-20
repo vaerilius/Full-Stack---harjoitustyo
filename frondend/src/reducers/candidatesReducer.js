@@ -6,7 +6,7 @@ const reducer = (state = [], action) => {
     case 'INIT_CANDIDATES':
       return [...action.candidates]
     case 'SIGNUP_CANDIDATE':
-      return [...state, action.createdCandidate]  
+      return [...state, action.createdCandidate]
     default:
       return [...state]
   }

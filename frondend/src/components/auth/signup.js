@@ -93,7 +93,7 @@ const SingUp = (props) => {
               />
               <label className="form-check-label" htmlFor="gridCheck">
                 Job Provider
-      </label>
+              </label>
             </div>
           </div>
           <button type="submit" className="btn btn-primary">Sign up</button>

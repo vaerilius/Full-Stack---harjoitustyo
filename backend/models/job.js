@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.set('useFindAndModify', false);
+mongoose.set('useFindAndModify', false)
 const jobSchema = mongoose.Schema({
 
   title: {
@@ -8,6 +8,11 @@ const jobSchema = mongoose.Schema({
     minlength: 4
   },
   description: String,
+  picture: {
+    type: String,
+    required: true,
+    minlength: 4
+  },
   candidates: [
     {
       type: mongoose.Schema.Types.ObjectId,

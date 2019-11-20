@@ -67,19 +67,19 @@ const App = (props) => {
                 : <Redirect to="/" />}
               {props.user ? <Route exact path="/jobs/:id" render={({ match }) =>
                 <Job job={jobById(match.params.id)} />
-                } /> : <Redirect to="/" />}
+              } /> : <Redirect to="/" />}
 
               {props.user ? <Route exact path="/candidates" render={() => <Candidates />} />
                 : <Redirect to="/" />}
 
-                {props.user ? <Route exact path="/candidates/:id" render={({ match }) =>
+              {props.user ? <Route exact path="/candidates/:id" render={({ match }) =>
                 <Candidate candidate={candidateById(match.params.id)} />
-              } />  : <Redirect to="/" />}
+              } /> : <Redirect to="/" />}
               {props.user ? <Route exact path="/providers" render={() => <Providers />} />
                 : <Redirect to="/" />}
               {props.user ? <Route exact path="/providers/:id" render={({ match }) =>
                 <Provider provider={providerById(match.params.id)} />
-                } /> : <Redirect to="/" />}
+              } /> : <Redirect to="/" />}
             </div>
           </div>
         </div>

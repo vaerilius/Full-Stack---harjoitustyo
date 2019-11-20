@@ -43,8 +43,11 @@ const Job = (props) => {
         Job advertisement
       </div>
 
-      <img className="card-img-top" alt="..."
-        src='https://images.unsplash.com/photo-1453814279372-783dc5b638ae?ixlib=rb-1.2.1' />
+      <img
+        className="img-fluid"
+        alt="..."
+        style={{ maxHeight: '15rem', maxWidth: '500px' }}
+        src={props.job.picture} />
       <div className="card-body">
         <h5 className="card-title">{props.job.title}</h5>
         <p className="card-text">{props.job.description}</p>

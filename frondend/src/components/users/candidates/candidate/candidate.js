@@ -25,18 +25,18 @@ const Candidate = (props) => {
 
         </div>
         <div className="col-md-12">
-        <h5 className="card-title text-center">The candidate is interested in following jobs</h5>
+          <h5 className="card-title text-center">The candidate is interested in following jobs</h5>
           {props.candidate.interestingJobs.length > 0
             ?
             <ul className="list-group list-group-flush">
-            {props.candidate.interestingJobs.map(jobAd =>
-              <li key={jobAd.id} className="list-group-item text-center">
-                <Link to={`/jobs/${jobAd.id}`} >
-                  {jobAd.title}
-                </Link>
-              </li>
-            )}
-          </ul>
+              {props.candidate.interestingJobs.map(jobAd =>
+                <li key={jobAd.id} className="list-group-item text-center">
+                  <Link to={`/jobs/${jobAd.id}`} >
+                    {jobAd.title}
+                  </Link>
+                </li>
+              )}
+            </ul>
             : <p className="text-center">The candidate is not interested in any jobs</p>
           }
         </div>
@@ -46,8 +46,8 @@ const Candidate = (props) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-const candidate = state.candidates.find(c => c.id === ownProps.candidate.id)
-console.log(candidate)
+  const candidate = state.candidates.find(c => c.id === ownProps.candidate.id)
+  console.log(candidate)
 
   return {
     candidate: candidate
