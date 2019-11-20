@@ -8,7 +8,8 @@ import { onSignUpProvider } from '../../reducers/providersReducer'
 const SingUp = (props) => {
   const [username, resetUsername] = useField('text')
   const [name, resetName] = useField('text')
-  const [picture, resetPicture] = useFileField('file')
+  // const [picture, resetPicture] = useFileField('file')
+  const [picture, setPicture] = useState(null)
   const [password, resetPassword] = useField('password')
   const [checkbox, setCheckBox] = useState(false)
 
@@ -35,7 +36,8 @@ const SingUp = (props) => {
 
     resetName()
     resetPassword()
-    resetPicture()
+    // resetPicture()
+    setPicture(null)
     resetUsername()
     setCheckBox(false)
   }
@@ -70,7 +72,15 @@ const SingUp = (props) => {
           <div className="form-group row">
             <label htmlFor="picture" className="col-sm-3 col-form-label">Picture url</label>
             <div className="col-sm-9">
-              <input {...picture} className="form-control" id="picture" />
+              <input
+                label="Picture"
+                // validators={['required:1']}
+                // errorMessages={['this field is required']}
+                type='file'
+                onChange={(e) => setPicture(e.target.files[0])}
+              />
+
+              {/* <input {...picture} className="form-control" id="picture" /> */}
             </div>
           </div>
           <div className="form-group">

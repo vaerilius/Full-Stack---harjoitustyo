@@ -15,18 +15,15 @@ const upload = multer({
   storage: multerS3({
     acl: 'public-read',
     s3: AWS.s3,
-    bucket: 'job-book',
-    metadata: function (req, file, cb) {
-      cb(null, Object.assign({}, req.body))
-    },
-    // contentType: multerS3.AUTO_CONTENT_TYPE,
+    bucket: process.env.AWS_BUCKET_NAME,
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
-
-      imageName =  file.originalname
+      console.log(file.mimetype.split('/')[1])
+      imageName = 'users/' + uuidv4() + '-' + file.originalname.toLowerCase().split(' ').join('-');
       cb(null, imageName)
     }
   })
-});
+})
 
 usersRouter.get('/providers', async (request, response) => {
   const providers = await Provider.find({})
@@ -77,6 +74,7 @@ usersRouter.get('/candidates/:id', async (req, res, next) => {
 
 
 usersRouter.post('/provider', upload.single('profileImg'), async (request, response, next) => {
+
   try {
     const body = request.body
 
@@ -89,9 +87,10 @@ usersRouter.post('/provider', upload.single('profileImg'), async (request, respo
       passwordHash,
       picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
       jobProvider: body.checkbox,
-      phone: body.phone,
-      email: body.email
+      phone: null,
+      email: null
     })
+    imageName = ''
 
     const savedUser = await user.save()
     console.log(savedUser)
@@ -100,7 +99,7 @@ usersRouter.post('/provider', upload.single('profileImg'), async (request, respo
     next(exception)
   }
 })
-usersRouter.post('/candidate', async (request, response, next) => {
+usersRouter.post('/candidate',upload.single('profileImg'), async (request, response, next) => {
   try {
     const body = request.body
 
@@ -114,8 +113,8 @@ usersRouter.post('/candidate', async (request, response, next) => {
         username: body.username,
         name: body.name,
         passwordHash,
-        picture: body.picture,
-        jobProvider: body.jobProvider,
+        picture:`${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
+        jobProvider: body.checkbox,
         phone: null,
         email: null
 
