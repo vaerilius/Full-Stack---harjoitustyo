@@ -29,6 +29,10 @@ const handleRemoveJobAdversement = async (blogID) => {
   const response = await axios.delete(`${baseUrl}/${blogID}`, getConfig())
   return response.data
 }
+const handleUpdatedJob = async (data) => {
+  const response = await axios.post(`${baseUrl}/${data.jobID}`, data.jobProviderID, getConfig())
+  return response.data
+}
 
 export default {
   getAll,
@@ -36,5 +40,6 @@ export default {
   setToken,
   destroyToken,
   pushCandidate,
-  handleRemoveJobAdversement
+  handleRemoveJobAdversement,
+  handleUpdatedJob
 }

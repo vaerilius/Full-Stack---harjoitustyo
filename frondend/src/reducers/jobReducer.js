@@ -13,6 +13,10 @@ const reducer = (state = [], action) => {
           ? action.updatedJob : job)
     case 'REMOVE_JOB':
       return [...state].filter(job => job.id !== action.jobID)
+    case 'UPDATE_JOB':
+      return [...state]
+        .map(job => job.id === action.updatedJob.id
+          ? action.updatedJob : job)
     default:
       return state
   }
@@ -105,6 +109,16 @@ export const removeJobAdversement = (jobID) => {
         message: 'Job has been removed already'
       }))
     }
+  }
+}
+export const onUpdateJob = (data) => {
+  return async dispatch => {
+    const updatedJob = await jobService.handleUpdatedJob(data)
+
+    dispatch({
+      type: 'UPDATE_JOB',
+      updatedJob
+    })
   }
 }
 

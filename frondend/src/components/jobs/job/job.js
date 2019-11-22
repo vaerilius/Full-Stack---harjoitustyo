@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { addCandidate, removeJobAdversement } from '../../../reducers/jobReducer'
+import { addCandidate, removeJobAdversement, onUpdateJob } from '../../../reducers/jobReducer'
 import { Link } from 'react-router-dom'
 import { useField } from '../../../hooks/formHook'
 
@@ -24,7 +24,6 @@ const Job = (props) => {
       setGridClass('col-md-12')
     } else {
       setGridClass('col-sm-12 col-md-6')
-
     }
   }, [manage])
 
@@ -35,6 +34,18 @@ const Job = (props) => {
     )
   }
 
+  const updateJob = (e) => {
+    e.preventDefault()
+    // console.log('title', title.value)
+    // console.log('desc', description.value)
+    props.onUpdateJob(
+      {
+        title: title.value,
+        description: description.value,
+        jobID: props.job.id,
+        jobProviderID: props.job.jobProvider.id
+      })
+  }
 
 
   const ids = props.job.candidates.map(k => k.id)
@@ -143,7 +154,7 @@ const Job = (props) => {
                 Manage job advertisement
               </div>
               <div className="card-body">
-                <form>
+                <form onSubmit={updateJob}>
                   <div className="form-group">
                     <label htmlFor="exampleInputEmail1">New Title</label>
                     <input {...title} className="form-control" id="title" placeholder="Enter new title" />
@@ -160,11 +171,8 @@ const Job = (props) => {
           </div>
           : null
         }
-
-
       </div>
     </div>
-
 
   )
 }
@@ -175,12 +183,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-
-
 export default connect(
   mapStateToProps,
   {
     addCandidate,
-    removeJobAdversement
+    removeJobAdversement,
+    onUpdateJob
   }
 )(Job)
