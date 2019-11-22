@@ -39,6 +39,7 @@
 | 14.11 | 4 | Frondend update: reducers, services, components..|
 | 16.11 | 2 | Frondend update: reducers, services, components..|
 | 20.11 | 4 | implement aws s3 storage for application images(provider, candidate, job)|
+| 22.11 | 2 | Manage job, frond & back|
 
 
 
