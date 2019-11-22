@@ -30,7 +30,7 @@ const handleRemoveJobAdversement = async (blogID) => {
   return response.data
 }
 const handleUpdatedJob = async (data) => {
-  const response = await axios.post(`${baseUrl}/${data.jobID}`, data.jobProviderID, getConfig())
+  const response = await axios.put(`${baseUrl}/${data.jobID}`, data, getConfig())
   return response.data
 }
 

@@ -60,7 +60,7 @@ jobsRouter.post('/', upload.single('jobImg'), async (request, response, next) =>
       picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`
     })
     imageName = ''
-  
+
     const token = tokenExtractor(request)
     const decodedToken = jwt.verify(token, config.SECRET)
     if (!token || !decodedToken) {
@@ -87,6 +87,41 @@ jobsRouter.post('/', upload.single('jobImg'), async (request, response, next) =>
   }
 })
 
+jobsRouter.put('/:id', async (request, response, next) => {
+  const token = tokenExtractor(request)
+  const decodedToken = jwt.verify(token, config.SECRET)
+  if (!token || !decodedToken) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const user = await Provider.findById(decodedToken.id)
+  if (!user) {
+    response.status(401).json({ error: 'Only job provider can add job advertisement' })
+  }
+  const job = await Job.findById(request.params.id)
+  job.title = request.body.title
+  job.description = request.body.description
+  // const newJob = {
+  //   ...job,
+  //   title: request.body.title,
+  //   description: request.body.description
+  // }
+  const updatedJob = await Job.findByIdAndUpdate(
+    request.params.id,
+    job,
+    { new: true })
+    .populate('candidates', { username: 1, name: 1, picture: 1 })
+
+
+  // const userJob = user.jobsProvided.find(job => job.id === request.params.id)
+  // userJob.title = job.title
+  // userJob.description = job.description
+
+  // await user.save()
+
+
+  response.json(updatedJob)
+})
+
 jobsRouter.delete('/:id', async (request, response, next) => {
 
   try {
@@ -110,7 +145,7 @@ jobsRouter.delete('/:id', async (request, response, next) => {
 
     await user.save()
     await Job.deleteOne({ _id: request.params.id })
- 
+
     response.status(204).json({
       message: 'job removed'
     })
@@ -131,7 +166,7 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
     const candidate = job.candidates
       .find(k => k === user.id)
 
-      
+
     console.log(candidate)
     if (candidate) {
 

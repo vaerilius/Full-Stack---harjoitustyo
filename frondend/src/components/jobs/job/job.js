@@ -42,9 +42,11 @@ const Job = (props) => {
       {
         title: title.value,
         description: description.value,
-        jobID: props.job.id,
-        jobProviderID: props.job.jobProvider.id
+        jobID: props.job.id
       })
+
+    resetDescription()
+    resetTitle()
   }
 
 
