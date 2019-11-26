@@ -64,6 +64,11 @@ const Job = (props) => {
   return (
 
     <div className="container">
+      <Link to={'/jobs/'}>
+        <button type="button"
+          className="btn btn-primary btn-md btn-block">
+          Back to jobs</button>
+      </Link>
       <div className="row">
         <div className={gridClass}>
           <div className="card m-5 card-hover" style={{ maxWidth: '420px' }}>
@@ -75,11 +80,17 @@ const Job = (props) => {
               className=" card-img-top"
               alt="..."
               src={props.job.picture} />
-            <div className="card-body">
-              <p className="card-text">{props.job.description}</p>
-            </div>
-            <div className="list-group list-group-flush">
+            <div className="card-footer text-muted text-center">
+              Description
+              </div>
+              <div className="card-body">
+              <p className="card-text te">{props.job.description}</p>
 
+              </div>
+
+
+            <div className="list-group list-group-flush">
+              <div className="card-footer text-muted text-center">Candidates</div>
               {props.job.candidates
                 .map(c =>
                   <div key={c.id} className="list-group-item list-group-item-action">
@@ -94,6 +105,7 @@ const Job = (props) => {
                 )}
             </div>
             <div className="card-body">
+
               {!props.user.jobProvider
                 ?
                 <button
@@ -129,6 +141,7 @@ const Job = (props) => {
               }
 
             </div>
+
             <div className="card-footer text-muted">
 
               Created at: {createdAt}
@@ -137,11 +150,7 @@ const Job = (props) => {
               last update: {lastchange}
             </div>
 
-            <Link to={'/jobs/'}>
-              <button type="button"
-                className="btn btn-primary btn-md btn-block">
-                Back to jobs</button>
-            </Link>
+
 
 
           </div>
