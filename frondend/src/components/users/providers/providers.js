@@ -6,6 +6,11 @@ const Providers = (props) => {
 
   return (
     <div className="container">
+      <div className="card shadow mb-4">
+        <div className="card-body text-center">
+          <h2 className="display-5 font-weight-bold">Providers</h2>
+        </div>
+      </div>
       <div className="list-group">
         {props.providers.map(p =>
           <div className="list-group mb-2" key={p.id}>

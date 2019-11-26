@@ -15,6 +15,11 @@ const Jobs = (props) => {
 
   return (
     <div className="container">
+      <div className="card shadow mb-5">
+        <div className="card-body text-center">
+          <h2 className="display-5 font-weight-bold">Jobs</h2>
+        </div>
+      </div>
       {props.user.jobProvider
         ? <Togglable
           buttonLabel='Create new job advertisement'

@@ -3,9 +3,28 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const Candidates = (props) => {
+  if (!props.candidates) {
+    return (
+      <div className="container">
+        <div className="text-center">
+          <div
+            style={{ width: '4rem', height: '4rem' }}
+            className="spinner-grow bg-transparent"
+            role="status">
+            <h2 className=" text-white">Loading...</h2>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="container">
+      <div className="card shadow mb-4">
+        <div className="card-body text-center">
+          <h2 className="display-5 font-weight-bold">Candidates</h2>
+        </div>
+      </div>
       <div className="list-group">
         {props.candidates.map(c =>
           <div className="list-group mb-2" key={c.id}>
@@ -24,6 +43,7 @@ const Candidates = (props) => {
         )
         }
       </div>
+
     </div>
   )
 }

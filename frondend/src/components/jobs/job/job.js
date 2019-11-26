@@ -66,15 +66,14 @@ const Job = (props) => {
     <div className="container">
       <div className="row">
         <div className={gridClass}>
-          <div className="card m-5 card-hover">
+          <div className="card m-5 card-hover" style={{ maxWidth: '420px' }}>
             <div className="card-header">
               Job advertisement:
               <h5 className="card-title">{props.job.title}</h5>
             </div>
             <img
-              className="rounded mx-auto d-block my-5"
+              className=" card-img-top"
               alt="..."
-              style={{ maxHeight: '18rem', maxWidth: '500px' }}
               src={props.job.picture} />
             <div className="card-body">
               <p className="card-text">{props.job.description}</p>
@@ -109,7 +108,7 @@ const Job = (props) => {
                 ?
                 <button
                   type="button"
-                  className='btn btn-danger btn-md btn-block'
+                  className='btn btn-success btn-md btn-block'
                   onClick={() => setManage(!manage)}
                 >Manage</button>
                 : null

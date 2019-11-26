@@ -25,18 +25,18 @@ const Provider = (props) => {
 
         </div>
         <div className="col-md-12">
-        <h5 className="card-title text-center">The candidate is interested in following jobs</h5>
+          <h5 className="card-title text-center">Jobs provided</h5>
           {props.provider.jobsProvided.length > 0
             ?
             <ul className="list-group list-group-flush">
-            {props.provider.jobsProvided.map(jobAd =>
-              <li key={jobAd.id} className="list-group-item text-center">
-                <Link to={`/jobs/${jobAd.id}`} >
-                  {jobAd.title}
-                </Link>
-              </li>
-            )}
-          </ul>
+              {props.provider.jobsProvided.map(jobAd =>
+                <li key={jobAd.id} className="list-group-item text-center">
+                  <Link to={`/jobs/${jobAd.id}`} >
+                    {jobAd.title}
+                  </Link>
+                </li>
+              )}
+            </ul>
             : <p className="text-center">The job provider has no open jobs to available</p>
           }
         </div>
@@ -46,7 +46,7 @@ const Provider = (props) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-const provider = state.providers.find(p => p.id === ownProps.provider.id)
+  const provider = state.providers.find(p => p.id === ownProps.provider.id)
 
   return {
     provider: provider
