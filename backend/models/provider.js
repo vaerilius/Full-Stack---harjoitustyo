@@ -20,14 +20,9 @@ const providerSchema = mongoose.Schema({
     minlength: 4
   },
   jobProvider: Boolean,
-  phone: {
-    type: String,
-    minlength: 6
-  },
-  email: {
-    type: String,
-    minlength: 6
-  },
+  phone: String,
+  email: String,
+  content: String,
   jobsProvided: [
     {
       type: mongoose.Schema.Types.ObjectId,

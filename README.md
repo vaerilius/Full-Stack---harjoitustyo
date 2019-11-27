@@ -41,6 +41,7 @@
 | 20.11 | 4 | implement aws s3 storage for application images(provider, candidate, job)|
 | 22.11 | 2 | Manage job, frond & back|
 | 26.11 | 3 | Frondend work, navbar|
+| 27.11 | 3 | Frondend manage provider (frondend and backend)|
 
 
 
