@@ -5,8 +5,11 @@ const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_PROVIDERS':
       return [...action.providers]
-    case 'SIGNUP_CANDIDATE':
+    case 'SIGNUP_PROVIDER':
       return [...state, action.createdProvider]
+    case 'UPDATE_PROVIDER':
+      return [...state]
+      .map(p => p.id === action.updatedProvider.id ? action.updatedProvider : p)
     default:
       return [...state]
   }
@@ -26,7 +29,7 @@ export const onSignUpProvider = (data) => {
     try {
       const createdProvider = await providerservice.signUpProvider(data)
       dispatch({
-        type: 'SIGNUP_CANDIDATE',
+        type: 'SIGNUP_PROVIDER',
         createdProvider
       })
       dispatch(setNotification(
@@ -44,6 +47,23 @@ export const onSignUpProvider = (data) => {
       ))
     }
   }
+}
+
+export const updateProfile = (data) => {
+  return async dispatch => {
+    // console.log(data)
+    try {
+      const updatedProvider = await providerservice.updateProviderProfile(data)
+      console.log(updatedProvider)
+
+      dispatch({
+        type: 'UPDATE_PROVIDER',
+        updatedProvider
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  } 
 }
 
 export default reducer

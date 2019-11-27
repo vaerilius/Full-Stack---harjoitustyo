@@ -46,7 +46,7 @@ const Provider = (props) => {
                 ? <Togglable
                   buttonLabel='Manage profile'
                   ref={manageProfileRef}>
-                  <ManageProfile manageProfileRef={manageProfileRef} />
+                  <ManageProfile manageProfileRef={manageProfileRef} id={props.user.id} />
                 </Togglable>
                 : null
               }

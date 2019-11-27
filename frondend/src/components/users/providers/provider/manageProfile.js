@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../../../../hooks/formHook'
-
-
+import { updateProfile } from '../../../../reducers/providersReducer'
 
 
 const ManageProfile = (props) => {
@@ -16,9 +15,10 @@ const ManageProfile = (props) => {
     const data = {
       phone: phone.value,
       email: email.value,
+      id: props.id
     }
     console.log(data)
-
+    props.updateProfile(data)
     props.manageProfileRef.current.toggleVisibility()
     resetPhone()
     resetEmail()
@@ -41,17 +41,9 @@ const ManageProfile = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    jobs: state.jobs
-  }
-}
-
-
-
 export default connect(
-  mapStateToProps,
+  null,
   {
-
+    updateProfile
   }
 )(ManageProfile)
