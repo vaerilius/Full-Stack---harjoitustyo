@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Togglable from '../../../togglable'
-import ManageProfile from './manageProfile'
+import ManageProfile from '../../manageProfile'
 
 
 const Provider = (props) => {
@@ -16,11 +16,9 @@ const Provider = (props) => {
 
   return (
     <div className="container">
-      <div className="card my-auto mx-auto" style={{ maxWidth: '420px' }}>
+      <div className="card my-auto mx-auto" style={{ maxWidth: '320px' }}>
         <div className="row no-gutters">
-          <div className="col-md-4">
-            <img src={props.provider.picture} className="card-img" alt="..." />
-          </div>
+          <img src={props.provider.picture} className="card-img-top" alt="..." />
           <div className="col-md-12">
             <div className="card-body">
               <h5 className="card-title">{props.provider.name}</h5>
@@ -42,7 +40,7 @@ const Provider = (props) => {
                 </tbody>
 
               </table>
-              {props.user.jobProvider
+              {props.user.id === props.provider.id
                 ? <Togglable
                   buttonLabel='Manage profile'
                   ref={manageProfileRef}>

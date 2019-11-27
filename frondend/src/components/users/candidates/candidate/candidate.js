@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Togglable from '../../../togglable'
+import ManageProfile from '../../manageProfile'
 
 const Candidate = (props) => {
   if (!props.candidate) {
@@ -8,20 +10,44 @@ const Candidate = (props) => {
       <h2>loading</h2>
     )
   }
+  const manageProfileRef = React.createRef()
 
   return (
     <div className="card my-auto mx-auto" style={{ maxWidth: '540px' }}>
       <div className="row no-gutters">
-        <div className="col-md-4">
+        <div className="col-md-12">
           <img src={props.candidate.picture} className="card-img" alt="..." />
         </div>
-        <div className="col-md-8">
+        <div className="col-md-12">
           <div className="card-body">
             <h5 className="card-title">{props.candidate.name}</h5>
-            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p className="card-text">{props.candidate.description}</p>
+            <table className="table table-responsive-md-12">
+              <thead>
+                <tr>
+                  <th scope="col">Phone</th>
+                  <th scope="col">email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{props.candidate.phone ? props.candidate.phone : 'Not set'}</td>
+                  <td>{props.candidate.email ? props.candidate.email : 'Not set'}</td>
+                </tr>
+              </tbody>
+
+            </table>
             <p className="card-text">
               <small className="text-muted"> Joined: {props.candidate.createdAt.split('T')[0]}</small></p>
           </div>
+          {props.user.id === props.candidate.id
+            ? <Togglable
+              buttonLabel='Manage profile'
+              ref={manageProfileRef}>
+              <ManageProfile manageProfileRef={manageProfileRef} id={props.user.id} />
+            </Togglable>
+            : null
+          }
 
         </div>
         <div className="col-md-12">
@@ -47,10 +73,11 @@ const Candidate = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
   const candidate = state.candidates.find(c => c.id === ownProps.candidate.id)
-  console.log(candidate)
+  // console.log(candidate)
 
   return {
-    candidate: candidate
+    candidate: candidate,
+    user: state.user
   }
 }
 export default connect(mapStateToProps)(Candidate)

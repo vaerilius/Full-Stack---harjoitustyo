@@ -1,6 +1,7 @@
 import userService from '../services/userService'
 import jobService from '../services/jobService'
 import providerService from '../services/providerService'
+import candidateService from '../services/candidateService'
 import { setNotification } from './notificationReducer'
 
 const reducer = (state = null, action) => {
@@ -22,6 +23,7 @@ export const initializeUser = () => {
     if (loggedUser) {
       jobService.setToken(loggedUser.token)
       providerService.setToken(loggedUser.token)
+      candidateService.setToken(loggedUser.token)
       dispatch({
         type: 'INIT_USER',
         loggedUser
@@ -38,6 +40,8 @@ export const login = (loginData) => {
       window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
       jobService.setToken(loggedUser.token)
       providerService.setToken(loggedUser.token)
+      candidateService.setToken(loggedUser.token)
+
 
       dispatch({
         type: 'LOGIN_USER',
@@ -66,6 +70,7 @@ export const logout = () => {
     window.localStorage.removeItem('loggedUser')
     jobService.destroyToken()
     providerService.destroyToken()
+    candidateService.destroyToken()
     dispatch({ type: 'LOGOUT_USER' })
     dispatch(setNotification(
       {

@@ -22,7 +22,7 @@ const providerSchema = mongoose.Schema({
   jobProvider: Boolean,
   phone: String,
   email: String,
-  content: String,
+  description: String,
   jobsProvided: [
     {
       type: mongoose.Schema.Types.ObjectId,

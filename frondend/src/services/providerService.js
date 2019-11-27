@@ -16,7 +16,7 @@ const getConfig = () => ({
 
 
 const signUpProvider = async (newUser) => {
-  const response = await axios.post(`${baseUrl}/provider`, newUser)
+  const response = await axios.post(`${baseUrl}/providers`, newUser)
   return response.data
 }
 const getAllProviders = async () => {

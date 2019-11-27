@@ -9,7 +9,7 @@ const reducer = (state = [], action) => {
       return [...state, action.createdProvider]
     case 'UPDATE_PROVIDER':
       return [...state]
-      .map(p => p.id === action.updatedProvider.id ? action.updatedProvider : p)
+        .map(p => p.id === action.updatedProvider.id ? action.updatedProvider : p)
     default:
       return [...state]
   }
@@ -49,7 +49,7 @@ export const onSignUpProvider = (data) => {
   }
 }
 
-export const updateProfile = (data) => {
+export const updateProvider = (data) => {
   return async dispatch => {
     try {
       const updatedProvider = await providerservice.updateProviderProfile(data)
@@ -62,7 +62,7 @@ export const updateProfile = (data) => {
     } catch (error) {
       console.log(error.message)
     }
-  } 
+  }
 }
 
 export default reducer

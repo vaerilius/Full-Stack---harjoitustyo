@@ -57,13 +57,32 @@ usersRouter.put('/providers/:id', async (req, res, next) => {
     const token = tokenExtractor(req)
     const decodedToken = jwt.verify(token, config.SECRET)
     const user = await Provider.findById(decodedToken.id)
-    
+
     user.phone = req.body.phone
     user.email = req.body.email
+    user.description = req.body.description
 
     const updatedUser = await Provider.findByIdAndUpdate(req.params.id, user, { new: true })
       .populate('jobsProvided', { title: 1, description: 1, company: 1 })
-      
+
+    res.json(updatedUser.toJSON())
+  } catch (error) {
+    next(error)
+  }
+})
+usersRouter.put('/candidates/:id', async (req, res, next) => {
+  try {
+    const token = tokenExtractor(req)
+    const decodedToken = jwt.verify(token, config.SECRET)
+    const user = await Candidate.findById(decodedToken.id)
+    user.phone = req.body.phone
+    user.email = req.body.email
+    user.description = req.body.description
+
+    const updatedUser = await Candidate.findByIdAndUpdate(req.params.id, user, { new: true })
+      .populate('interestingJobs',
+        { title: 1, description: 1, company: 1 })
+
     res.json(updatedUser.toJSON())
   } catch (error) {
     next(error)
@@ -96,7 +115,7 @@ usersRouter.get('/candidates/:id', async (req, res, next) => {
 
 
 
-usersRouter.post('/provider', upload.single('profileImg'), async (request, response, next) => {
+usersRouter.post('/providers', upload.single('profileImg'), async (request, response, next) => {
 
   try {
     const body = request.body
@@ -111,7 +130,8 @@ usersRouter.post('/provider', upload.single('profileImg'), async (request, respo
       picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
       jobProvider: body.checkbox,
       phone: null,
-      email: null
+      email: null,
+      content: null
     })
     imageName = ''
 
@@ -122,7 +142,7 @@ usersRouter.post('/provider', upload.single('profileImg'), async (request, respo
     next(exception)
   }
 })
-usersRouter.post('/candidate', upload.single('profileImg'), async (request, response, next) => {
+usersRouter.post('/candidates', upload.single('profileImg'), async (request, response, next) => {
   try {
     const body = request.body
 
@@ -139,7 +159,8 @@ usersRouter.post('/candidate', upload.single('profileImg'), async (request, resp
         picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
         jobProvider: body.checkbox,
         phone: null,
-        email: null
+        email: null,
+        status: null
 
       })
     }

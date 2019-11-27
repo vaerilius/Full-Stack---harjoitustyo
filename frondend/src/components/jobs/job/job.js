@@ -77,16 +77,16 @@ const Job = (props) => {
               <h5 className="card-title">{props.job.title}</h5>
             </div>
             <img
-              className=" card-img-top"
+              className="card-img-top"
               alt="..."
               src={props.job.picture} />
             <div className="card-footer text-muted text-center">
               Description
-              </div>
-              <div className="card-body">
+            </div>
+            <div className="card-body">
               <p className="card-text te">{props.job.description}</p>
 
-              </div>
+            </div>
 
 
             <div className="list-group list-group-flush">

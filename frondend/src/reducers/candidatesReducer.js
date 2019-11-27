@@ -1,12 +1,16 @@
 import candidateService from '../services/candidateService'
 import { setNotification } from './notificationReducer'
 
+
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_CANDIDATES':
       return [...action.candidates]
     case 'SIGNUP_CANDIDATE':
       return [...state, action.createdCandidate]
+    case 'UPDATE_CANDIDATE':
+      return [...state]
+        .map(p => p.id === action.updatedCandidate.id ? action.updatedCandidate : p)
     default:
       return [...state]
   }
@@ -42,6 +46,21 @@ export const signUpCandidate = (data) => {
           message: 'ValidationError'
         }
       ))
+    }
+  }
+}
+export const updateCandidate = (data) => {
+  return async dispatch => {
+    try {
+      const updatedCandidate = await candidateService.updateCandidateProfile(data)
+      console.log(updatedCandidate)
+
+      dispatch({
+        type: 'UPDATE_CANDIDATE',
+        updatedCandidate
+      })
+    } catch (error) {
+      console.log(error.message)
     }
   }
 }

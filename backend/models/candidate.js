@@ -20,15 +20,9 @@ const candidateSchema = mongoose.Schema({
     minlength: 4
   },
   jobProvider: Boolean,
-  status: String,
-  phone: {
-    type: String,
-    minlength: 6
-  },
-  email: {
-    type: String,
-    minlength: 6
-  },
+  description: String,
+  phone: String,
+  email: String,
   interestingJobs: [
     {
       type: mongoose.Schema.Types.ObjectId,
