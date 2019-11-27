@@ -44,7 +44,7 @@ const Navbar = (props) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={userUrl}>
+            <Link to='/providers'>
               <div className="nav-link">Providers</div>
             </Link>
           </li>
