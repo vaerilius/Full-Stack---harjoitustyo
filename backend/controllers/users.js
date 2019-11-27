@@ -1,9 +1,13 @@
+const config = require('../utils/config')
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const AWS = require('../utils/aws-config')
 const uuidv4 = require('uuid/v4')
+const jwt = require('jsonwebtoken')
+const { tokenExtractor } = require('../utils/middleware')
+
 
 const Provider = require('../models/provider')
 const Candidate = require('../models/candidate')
@@ -47,6 +51,25 @@ usersRouter.get('/providers/:id', async (req, res, next) => {
     next(error)
   }
 })
+
+usersRouter.put('/providers/:id', async (req, res, next) => {
+  try {
+    const token = tokenExtractor(req)
+    const decodedToken = jwt.verify(token, config.SECRET)
+    const user = await Provider.findById(decodedToken.id)
+    
+    user.phone = req.body.phone
+    user.email = req.body.email
+
+    const updatedUser = await Provider.findByIdAndUpdate(req.params.id, user, { new: true })
+      .populate('jobsProvided', { title: 1, description: 1, company: 1 })
+      
+    res.json(updatedUser.toJSON())
+  } catch (error) {
+    next(error)
+  }
+})
+
 usersRouter.get('/candidates', async (request, response) => {
   const users = await Candidate
     .find({})
@@ -99,7 +122,7 @@ usersRouter.post('/provider', upload.single('profileImg'), async (request, respo
     next(exception)
   }
 })
-usersRouter.post('/candidate',upload.single('profileImg'), async (request, response, next) => {
+usersRouter.post('/candidate', upload.single('profileImg'), async (request, response, next) => {
   try {
     const body = request.body
 
@@ -113,7 +136,7 @@ usersRouter.post('/candidate',upload.single('profileImg'), async (request, respo
         username: body.username,
         name: body.name,
         passwordHash,
-        picture:`${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
+        picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
         jobProvider: body.checkbox,
         phone: null,
         email: null

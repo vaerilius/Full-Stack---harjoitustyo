@@ -51,10 +51,9 @@ export const onSignUpProvider = (data) => {
 
 export const updateProfile = (data) => {
   return async dispatch => {
-    // console.log(data)
     try {
       const updatedProvider = await providerservice.updateProviderProfile(data)
-      console.log(updatedProvider)
+      // console.log(updatedProvider)
 
       dispatch({
         type: 'UPDATE_PROVIDER',
