@@ -100,15 +100,18 @@ jobsRouter.put('/:id', async (request, response, next) => {
   const job = await Job.findById(request.params.id)
   job.title = request.body.title
   job.description = request.body.description
+  job.company = request.body.company
   // const newJob = {
   //   ...job,
   //   title: request.body.title,
-  //   description: request.body.description
+  //   description: request.body.description,
+  //   company: request.body.company
   // }
   const updatedJob = await Job.findByIdAndUpdate(
     request.params.id,
     job,
     { new: true })
+    .populate('jobProvider', { username: 1, name: 1, picture: 1 })
     .populate('candidates', { username: 1, name: 1, picture: 1 })
 
 

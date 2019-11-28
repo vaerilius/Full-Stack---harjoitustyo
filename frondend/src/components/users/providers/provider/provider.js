@@ -22,8 +22,7 @@ const Provider = (props) => {
           <div className="col-md-12">
             <div className="card-body">
               <h5 className="card-title">{props.provider.name}</h5>
-              <p className="card-text">This is a wider card with supporting
-                  text below as a natural lead-in to additional content. </p>
+              <p className="card-text">{props.provider.description} </p>
 
               <table className="table table-responsive-md-12">
                 <thead>
