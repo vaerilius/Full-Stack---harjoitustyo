@@ -42,7 +42,7 @@
 | 22.11 | 2 | Manage job, frond & back|
 | 26.11 | 3 | Frondend work, navbar|
 | 27.11 | 4 | Frondend manage provider (frondend and backend)|
-| 28.11 | 2 | Frondend manage job (update)|
+| 28.11 | 2 | Frondend manage job (update),update notifications |
 | | | |
 | yht. | 82 | tuntia|
 
