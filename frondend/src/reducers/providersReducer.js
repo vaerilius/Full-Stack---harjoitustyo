@@ -59,8 +59,19 @@ export const updateProvider = (data) => {
         type: 'UPDATE_PROVIDER',
         updatedProvider
       })
+      dispatch(setNotification(
+        {
+          class: 'alert alert-success',
+          message: `user: ${updatedProvider.username} updated successfully`
+        }
+      ))
     } catch (error) {
-      console.log(error.message)
+      dispatch(setNotification(
+        {
+          class: 'alert alert-danger',
+          message: 'ValidationError'
+        }
+      ))
     }
   }
 }

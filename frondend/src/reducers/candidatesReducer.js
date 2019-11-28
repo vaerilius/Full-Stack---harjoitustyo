@@ -54,13 +54,22 @@ export const updateCandidate = (data) => {
     try {
       const updatedCandidate = await candidateService.updateCandidateProfile(data)
       console.log(updatedCandidate)
+      dispatch(setNotification({
+        class: 'alert alert-success',
+        message: `Candidate ${updatedCandidate.name} updated successfully`
+      }))
 
       dispatch({
         type: 'UPDATE_CANDIDATE',
         updatedCandidate
       })
     } catch (error) {
-      console.log(error.message)
+      dispatch(setNotification(
+        {
+          class: 'alert alert-danger',
+          message: 'Something went wrong'
+        }
+      ))
     }
   }
 }

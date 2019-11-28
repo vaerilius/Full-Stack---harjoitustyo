@@ -112,13 +112,26 @@ export const removeJobAdversement = (jobID) => {
   }
 }
 export const onUpdateJob = (data) => {
-  return async dispatch => {
-    const updatedJob = await jobService.handleUpdatedJob(data)
 
-    dispatch({
-      type: 'UPDATE_JOB',
-      updatedJob
-    })
+  return async dispatch => {
+    try {
+      const updatedJob = await jobService.handleUpdatedJob(data)
+
+      dispatch({
+        type: 'UPDATE_JOB',
+        updatedJob
+      })
+      dispatch(setNotification({
+        class: 'alert alert-success',
+        message: 'Job has been updated succefully'
+      }))
+    } catch (error) {
+      dispatch(setNotification({
+        class: 'alert alert-danger',
+        message: 'Something went wrong'
+      }))
+    }
+
   }
 }
 

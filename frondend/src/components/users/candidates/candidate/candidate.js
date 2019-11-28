@@ -37,8 +37,9 @@ const Candidate = (props) => {
               </tbody>
 
             </table>
-            <p className="card-text">
-              <small className="text-muted"> Joined: {props.candidate.createdAt.split('T')[0]}</small></p>
+            <div className="card-footer text-muted text-center">
+              Joined: {props.candidate.createdAt.split('T')[0]}
+            </div>
           </div>
           {props.user.id === props.candidate.id
             ? <Togglable
