@@ -29,13 +29,19 @@ const upload = multer({
   })
 })
 
-usersRouter.get('/providers', async (request, response) => {
-  const providers = await Provider.find({})
+usersRouter.get('/providers', async (request, response, next) => {
 
-    .populate('jobsProvided', { title: 1, description: 1, company: 1 })
-  // .populate('candidates', { username: 1, name: 1, picture: 1, })
-  // ei toimi, korjaa tämä
-  response.json(providers.map(p => p.toJSON()))
+  try {
+    const providers = await Provider.find({})
+
+      .populate('jobsProvided', { title: 1, description: 1, company: 1 })
+    // .populate('candidates', { username: 1, name: 1, picture: 1, })
+    // ei toimi, korjaa tämä
+    response.json(providers.map(p => p.toJSON()))
+  } catch (error) {
+    next(error)
+  }
+
 })
 usersRouter.get('/providers/:id', async (req, res, next) => {
   try {
@@ -89,13 +95,19 @@ usersRouter.put('/candidates/:id', async (req, res, next) => {
   }
 })
 
-usersRouter.get('/candidates', async (request, response) => {
-  const users = await Candidate
-    .find({})
-    .populate('interestingJobs',
-      { title: 1, description: 1, company: 1 })
+usersRouter.get('/candidates', async (request, response, next) => {
 
-  response.json(users.map(u => u.toJSON()))
+  try {
+    const users = await Candidate
+      .find({})
+      .populate('interestingJobs',
+        { title: 1, description: 1, company: 1 })
+
+    response.json(users.map(u => u.toJSON()))
+  } catch (error) {
+    next(error)
+  }
+
 })
 usersRouter.get('/candidates/:id', async (req, res, next) => {
   try {
