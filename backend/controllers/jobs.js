@@ -93,34 +93,32 @@ jobsRouter.put('/:id', async (request, response, next) => {
   if (!token || !decodedToken) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-  const user = await Provider.findById(decodedToken.id)
-  if (!user) {
-    response.status(401).json({ error: 'Only job provider can add job advertisement' })
-  }
+
   const job = await Job.findById(request.params.id)
-  job.title = request.body.title
-  job.description = request.body.description
-  job.company = request.body.company
-  // const newJob = {
-  //   ...job,
-  //   title: request.body.title,
-  //   description: request.body.description,
-  //   company: request.body.company
-  // }
+
+  const newJob = {
+    ...job.toJSON(),
+    title: request.body.title,
+    description: request.body.description,
+    company: request.body.company
+  }
   const updatedJob = await Job.findByIdAndUpdate(
     request.params.id,
-    job,
+    newJob,
     { new: true })
     .populate('jobProvider', { username: 1, name: 1, picture: 1 })
     .populate('candidates', { username: 1, name: 1, picture: 1 })
 
+  const updatedUser = await Provider.findByIdAndUpdate(decodedToken.id,
+    {
+      company: request.body.company,
+      description: request.body.description,
+      title: request.body.title
+    }, { new: true }
+  ).populate('jobsProvided', { title: 1, company: 1, description: 1 })
 
-  // const userJob = user.jobsProvided.find(job => job.id === request.params.id)
-  // userJob.title = job.title
-  // userJob.description = job.description
-
-  // await user.save()
-
+  console.log(updatedUser)
+  // await updatedUser.save()
 
   response.json(updatedJob)
 })
