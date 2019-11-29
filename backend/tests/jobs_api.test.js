@@ -22,16 +22,17 @@ describe('initialize database', () => {
 
     }
   })
-  // test('jobs are returned as json', async () => {
-  //   await api
-  //     .get('/api/jobs')
-  //     .expect(200)
-  //     .expect('Content-Type', /application\/json/)
-  // })
-  // test('jobs array length is currect', async () => {
-  //   const response = await api.get('/api/jobs')
-  //   expect(response.body.length).toBe(helper.initialJobs.length)
-  // })
+  test('jobs are returned as json', async () => {
+    await api
+      .get('/api/jobs')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+  test('jobs array length is currect', async () => {
+    const response =  await helper.jobsInDb()
+    console.log(response)
+    expect(response.length).toBe(helper.initialJobs.length)
+  })
 
   // describe('when addition job', () => {
   //   test('when create new job, the job should be on list ', async () => {

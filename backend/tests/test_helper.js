@@ -4,41 +4,20 @@ const Candidate = require('../models/candidate')
 
 const initialJobs = [
   {
-    candidates: [
-      {
-        id: '3',
-        username: 'candidate',
-        name: 'candidate',
-        picture: 'candidate picture url',
-      }
-    ],
+    id: '1',
     title: 'Fullstack Developer',
     description: 'React, NodeJS, Mongodb, AWS, Jest',
     company: 'Company Oy',
-    jobProvider: {
-      username: 'provider',
-      name: 'provider',
-      picture: 'providers picture url',
-      id: '1'
-    },
-    createdAt: '2019-11-26T08:55:27.075Z',
-    updatedAt: '2019-11-29T07:22:58.206Z',
-    id: '1'
+    picture: 'job picture url',
+ 
   },
   {
-    candidates: [],
+    id: '2',
     title: 'backend Developer',
     description: 'GraphQL',
     company: 'Houston Oy',
-    jobProvider: {
-      username: 'houston',
-      name: 'houston',
-      picture: 'provider picture url',
-      id: '2'
-    },
-    createdAt: '2019-11-26T08:55:27.075Z',
-    updatedAt: '2019-11-29T07:22:58.206Z',
-    id: '2'
+    picture: 'job picture url',
+  
   }
 ]
 const initialProviders = [
