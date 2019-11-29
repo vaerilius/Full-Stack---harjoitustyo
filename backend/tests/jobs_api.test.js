@@ -3,6 +3,7 @@ const supertest = require('supertest')
 const helper = require('./test_helper')
 const app = require('../app')
 const Job = require('../models/job')
+const Provider = require('../models/provider')
 
 const api = supertest(app)
 
@@ -10,11 +11,18 @@ describe('initialize database', () => {
   beforeEach(async () => {
     try {
       await Job.deleteMany({})
+      await Provider.deleteMany({})
 
       const jobs = helper.initialJobs.map(job => new Job(job))
-      const promiseArray = jobs.map(j => j.save())
+      let promiseArray = jobs.map(j => j.save())
       await Promise.all(promiseArray)
 
+      const providers = helper.initialProviders.map(p => new Provider(p))
+      promiseArray = providers.map(u => u.save())
+      await Promise.all(promiseArray)
+
+      const response = await helper.providersInDb()
+      expect(response.length).toBe(helper.initialProviders.length)
 
 
     } catch (error) {
@@ -29,43 +37,43 @@ describe('initialize database', () => {
       .expect('Content-Type', /application\/json/)
   })
   test('jobs array length is currect', async () => {
-    const response =  await helper.jobsInDb()
-    console.log(response)
+    const response = await helper.jobsInDb()
     expect(response.length).toBe(helper.initialJobs.length)
   })
 
-  // describe('when addition job', () => {
-  //   test('when create new job, the job should be on list ', async () => {
+  describe('when addition job', () => {
+    test('when create new job, the job should be on list ', async () => {
 
-  //     const loggeduser = await api
-  //       .post('/api/login/')
-  //       .send({ username: 'testaaja', password: 'timo' })
-  //       .expect(200)
-  //       .expect('Content-Type', /application\/json/)
+      // const loggeduser = await api
+      //   .post('/api/login/')
+      //   .send({ username: 'provider', password: 'provider' })
+      //   .expect(200)
+      //   .expect('Content-Type', /application\/json/)
+      // console.log(loggeduser)
 
-  //     const job = helper.job
-  //     const token = helper.auth
-  //     token.headers.Authorization = `bearer ${loggeduser.body.token}`
-  //     // console.log(token)
+      // const job = helper.job
+      // const token = helper.auth
+      // token.headers.Authorization = `bearer ${loggeduser.body.token}`
+      // console.log(token)
 
-  //     const newJob = await api
-  //       .post('/api/jobs')
-  //       .send(job)
-  //       .set('Authorization', 'Bearer ' + loggeduser.body.token)
-  //       .expect(200)
-  //       .expect('Content-Type', /application\/json/)
+      // const newJob = await api
+      //   .post('/api/jobs')
+      //   .send(job)
+      //   .set('Authorization', 'Bearer ' + loggeduser.body.token)
+      //   .expect(200)
+      //   .expect('Content-Type', /application\/json/)
 
-  //     // console.log(newJob.body)
-  //     const jobsAtEnd = await api.get('/api/jobs')
+      // console.log(newJob.body)
+      // const jobsAtEnd = await api.get('/api/jobs')
 
-  //     expect(jobsAtEnd.body.length).toBe(helper.initialJobs.length + 1)
+      // expect(jobsAtEnd.body.length).toBe(helper.initialJobs.length + 1)
 
-  //     expect(newJob.body.title).toContain('frondend developer')
+      // expect(newJob.body.title).toContain('frondend developer')
 
-  //     const jobsTitles = jobsAtEnd.body.map(job => job.title)
-  //     expect(jobsTitles).toContain('frondend developer')
-  //   })
-  // })
+      // const jobsTitles = jobsAtEnd.body.map(job => job.title)
+      // expect(jobsTitles).toContain('frondend developer')
+    })
+  })
   // describe('when you delete a job notice', () => {
   //   test('should job notice be deleted', async () => {
   //     const loggeduser = await api
