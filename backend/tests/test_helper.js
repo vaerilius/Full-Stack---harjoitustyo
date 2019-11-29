@@ -1,83 +1,97 @@
 const Job = require('../models/job')
-const User = require('../models/user')
+const Provider = require('../models/provider')
+const Candidate = require('../models/candidate')
 
 const initialJobs = [
   {
     candidates: [
       {
-        id: '5db7d899493dc526590658e4',
-        username: 'aaaa',
-        picture: 'aaaa',
+        id: '3',
+        username: 'candidate',
+        name: 'candidate',
+        picture: 'candidate picture url',
       }
     ],
-    title: 'roskakuski 2.0',
-    description: 'apumies',
-    company: 'Lassila ja Tikanoja OY',
-    jobProvider: '5db7d899493dc526590658e4',
-    createdAt: '2019-10-30T05:48:42.433Z',
-    updatedAt: '2019-10-30T05:48:42.433Z',
-    id: '5db9243afebf0c173afb6d90'
+    title: 'Fullstack Developer',
+    description: 'React, NodeJS, Mongodb, AWS, Jest',
+    company: 'Company Oy',
+    jobProvider: {
+      username: 'provider',
+      name: 'provider',
+      picture: 'providers picture url',
+      id: '1'
+    },
+    createdAt: '2019-11-26T08:55:27.075Z',
+    updatedAt: '2019-11-29T07:22:58.206Z',
+    id: '1'
   },
   {
     candidates: [],
-    title: 'fullstack developer',
-    description: 'React, node, mongo',
-    company: 'Yhtiö',
-    jobProvider: '5db7d899493dc526590658e4',
-    createdAt: '2019-10-30T05:48:42.433Z',
-    updatedAt: '2019-10-30T05:48:42.433Z',
-    id: '5db7d8cd493dc526590658e5'
-  },
+    title: 'backend Developer',
+    description: 'GraphQL',
+    company: 'Houston Oy',
+    jobProvider: {
+      username: 'houston',
+      name: 'houston',
+      picture: 'provider picture url',
+      id: '2'
+    },
+    createdAt: '2019-11-26T08:55:27.075Z',
+    updatedAt: '2019-11-29T07:22:58.206Z',
+    id: '2'
+  }
 ]
-const initialUsers = [
+const initialProviders = [
   {
     jobsProvided: [
       {
-        title: 'roskakuski 2.0',
-        description: 'apumies',
-        id: '5db9243afebf0c173afb6d90'
-      },
-      {
-        title: 'fullstack developer',
-        description: 'React, node, mongo',
-        id: '5db7d8cd493dc526590658e5'
+        title: 'backend Developer',
+        description: 'GraphQL',
+        company: 'Houston Oy',
+        id: '2'
       }
     ],
-    interestingJobs: [],
-    username: 'timo',
-    password: 'timo',
-    name: 'timo',
-    picture: 'XXXX',
+    username: 'houston',
+    password: 'houston',
+    name: 'houston',
+    picture: 'providers picture url',
     jobProvider: true,
     createdAt: '2019-10-29T06:13:45.530Z',
     updatedAt: '2019-10-30T05:48:42.955Z',
-    id: '5db7d899493dc526590658e4'
+    id: '2'
   },
   {
-    jobsProvided: [],
-    interestingJobs: [
+    jobsProvided: [
       {
-        title: 'roskakuski 2.0',
-        id: '5db9243afebf0c173afb6d90'
+        title: 'Fullstack Developer',
+        description: 'React, NodeJS, Mongodb, AWS, Jest',
+        company: 'Company Oy',
+        id: '1'
       }
     ],
-    username: 'aaaa',
-    name: 'aaaa',
-    password: 'aaaa',
-    picture: 'aaaa',
-    jobProvider: false,
+    username: 'provider',
+    name: 'provider',
+    password: 'provider',
+    picture: 'providers picture url',
+    jobProvider: true,
     createdAt: '2019-10-29T06:13:45.530Z',
     updatedAt: '2019-10-30T05:48:42.955Z',
-    id: '5db7d899493dc526590658e4'
+    id: '1'
   },
 ]
-const user = {
-  username: 'testaaja',
-  password: 'timo',
-  name: 'timo',
-  picture: 'qqqq',
-  jobProvider: true,
-  phone: '12341234'
+const provider = new Provider({
+  username: 'provider',
+  name: 'provider',
+  password: 'provider',
+  picture: 'providers picture url',
+  jobProvider: true
+})
+const candidate = {
+  username: 'candidate',
+  name: 'candidate',
+  password: 'candidate',
+  picture: 'candidate picture url',
+  jobProvider: false
 }
 
 const job = {
@@ -97,15 +111,19 @@ const jobsInDb = async () => {
   return jobs.map(j => j.toJSON())
 }
 
-const usersInDb = async () => {
-  const users = await User.find({})
-  return users.map(u => u.toJSON())
+const providersInDb = async () => {
+  const providers = await Provider.find({})
+  return providers.map(p => p.toJSON())
 }
-const userInDb = async () => {
-  const user = await User.find({})
+const candidatesInDb = async () => {
+  const candidates = await Candidate.find({})
+  return candidates.map(p => p.toJSON())
+}
+// const userInDb = async () => {
+//   const user = await User.find({})
 
-  return user.toJSON()
-}
+//   return user.toJSON()
+// }
 
 const auth = {
   headers: { Authorization: '' }
@@ -113,11 +131,14 @@ const auth = {
 
 module.exports = {
   initialJobs,
-  initialUsers,
+  initialProviders,
+  // initialCandidates,
   jobsInDb,
-  usersInDb,
-  user,
-  userInDb,
+  providersInDb,
+  candidatesInDb,
+  provider,
+  candidate,
+  // userInDb,
   job,
   auth
 }
