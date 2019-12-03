@@ -6,9 +6,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "watch": "cross-env NODE_ENV=development nodemon index.js",
-    "test": " NODE_ENV=test jest --verbose --runInBand",
+    "test": "cross-env NODE_ENV=test jest --watch --verbose",
     "lint": "eslint .",
-    "start:test": " NODE_ENV=test node index.js"
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
   "author": "Timo Tamminen",
   "license": "ISC",

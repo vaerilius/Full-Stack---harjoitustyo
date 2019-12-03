@@ -148,7 +148,7 @@ usersRouter.post('/providers', upload.single('profileImg'), async (request, resp
     imageName = ''
 
     const savedUser = await user.save()
-    console.log(savedUser)
+    // console.log(savedUser)
     response.json(savedUser)
   } catch (exception) {
     next(exception)

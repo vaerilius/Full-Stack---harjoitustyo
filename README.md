@@ -44,6 +44,7 @@
 | 27.11 | 4 | Frondend manage provider (frondend and backend)|
 | 28.11 | 2 | Frondend manage job (update),update notifications |
 | 29.11 | 3 | Postman, backend fixing, test update |
+| 03.12 | 2,5 | Jest, Setup local mongodb & edited test.helper & jobs test |
 | | | |
 | yht. | 85 | tuntia|
 

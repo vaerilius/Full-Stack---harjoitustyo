@@ -6,6 +6,7 @@ const Job = require('../models/job')
 const Provider = require('../models/provider')
 
 const api = supertest(app)
+let provider
 
 describe('initialize database', () => {
   beforeEach(async () => {
@@ -22,139 +23,90 @@ describe('initialize database', () => {
       await Promise.all(promiseArray)
 
       const response = await helper.providersInDb()
-      expect(response.length).toBe(helper.initialProviders.length)
+      // expect(response.length).toBe(helper.initialProviders.length)
 
+      provider = helper.provider
+      const te = await api
+        .post('/api/users/providers')
+        .send(provider)
 
+      // console.log(te.body)
     } catch (error) {
       console.log(error.message)
 
     }
   })
-  test('jobs are returned as json', async () => {
-    await api
-      .get('/api/jobs')
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
+
+
+  describe('test database jobs', () => {
+    test('jobs are returned as json', async () => {
+      await api
+        .get('/api/jobs')
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+    })
+    test('jobs array length is currect', async () => {
+      const response = await helper.jobsInDb()
+      expect(response.length).toBe(helper.initialJobs.length)
+    })
+    test('jobs titles is are returned properly ', async () => {
+      const jobs = await helper.jobsInDb()
+      // console.log(jobs)
+
+      expect(jobs[1].jobProvider.toString()).toBe('5de5f549715d9615d47536e5')
+
+      const titles = jobs.map(j => j.title)
+      // console.log(titles)
+      expect(titles[0]).toBe('Fullstack Developer')
+    })
+    test('1 job candidates are empty array ', async () => {
+      const jobs = await helper.jobsInDb()
+
+      const candidates = jobs[0].candidates.map(c => c.toJSON())
+      expect(candidates.length).toBe(0)
+    })
+
+
   })
-  test('jobs array length is currect', async () => {
-    const response = await helper.jobsInDb()
-    expect(response.length).toBe(helper.initialJobs.length)
-  })
 
-  describe('when addition job', () => {
-    test('when create new job, the job should be on list ', async () => {
+  describe('when you delete a job notice', () => {
+    test('should job notice be deleted', async () => {
 
-      // const loggeduser = await api
-      //   .post('/api/login/')
-      //   .send({ username: 'provider', password: 'provider' })
-      //   .expect(200)
-      //   .expect('Content-Type', /application\/json/)
-      // console.log(loggeduser)
+      const jobsAtStart = await helper.jobsInDb()
+      expect(jobsAtStart.length).toBe(helper.initialJobs.length)
 
-      // const job = helper.job
-      // const token = helper.auth
-      // token.headers.Authorization = `bearer ${loggeduser.body.token}`
-      // console.log(token)
+      const loggeduser = await api
+        .post('/api/login/')
+        .send({ username: 'tester', password: 'secret' })
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+      const job = helper.job
 
-      // const newJob = await api
-      //   .post('/api/jobs')
-      //   .send(job)
-      //   .set('Authorization', 'Bearer ' + loggeduser.body.token)
-      //   .expect(200)
-      //   .expect('Content-Type', /application\/json/)
+      const newJob = await api
+        .post('/api/jobs')
+        .send(job)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
 
-      // console.log(newJob.body)
-      // const jobsAtEnd = await api.get('/api/jobs')
+      const jobsAtNow = await helper.jobsInDb()
+      expect(jobsAtNow.length).toBe(helper.initialJobs.length + 1)
 
-      // expect(jobsAtEnd.body.length).toBe(helper.initialJobs.length + 1)
+      await api.delete(`/api/jobs/${newJob.body.id}`)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(204)
 
-      // expect(newJob.body.title).toContain('frondend developer')
+      const jobsAtEnd = await helper.jobsInDb()
 
-      // const jobsTitles = jobsAtEnd.body.map(job => job.title)
-      // expect(jobsTitles).toContain('frondend developer')
+      expect(jobsAtEnd.length).toBe(helper.initialJobs.length)
+
+      const ids = jobsAtEnd.map(j => j.id)
+
+      expect(ids).not.toContain(newJob.id)
+
+
     })
   })
-  // describe('when you delete a job notice', () => {
-  //   test('should job notice be deleted', async () => {
-  //     const loggeduser = await api
-  //       .post('/api/login/')
-  //       .send({ username: 'testaaja', password: 'timo' })
-  //       .expect(200)
-  //       .expect('Content-Type', /application\/json/)
-  //     const job = helper.job
-
-  //     const newJob = await api
-  //       .post('/api/jobs')
-  //       .send(job)
-  //       .set('Authorization', 'Bearer ' + loggeduser.body.token)
-  //       .expect(200)
-  //       .expect('Content-Type', /application\/json/)
-
-  //     const jobsAtStart = await helper.jobsInDb()
-  //     expect(jobsAtStart.length).toBe(helper.initialJobs.length + 1)
-
-
-  //     await api.delete(`/api/jobs/${newJob.body.id}`)
-  //       .set('Authorization', 'Bearer ' + loggeduser.body.token)
-  //       .expect(204)
-
-  //     const jobsAtEnd = await helper.jobsInDb()
-
-  //     expect(jobsAtEnd.length).toBe(helper.initialJobs.length)
-
-  //     const ids = jobsAtEnd.map(j => j.id)
-
-  //     expect(ids).not.toContain(newJob.id)
-
-
-  //   })
-
-  //   describe('when addition a candidate', () => {
-  //     test('should candidate added to job candidate list', async () => {
-
-  //       const loggeduser = await api
-  //         .post('/api/login/')
-  //         .send({ username: 'testaaja', password: 'timo' })
-  //         .expect(200)
-
-  //       const job = await helper.jobsInDb()
-  //       const token = helper.auth
-  //       token.headers.Authorization = `bearer ${loggeduser.body.token}`
-  //       console.log(job[0].id, loggeduser.body.id)
-
-  //       const response = await api
-  //         .post(`/api/jobs/${job[0].id}/candidates`)
-  //         .send({ candidateID: loggeduser.body.id })
-  //         .set('Authorization', 'Bearer ' + loggeduser.body.token)
-  //         .expect(200)
-  //         .expect('Content-Type', /application\/json/)
-
-  //       const jobsAtEnd = await helper.jobsInDb()
-  //       expect(jobsAtEnd[0].candidates.length).toBe(2)
-
-  //       const ids = jobsAtEnd[0].candidates.map(j => j.id)
-
-  //       expect(ids).toContain(loggeduser.body.id)
-
-  //       const errorResponse = await api
-  //         .post(`/api/jobs/${job[0].id}/candidates`)
-  //         .send({ candidateID: loggeduser.body.id })
-  //         .set('Authorization', 'Bearer ' + loggeduser.body.token)
-  //         .expect(400)
-  //         .expect('Content-Type', /application\/json/)
-
-  //       // console.log(response.body)
-  //       // console.log(errorResponse.body)
-
-  //       expect(errorResponse.body.error).toBe('allready added')
-
-
-  //     })
-
-
-  //   })
-  // })
-
 
 
   afterAll(() => {

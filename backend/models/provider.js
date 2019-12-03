@@ -16,7 +16,7 @@ const providerSchema = mongoose.Schema({
   },
   picture: {
     type: String,
-    required: true,
+    // required: true,
     minlength: 4
   },
   jobProvider: Boolean,
