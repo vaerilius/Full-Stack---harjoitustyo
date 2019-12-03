@@ -138,7 +138,7 @@ jobsRouter.delete('/:id', async (request, response, next) => {
     const job = await Job.findById(request.params.id)
     // console.log(token)§
     // console.log(job.jobProvider)
-    console.log(job.jobProvider, user.id)
+    // console.log(job.jobProvider, user.id)
 
     if (!token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })

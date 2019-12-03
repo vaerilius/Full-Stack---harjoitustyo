@@ -26,11 +26,12 @@ describe('initialize database', () => {
       // expect(response.length).toBe(helper.initialProviders.length)
 
       provider = helper.provider
-      const te = await api
+      await api
         .post('/api/users/providers')
         .send(provider)
 
-      // console.log(te.body)
+
+
     } catch (error) {
       console.log(error.message)
 
@@ -68,8 +69,45 @@ describe('initialize database', () => {
 
 
   })
+  describe('Test: when addition a job ad', () => {
+    test('only authorized user can add ad', async () => {
+      const jobsAtStart = await helper.jobsInDb()
+      expect(jobsAtStart.length).toBe(helper.initialJobs.length)
+      await api.post('/api/jobs/')
+        .expect(401)
+    })
+    test('when create a new job ad', async () => {
+      const jobsAtStart = await helper.jobsInDb()
+      expect(jobsAtStart.length).toBe(helper.initialJobs.length)
 
-  describe('when you delete a job notice', () => {
+      const loggeduser = await api
+        .post('/api/login/')
+        .send({ username: 'tester', password: 'secret' })
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      const newJob = await api
+        .post('/api/jobs')
+        .send(helper.job)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(201)
+
+      expect(newJob.body.jobProvider.id).toBe(loggeduser.body.id)
+      expect(newJob.body.title).toBe(helper.job.title)
+
+      const jobsAtEnd = await helper.jobsInDb()
+      expect(jobsAtEnd[2].jobProvider.toString()).toBe(loggeduser.body.id)
+    })
+  })
+
+  describe('test: when you delete a job notice', () => {
+    test('only authorized user can delete ad', async () => {
+      const jobsAtStart = await helper.jobsInDb()
+
+      await api.delete(`/api/jobs/${jobsAtStart[0].id}`)
+        .expect(401)
+    })
+
     test('should job notice be deleted', async () => {
 
       const jobsAtStart = await helper.jobsInDb()
@@ -103,7 +141,6 @@ describe('initialize database', () => {
       const ids = jobsAtEnd.map(j => j.id)
 
       expect(ids).not.toContain(newJob.id)
-
 
     })
   })

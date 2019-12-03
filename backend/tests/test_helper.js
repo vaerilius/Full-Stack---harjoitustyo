@@ -30,6 +30,7 @@ const initialProviders = [
     name: 'provider',
     password: 'provider',
     picture: 'providers picture url',
+    passwordHash: 'secret',
     jobProvider: true,
     _id: '5de5f549715d9615d47536e5',
     jobsProvided: [
