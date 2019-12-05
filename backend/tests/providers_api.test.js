@@ -43,44 +43,87 @@ describe('initialize provider database', () => {
       expect(provider.jobsProvided.length).toBe(2)
       expect(provider.jobProvider).toBe(true)
     })
+    test('when get provider by id should right provider returned', async () => {
+      await api.post('/api/users/providers').send(helper.provider)
+      const providersAtStart = await helper.providersInDb()
+      const provider = await api.get(`/api/users/providers/${providersAtStart[1].id}`)
+      expect(provider.body.username).toBe('tester')
+    })
   })
   describe('provider tests', () => {
     test('when sign up as provider should new provider be found', async () => {
       const providersAtStart = await helper.providersInDb()
       expect(providersAtStart.length).toBe(helper.initialProviders.length)
 
-      const newProvider = await api.post('/api/users/providers').send(helper.provider)
+      await api.post('/api/users/providers').send(helper.provider)
       // console.log(newProvider.body.id)
       const providersAtEnd = await helper.providersInDb()
-      expect(providersAtEnd.length).toBe(providersAtStart.length + 1)
+      expect(providersAtEnd.length).toBe(helper.initialProviders.length + 1)
 
-      const providersIDs = await providersAtEnd.map(p => p.id)
+      const providersIDs = providersAtEnd.map(p => p.id)
 
       // console.log(providersIDs)
-      expect(providersIDs[1]).toBe(newProvider.body.id)
+      expect(providersIDs[1]).toBe(providersAtEnd[1].id)
     })
     test('when sign up as not unique username should throw an error', async () => {
       const provider = {
         username: 'provider',
-        password: 'joo',
-        name: 'joo',
+        password: 'joo0',
+        name: 'joo0',
         checkbox: true
       }
-      // console.log(notUniqueProvider)
-      try {
-        await api.post('/api/users/providers')
-          .send(provider)
-          .expect(400)
-      } catch (error) {
-        console.log(error)
-        // expect(error.message).toBe('Provider validation failed: username: Error, expected `username` to be unique.')
+
+      const data = await api.post('/api/users/providers')
+        .send(provider)
+        .expect(400)
+      // console.log(data.text)
+      expect(data.text).toContain('expected `username` to be unique.')
+
+
+    })
+    test('when sign up as too short username should throw an error', async () => {
+      const provider = {
+        username: 'sho',
+        password: 'joo0',
+        name: 'joo0',
+        checkbox: true
       }
+      const data = await api.post('/api/users/providers')
+        .send(provider)
+        .expect(400)
+      expect(data.text).toContain('Path `username` (`sho`) is shorter than the minimum allowed length (4).')
 
+    })
+    test('when sign up without username should throw an error', async () => {
+      const provider = {
+        password: 'joo0',
+        name: 'joo0',
+        checkbox: true
+      }
+      const data = await api.post('/api/users/providers')
+        .send(provider)
+        .expect(400)
+      expect(data.text).toContain('Provider validation failed: username: Path `username` is required.')
 
+    })
+    test('when sign up without password should throw an error', async () => {
+      const provider = {
+        username: 'valid',
+        name: 'joo0',
+        checkbox: true
+      }
+      const data = await api.post('/api/users/providers')
+        .send(provider)
+        .expect(400)
+      expect(data.text).toContain('data and salt arguments required')
 
+    })
+    test('when sign up to invalid url should throw an errors', async () => {
 
-
-
+      const data = await api.post('/api/users/')
+        .expect(404)
+      // console.log(data.text)
+      expect(data.text).toContain('unknown endpoint')
 
     })
 
