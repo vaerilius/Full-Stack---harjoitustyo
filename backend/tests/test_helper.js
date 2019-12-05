@@ -39,6 +39,16 @@ const initialProviders = [
     ]
   },
 ]
+const initialCandidates = [
+  {
+    username: 'soini',
+    name: 'Timo Soini',
+    password: 'soini',
+    picture: 'candidate picture url',
+    passwordHash: 'secret',
+    jobProvider: false
+  },
+]
 
 const job = {
   title: 'frondend developer',
@@ -51,6 +61,12 @@ const provider = {
   password: 'secret',
   name: 'tester',
   checkbox: true
+}
+const candidate = {
+  username: 'candidate',
+  password: 'candidate',
+  name: 'candiate',
+  checkbox: false
 }
 
 
@@ -65,13 +81,9 @@ const providersInDb = async () => {
 }
 const candidatesInDb = async () => {
   const candidates = await Candidate.find({})
-  return candidates.map(p => p.toJSON())
+  return candidates.map(c => c.toJSON())
 }
-// const userInDb = async () => {
-//   const user = await User.find({})
 
-//   return user.toJSON()
-// }
 
 const auth = {
   headers: { Authorization: '' }
@@ -80,12 +92,12 @@ const auth = {
 module.exports = {
   initialJobs,
   initialProviders,
-  // initialCandidates,
+  initialCandidates,
   jobsInDb,
   providersInDb,
   candidatesInDb,
-  // userInDb,
   provider,
+  candidate,
   job,
   auth
 }

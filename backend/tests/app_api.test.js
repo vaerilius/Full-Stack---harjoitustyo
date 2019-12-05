@@ -4,15 +4,18 @@ const helper = require('./test_helper')
 const app = require('../app')
 const Job = require('../models/job')
 const Provider = require('../models/provider')
+const Candidate = require('../models/candidate')
 
 const api = supertest(app)
 let provider
+let candidate
 
 describe('initialize database', () => {
   beforeEach(async () => {
     try {
       await Job.deleteMany({})
       await Provider.deleteMany({})
+      await Candidate.deleteMany({})
 
       const jobs = helper.initialJobs.map(job => new Job(job))
       let promiseArray = jobs.map(j => j.save())
@@ -22,15 +25,16 @@ describe('initialize database', () => {
       promiseArray = providers.map(u => u.save())
       await Promise.all(promiseArray)
 
-      const response = await helper.providersInDb()
-      // expect(response.length).toBe(helper.initialProviders.length)
-
       provider = helper.provider
-      await api
-        .post('/api/users/providers')
-        .send(provider)
+      await api.post('/api/users/providers').send(provider)
+
+      const candidates = helper.initialCandidates.map(c => new Candidate(c))
+      promiseArray = candidates.map(c => c.save())
+      await Promise.all(promiseArray)
 
 
+      candidate = helper.candidate
+      await api.post('/api/users/candidates').send(candidate)
 
     } catch (error) {
       console.log(error.message)
@@ -39,7 +43,7 @@ describe('initialize database', () => {
   })
 
 
-  describe('test database jobs', () => {
+  describe('test jobs database ', () => {
     test('jobs are returned as json', async () => {
       await api
         .get('/api/jobs')
@@ -69,6 +73,8 @@ describe('initialize database', () => {
 
 
   })
+
+
   describe('Test: when addition a job ad', () => {
     test('only authorized user can add ad', async () => {
       const jobsAtStart = await helper.jobsInDb()
@@ -144,6 +150,8 @@ describe('initialize database', () => {
 
     })
   })
+
+
 
 
   afterAll(() => {

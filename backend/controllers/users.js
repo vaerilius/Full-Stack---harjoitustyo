@@ -157,7 +157,7 @@ usersRouter.post('/providers', upload.single('profileImg'), async (request, resp
 usersRouter.post('/candidates', upload.single('profileImg'), async (request, response, next) => {
   try {
     const body = request.body
-    console.log(body)
+    // console.log(body)
 
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
