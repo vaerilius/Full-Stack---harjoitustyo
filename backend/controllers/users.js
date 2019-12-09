@@ -131,6 +131,9 @@ usersRouter.post('/providers', upload.single('profileImg'), async (request, resp
 
   try {
     const body = request.body
+    if (!body.password) {
+      return response.status(401).json({ error: 'invalid signup data' })
+    }
 
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)

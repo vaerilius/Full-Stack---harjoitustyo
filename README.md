@@ -46,6 +46,7 @@
 | 29.11 | 3 | Postman, backend fixing, test update |
 | 03.12 | 3,5 | Jest, Setup local mongodb & edited test.helper & jobs test |
 | 05.12 | 3 | provider test |
+| 09.12 | 2 | login, provider, job tests |
 | | | |
 | yht. | 92 | tuntia|
 

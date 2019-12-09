@@ -7,8 +7,8 @@ const Provider = require('../models/provider')
 const Candidate = require('../models/candidate')
 
 const api = supertest(app)
-let provider
-let candidate
+// let provider
+// let candidate
 
 describe('initialize database', () => {
   beforeEach(async () => {
@@ -25,7 +25,7 @@ describe('initialize database', () => {
       promiseArray = providers.map(u => u.save())
       await Promise.all(promiseArray)
 
-      provider = helper.provider
+      const provider = helper.provider
       await api.post('/api/users/providers').send(provider)
 
       const candidates = helper.initialCandidates.map(c => new Candidate(c))
@@ -33,7 +33,7 @@ describe('initialize database', () => {
       await Promise.all(promiseArray)
 
 
-      candidate = helper.candidate
+      const candidate = helper.candidate
       await api.post('/api/users/candidates').send(candidate)
 
     } catch (error) {
@@ -86,6 +86,9 @@ describe('initialize database', () => {
       const jobsAtStart = await helper.jobsInDb()
       expect(jobsAtStart.length).toBe(helper.initialJobs.length)
 
+
+      // const providersAtEnd = await helper.providersInDb()
+      // console.log(providersAtEnd)
       const loggeduser = await api
         .post('/api/login/')
         .send({ username: 'tester', password: 'secret' })
@@ -118,12 +121,16 @@ describe('initialize database', () => {
 
       const jobsAtStart = await helper.jobsInDb()
       expect(jobsAtStart.length).toBe(helper.initialJobs.length)
+      // console.log(jobsAtStart)
+      // provider = helper.provider
+      // await api.post('/api/users/providers').send(provider)
 
       const loggeduser = await api
         .post('/api/login/')
         .send({ username: 'tester', password: 'secret' })
         .expect(200)
         .expect('Content-Type', /application\/json/)
+
       const job = helper.job
 
       const newJob = await api
