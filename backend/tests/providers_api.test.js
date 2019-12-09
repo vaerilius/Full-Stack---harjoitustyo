@@ -11,9 +11,11 @@ describe('initialize provider database', () => {
     try {
       await Provider.deleteMany({})
 
-      const providers = helper.initialProviders.map(p => new Provider(p))
-      const promiseArray = providers.map(u => u.save())
-      await Promise.all(promiseArray)
+      // const providers = helper.initialProviders.map(p => new Provider(p))
+      // console.log(providers)
+      await api.post('/api/users/providers').send(helper.initialProviders[0])
+      await api.post('/api/users/providers').send(helper.initialProviders[1])
+      // await Promise.all(promiseArray)
 
 
     } catch (error) {
@@ -40,31 +42,33 @@ describe('initialize provider database', () => {
       const provider = providers[0]
       // console.log(provider)
       expect(provider.name).toBe('provider')
-      expect(provider.jobsProvided.length).toBe(2)
-      expect(provider.jobProvider).toBe(true)
+      expect(provider.jobsProvided.length).toBe(0)
+      // expect(provider.jobProvider).toBe(true)
     })
     test('when get provider by id should right provider returned', async () => {
       await api.post('/api/users/providers').send(helper.provider)
       const providersAtStart = await helper.providersInDb()
+      // console.log(providersAtStart[1])
       const provider = await api.get(`/api/users/providers/${providersAtStart[1].id}`)
-      expect(provider.body.username).toBe('tester')
+      expect(provider.body.username).toBe('timo')
     })
   })
   describe('provider tests', () => {
-    // test('when sign up as provider should new provider be found', async () => {
-    //   const providersAtStart = helper.providersInDb()
-    //   // expect(providersAtStart.length).toBe(helper.initialProviders.length)
+    test('when sign up as provider should new provider be found', async () => {
+      const providersAtStart = await helper.providersInDb()
+      expect(providersAtStart.length).toBe(helper.initialProviders.length)
 
-    //   await api.post('/api/users/providers').send(helper.provider)
-    //   // console.log(newProvider.body.id)
-    //   expect(providersAtStart.length).toBe(helper.initialProviders.length + 1)
-    //   const providersAtEnd = helper.providersInDb()
+      const newProvider = await api.post('/api/users/providers').send(helper.provider)
+      // console.log(newProvider.body.id)
+      const providersAtEnd = await helper.providersInDb()
 
-    //   const providersIDs = providersAtEnd.map(p => p.id)
+      expect(providersAtEnd.length).toBe(helper.initialProviders.length + 1)
 
-    //   // console.log(providersIDs)
-    //   expect(providersIDs[1]).toBe(providersAtEnd[1].id)
-    // })
+      const providersIDs = providersAtEnd.map(p => p.id)
+
+      // console.log(providersIDs)
+      expect(providersIDs[providersAtEnd.length -1]).toBe(newProvider.body.id)
+    })
     test('when sign up as not unique username should throw an error', async () => {
       const provider = {
         username: 'provider',

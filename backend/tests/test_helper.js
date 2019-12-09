@@ -27,17 +27,17 @@ const initialJobs = [
 const initialProviders = [
   {
     username: 'provider',
+    password: 'secret',
     name: 'provider',
-    password: 'provider',
-    picture: 'providers picture url',
-    passwordHash: 'secret',
-    jobProvider: true,
-    _id: '5de5f549715d9615d47536e5',
-    jobsProvided: [
-      '5de5f334208d4e13266eb17f',
-      '5de5f334208d4e13266eb181'
-    ]
+    checkbox: true
   },
+  {
+    username: 'timo',
+    password: 'timo',
+    name: 'timo',
+    checkbox: true
+  }
+
 ]
 const initialCandidates = [
   {
