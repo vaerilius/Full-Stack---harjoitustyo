@@ -32,6 +32,8 @@ describe('initialize provider database', () => {
         .expect('Content-Type', /application\/json/)
     })
     test('providers array length is currect', async () => {
+      await api.post('/api/users/providers').send(helper.initialProviders[0])
+
       const providers = await helper.providersInDb()
       // console.log(providers)
       expect(providers.length).toBe(helper.initialProviders.length)

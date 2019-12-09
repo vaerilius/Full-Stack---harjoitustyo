@@ -21,9 +21,11 @@ describe('initialize database', () => {
       let promiseArray = jobs.map(j => j.save())
       await Promise.all(promiseArray)
 
+
       const providers = helper.initialProviders.map(p => new Provider(p))
       promiseArray = providers.map(u => u.save())
       await Promise.all(promiseArray)
+
 
       const provider = helper.provider
       await api.post('/api/users/providers').send(provider)
