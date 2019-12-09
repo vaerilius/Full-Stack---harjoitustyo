@@ -12,10 +12,11 @@ describe('initialize database', () => {
     try {
       await Provider.deleteMany({})
       await Candidate.deleteMany({})
-      // await api.post('/api/users/providers').send(helper.provider)
       await api.post('/api/users/providers').send(helper.initialProviders[0])
       await api.post('/api/users/providers').send(helper.initialProviders[1])
       await api.post('/api/users/candidates').send(helper.candidate)
+
+      
 
     } catch (error) {
       console.log(error.message)
@@ -85,14 +86,6 @@ describe('initialize database', () => {
       // console.log(response.body.error)
       expect(response.body.error).toBe('data and hash arguments required')
     })
-  })
-  afterEach( async () => {
-    await Provider.deleteMany({})
-    await Candidate.deleteMany({})
-    await api.post('/api/users/providers').send(helper.initialProviders[0])
-    await api.post('/api/users/providers').send(helper.initialProviders[1])
-    await api.post('/api/users/candidates').send(helper.candidate)
-
   })
 
   afterAll(() => {
