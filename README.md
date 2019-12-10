@@ -47,9 +47,9 @@
 | 03.12 | 3,5 | Jest, Setup local mongodb & edited test.helper & jobs test |
 | 05.12 | 3 | provider test |
 | 09.12 | 4 | login, provider, job, candiate tests, issue whwn run all tests |
-| 10.12 | 3 | candidate tests, jest tests, fixing problem when run all tests |
+| 10.12 | 4 | jest tests, fixing problem when run all tests, bug fixing |
 | | | |
-| yht. | 99 | tuntia|
+| yht. | 100 | tuntia|
 
 
 

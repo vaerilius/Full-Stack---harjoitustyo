@@ -172,10 +172,8 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
     const job = await Job.findById(request.params.id)
     // console.log(job);
     // console.log(user);
-    const candidate = job.candidates.find(k => k === user.id)
 
-    // console.log(candidate)
-    if (candidate) {
+    if (user.interestingJobs.includes(job.id) || job.candidates.includes(user.id)) {
 
       return response.status(400).json({ error: 'allready added' })
     }

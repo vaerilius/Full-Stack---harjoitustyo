@@ -35,8 +35,6 @@ describe('initialize database', () => {
       await Promise.all(promiseArray)
 
 
-      const candidate = helper.candidate
-      await api.post('/api/users/candidates').send(candidate)
 
     } catch (error) {
       console.log(error.message)
@@ -159,6 +157,59 @@ describe('initialize database', () => {
 
     })
   })
+  describe('test candidate functions', () => {
+    test('when candidate joins jobs candidate list should candidate be founded', async () => {
+      const jobsAtStart = await helper.jobsInDb()
+      // console.log(jobsAtStart)
+      const candidate = await api.post('/api/users/candidates').send(helper.candidate)
+
+      const loggeduser = await api
+        .post('/api/login/')
+        .send({ username: 'candidate', password: 'candidate' })
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+      // console.log(loggeduser.body)
+
+      const updatedJobAd = await api
+        .post(`/api/jobs/${jobsAtStart[0].id}/candidates/`)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(200)
+      // console.log(updatedJobAd.body)
+      const candidates = updatedJobAd.body.candidates.map(c => c)
+      // console.log(candidates)
+      expect(candidates[0].id).toBe(loggeduser.body.id)
+    })
+    test('when the candidate is already joined to job ad candidate list should return error message', async () => {
+      const jobsAtStart = await helper.jobsInDb()
+      // console.log(jobsAtStart)
+      const candidate = await api.post('/api/users/candidates').send(helper.candidate)
+
+      const loggeduser = await api
+        .post('/api/login/')
+        .send({ username: 'candidate', password: 'candidate' })
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+      // console.log(loggeduser.body)
+
+      const updatedJobAd = await api
+        .post(`/api/jobs/${jobsAtStart[0].id}/candidates/`)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(200)
+      // console.log(updatedJobAd.body)
+      const candidates = updatedJobAd.body.candidates.map(c => c)
+      // console.log(candidates)
+      expect(candidates[0].id).toBe(loggeduser.body.id)
+      const response = await api
+        .post(`/api/jobs/${jobsAtStart[0].id}/candidates/`)
+        .set('Authorization', 'Bearer ' + loggeduser.body.token)
+        .expect(400)
+
+      expect(response.body.error).toBe('allready added')
+      console.log(response.body.error)
+    })
+
+  })
+
 
 
 
