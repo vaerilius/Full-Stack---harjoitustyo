@@ -16,8 +16,6 @@ describe('initialize database', () => {
       await api.post('/api/users/providers').send(helper.initialProviders[1])
       await api.post('/api/users/candidates').send(helper.candidate)
 
-      
-
     } catch (error) {
       console.log(error.message)
     }
@@ -25,16 +23,10 @@ describe('initialize database', () => {
 
   describe('login tests', () => {
     test('The provider should be able to login', async () => {
-      // await api.post('/api/users/providers').send(helper.provider)
-      // await api.post('/api/users/providers').send(helper.initialProviders[0])
-
-      const providersAtStart = await helper.providersInDb()
-      // console.log(providersAtStart)
-      expect(providersAtStart.length).toBe(helper.initialProviders.length)
 
       const response = await api
         .post('/api/login/')
-        .send({ username: 'provider', password: 'secret' })
+        .send({ username: 'tester', password: 'secret' })
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -44,10 +36,7 @@ describe('initialize database', () => {
       expect(response.body.jobProvider).toBe(true)
     })
     test('The candidate should be able to login', async () => {
-
-      const candidatesAtStart = await helper.candidatesInDb()
-      // console.log(providersAtStart)
-      expect(candidatesAtStart.length).toBe(helper.initialCandidates.length)
+      await api.post('/api/users/providers').send(helper.provider)
       const response = await api
         .post('/api/login/')
         .send({ username: 'candidate', password: 'candidate' })

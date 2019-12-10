@@ -48,6 +48,14 @@ const initialCandidates = [
     passwordHash: 'secret',
     jobProvider: false
   },
+  {
+    username: 'pekka',
+    name: 'Pekka Haavisto',
+    password: 'pekka',
+    picture: 'candidate picture url',
+    passwordHash: 'secret',
+    jobProvider: false
+  },
 ]
 
 const job = {

@@ -163,23 +163,29 @@ usersRouter.post('/candidates', upload.single('profileImg'), async (request, res
     // console.log(body)
 
     const saltRounds = 10
+
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
-
-    let user
-
-    if (!body.jobProvider) {
-      user = new Candidate({
-        username: body.username,
-        name: body.name,
-        passwordHash,
-        picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
-        jobProvider: body.checkbox,
-        phone: null,
-        email: null,
-        status: null
-
-      })
+    if (body.password.length < 4) {
+      return response.status(400).json({ error: 'password too short, min length is 4' })
     }
+    if (body.checkbox) {
+      return response.status(400).json({ error: 'Only candidate can signup here' })
+    }
+    if (body.checkbox === undefined) {
+      return response.status(400).json({ error: 'checkBox must be tagged' })
+    }
+
+    const user = new Candidate({
+      username: body.username,
+      name: body.name,
+      passwordHash,
+      picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
+      jobProvider: body.checkbox,
+      phone: null,
+      email: null,
+      status: null
+
+    })
 
     const savedUser = await user.save()
 
