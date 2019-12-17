@@ -48,8 +48,9 @@
 | 05.12 | 3 | provider test |
 | 09.12 | 4 | login, provider, job, candiate tests, issue whwn run all tests |
 | 10.12 | 4 | jest tests, fixing problem when run all tests, bug fixing |
+| 17.12 | 2 | jest jobs tests, frondend work, candidate on upload cv |
 | | | |
-| yht. | 100 | tuntia|
+| yht. | 102 | tuntia|
 
 
 

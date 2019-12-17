@@ -52,7 +52,6 @@ const Candidate = (props) => {
 
         </div>
         <div className="col-md-12">
-          <h5 className="card-title text-center">The candidate is interested in following jobs</h5>
           {props.candidate.interestingJobs.length > 0
             ?
             <ul className="list-group list-group-flush">

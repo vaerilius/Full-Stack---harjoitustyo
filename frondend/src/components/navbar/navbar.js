@@ -18,12 +18,11 @@ const Navbar = (props) => {
     return (<Redirect to="/" />)
 
   }
-  // console.log(props.user)
-
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-transparent">
-      <Link to="/"><div className="navbar-brand">Job Book</div></Link>
+      <div className="navbar-brand">Job Book</div>
+      {/* tee tähän oma hookki */}
       <button className="navbar-toggler" type="button"
         data-toggle="collapse" data-target="#navbarsExample03"
         aria-controls="navbarsExample03" aria-expanded="false"

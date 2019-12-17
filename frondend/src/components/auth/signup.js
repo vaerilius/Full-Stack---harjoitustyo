@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { useField, useFileField } from '../../hooks/formHook'
 import { signUpCandidate } from '../../reducers/candidatesReducer'
 import { onSignUpProvider } from '../../reducers/providersReducer'
@@ -98,6 +99,10 @@ const SingUp = (props) => {
           </div>
           <button type="submit" className="btn btn-primary">Sign up</button>
         </form>
+        <Link to='/'>
+          <button type="button" className="btn btn-secondary btn-block mt-3">Back</button>
+        </Link>
+
       </div>
     </div>
   )

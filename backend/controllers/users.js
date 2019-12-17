@@ -8,7 +8,6 @@ const uuidv4 = require('uuid/v4')
 const jwt = require('jsonwebtoken')
 const { tokenExtractor } = require('../utils/middleware')
 
-
 const Provider = require('../models/provider')
 const Candidate = require('../models/candidate')
 
@@ -23,7 +22,7 @@ const upload = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
       console.log(file.mimetype.split('/')[1])
-      imageName = 'users/' + uuidv4() + '-' + file.originalname.toLowerCase().split(' ').join('-');
+      imageName = 'users/' + uuidv4() + '-' + file.originalname.toLowerCase().split(' ').join('-')
       cb(null, imageName)
     }
   })
@@ -168,7 +167,7 @@ usersRouter.post('/candidates', upload.single('profileImg'), async (request, res
     if (body.password.length < 4) {
       return response.status(400).json({ error: 'password too short, min length is 4' })
     }
-    if (body.checkbox) {
+    if (!body.checkbox) {
       return response.status(400).json({ error: 'Only candidate can signup here' })
     }
     if (body.checkbox === undefined) {
@@ -193,6 +192,23 @@ usersRouter.post('/candidates', upload.single('profileImg'), async (request, res
   } catch (exception) {
     next(exception)
   }
+})
+
+usersRouter.post('/candidates/:id/cv', upload.single('cv'), async (req, res, next) => {
+  const body = req.body
+  try {
+    const token = tokenExtractor(req)
+    const decodedToken = jwt.verify(token, config.SECRET)
+    const candidate = await Candidate.findById(decodedToken.id)
+    candidate.cv = `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`
+    // console.log(candidate)
+    const updatedCandidate = await candidate.save()
+    res.json(updatedCandidate)
+
+  } catch (error) {
+    next(error)
+  }
+
 })
 
 module.exports = usersRouter

@@ -15,7 +15,10 @@ const fileFilter = (req, file, cb) => {
     || file.mimetype === 'image/jpg'
     || file.mimetype === 'image/png') {
     cb(null, true)
+  } else if (file.mimetype === 'application/pdf'){
+    cb(null, true)
   } else {
+    // console.log(file.mimetype)
     cb(new Error('Wrong file type, only upload JPEG and/or PNG !'),
       false)
   }

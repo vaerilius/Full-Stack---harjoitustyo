@@ -87,14 +87,22 @@ const providersInDb = async () => {
   const providers = await Provider.find({})
   return providers.map(p => p.toJSON())
 }
+const providerById = async (id) => {
+  const provider = await Provider.findById(id)
+  return provider.toJSON()
+}
 const candidatesInDb = async () => {
   const candidates = await Candidate.find({})
   return candidates.map(c => c.toJSON())
 }
+const candidateById = async (id) => {
+  const candiate = await Candidate.findById(id)
+  return candiate.toJSON()
+}
 
 
 const auth = {
-  headers: { Authorization: '' }
+  headers: { Authorization: 'Bearer ' }
 }
 
 module.exports = {
@@ -107,5 +115,7 @@ module.exports = {
   provider,
   candidate,
   job,
-  auth
+  auth,
+  providerById,
+  candidateById
 }

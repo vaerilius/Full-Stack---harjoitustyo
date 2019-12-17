@@ -106,6 +106,9 @@ describe('initialize database', () => {
 
       const jobsAtEnd = await helper.jobsInDb()
       expect(jobsAtEnd[2].jobProvider.toString()).toBe(loggeduser.body.id)
+      const updatedProvider = await helper.providerById(loggeduser.body.id)
+
+      expect(updatedProvider.jobsProvided[0].toString()).toBe(newJob.body.id)
     })
   })
 
@@ -121,9 +124,6 @@ describe('initialize database', () => {
 
       const jobsAtStart = await helper.jobsInDb()
       expect(jobsAtStart.length).toBe(helper.initialJobs.length)
-      // console.log(jobsAtStart)
-      // provider = helper.provider
-      // await api.post('/api/users/providers').send(provider)
 
       const loggeduser = await api
         .post('/api/login/')
@@ -142,18 +142,23 @@ describe('initialize database', () => {
 
       const jobsAtNow = await helper.jobsInDb()
       expect(jobsAtNow.length).toBe(helper.initialJobs.length + 1)
+      let updatedProvider = await helper.providerById(loggeduser.body.id)
+      expect(updatedProvider.jobsProvided[0].toString()).toBe(newJob.body.id)
 
       await api.delete(`/api/jobs/${newJob.body.id}`)
         .set('Authorization', 'Bearer ' + loggeduser.body.token)
         .expect(204)
 
       const jobsAtEnd = await helper.jobsInDb()
+      updatedProvider = await helper.providerById(loggeduser.body.id)
 
       expect(jobsAtEnd.length).toBe(helper.initialJobs.length)
 
       const ids = jobsAtEnd.map(j => j.id)
 
       expect(ids).not.toContain(newJob.id)
+
+      expect(updatedProvider.jobsProvided).not.toContain(newJob.body.id)
 
     })
   })
@@ -178,6 +183,9 @@ describe('initialize database', () => {
       const candidates = updatedJobAd.body.candidates.map(c => c)
       // console.log(candidates)
       expect(candidates[0].id).toBe(loggeduser.body.id)
+
+      const updatedCandidate = await helper.candidateById(loggeduser.body.id)
+      expect(updatedCandidate.interestingJobs[0].toString()).toBe(updatedJobAd.body.id)
     })
     test('when the candidate is already joined to job ad candidate list should return error message', async () => {
       const jobsAtStart = await helper.jobsInDb()
@@ -209,10 +217,6 @@ describe('initialize database', () => {
     })
 
   })
-
-
-
-
 
   afterAll(() => {
     mongoose.connection.close()

@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { useField } from '../../hooks/formHook'
 import { login } from '../../reducers/userReducer'
+import { Link } from 'react-router-dom'
+
 import { Form } from 'react-bootstrap'
 
 
@@ -85,6 +87,9 @@ const Login = (props) => {
           </div>
           <button type="submit" className="btn btn-primary">sign in</button>
         </form>
+        <Link to='/'>
+          <button type="button" className="btn btn-secondary btn-block mt-3">Back</button>
+        </Link>
       </div>
     </div >
   )

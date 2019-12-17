@@ -19,6 +19,7 @@ const candidateSchema = mongoose.Schema({
     required: true,
     minlength: 4
   },
+  cv: String,
   jobProvider: Boolean,
   description: String,
   phone: String,
