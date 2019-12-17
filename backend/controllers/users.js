@@ -195,15 +195,18 @@ usersRouter.post('/candidates', upload.single('profileImg'), async (request, res
 })
 
 usersRouter.post('/candidates/:id/cv', upload.single('cv'), async (req, res, next) => {
-  const body = req.body
   try {
     const token = tokenExtractor(req)
     const decodedToken = jwt.verify(token, config.SECRET)
-    const candidate = await Candidate.findById(decodedToken.id)
-    candidate.cv = `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`
-    // console.log(candidate)
-    const updatedCandidate = await candidate.save()
-    res.json(updatedCandidate)
+
+    const updatedCandidate = await Candidate
+      .findByIdAndUpdate(
+        decodedToken.id,
+        { $set: { 'cv': `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}` } },
+        { new: true })
+      .populate('interestingJobs', { title: 1 })
+
+    res.json(updatedCandidate.toJSON())
 
   } catch (error) {
     next(error)

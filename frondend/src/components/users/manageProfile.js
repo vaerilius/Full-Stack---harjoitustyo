@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../../hooks/formHook'
 import { updateProvider } from '../../reducers/providersReducer'
-import { updateCandidate } from '../../reducers/candidatesReducer'
+import { updateCandidate, updateCandidateCV } from '../../reducers/candidatesReducer'
 
 
 const ManageProfile = (props) => {
@@ -10,6 +10,7 @@ const ManageProfile = (props) => {
   const [description, resetDescription] = useField('text')
   const [email, resetEmail] = useField('email')
   // const [picture, setPicture] = useState(null)
+  const [cv, setCV] = useState(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -32,6 +33,18 @@ const ManageProfile = (props) => {
     // setPicture(null)
   }
 
+  const uploadCV = (e) => {
+    e.preventDefault()
+
+    const formData = new FormData()
+
+    formData.append('cv', cv)
+    if (!props.user.jobProvider) {
+      props.updateCandidateCV(formData, props.id)
+      setCV(null)
+    }
+  }
+
   return (
     <div className='container'>
       <form onSubmit={handleSubmit} className='mb-4'>
@@ -49,7 +62,21 @@ const ManageProfile = (props) => {
         </div>
         <button type="submit" className="btn btn-primary btn-block">Change</button>
       </form>
-    </div>
+      <form onSubmit={uploadCV} className='mb-4'>
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="inputGroupFileAddon01">CV pdf file</span>
+          </div>
+          <div className="custom-file">
+            <input type="file" className="custom-file-input"
+              id="cv" aria-describedby="inputGroupFileAddon01"
+              onChange={(e) => setCV(e.target.files[0])} />
+            <label className="custom-file-label" htmlFor="cv"></label>
+          </div>
+        </div>
+        <button type="submit" className="btn btn-primary btn-block">Upload CV</button>
+      </form>
+    </div >
 
   )
 }
@@ -64,6 +91,7 @@ export default connect(
   mapStateToProps,
   {
     updateProvider,
-    updateCandidate
+    updateCandidate,
+    updateCandidateCV
   }
 )(ManageProfile)

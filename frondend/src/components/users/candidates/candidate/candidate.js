@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom'
 import Togglable from '../../../togglable'
 import ManageProfile from '../../manageProfile'
 
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
+
+{/* <i class="fas fa-file-pdf"></i> */ }
 const Candidate = (props) => {
   if (!props.candidate) {
     return (
@@ -11,7 +16,7 @@ const Candidate = (props) => {
     )
   }
   const manageProfileRef = React.createRef()
-
+  console.log(props.candidate)
   return (
     <div className="card my-auto mx-auto" style={{ maxWidth: '540px' }}>
       <div className="row no-gutters">
@@ -22,21 +27,30 @@ const Candidate = (props) => {
           <div className="card-body">
             <h5 className="card-title">{props.candidate.name}</h5>
             <p className="card-text">{props.candidate.description}</p>
-            <table className="table table-responsive-md-12">
-              <thead>
-                <tr>
-                  <th scope="col">Phone</th>
-                  <th scope="col">email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{props.candidate.phone ? props.candidate.phone : 'Not set'}</td>
-                  <td>{props.candidate.email ? props.candidate.email : 'Not set'}</td>
-                </tr>
-              </tbody>
 
-            </table>
+            <div className="card-body ">
+              <ul className="list-group shadow">
+                <li className="list-group-item">
+                  Phone: {props.candidate.phone ? props.candidate.phone : 'Not set'}
+                </li>
+                <li className="list-group-item">
+                  Email: {props.candidate.email ? props.candidate.email : 'Not set'}
+                </li>
+                <li className="list-group-item">
+                  <div className="d-flex w-100 justify-content-between">
+                    <div className="my-auto">Here is my CV: </div>
+                    <div className="my-auto">
+                      <a href={props.candidate.cv} target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon
+                          icon={faFilePdf}
+                          size='2x'
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div className="card-footer text-muted text-center">
               Joined: {props.candidate.createdAt.split('T')[0]}
             </div>

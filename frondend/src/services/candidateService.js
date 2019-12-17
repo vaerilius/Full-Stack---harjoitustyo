@@ -29,6 +29,10 @@ const updateCandidateProfile = async (data) => {
   const response = await axios.put(`${baseUrl}/candidates/${data.id}`, data, getConfig())
   return response.data
 }
+const uploadCV = async (formData, id) => {
+  const response = await axios.post(`${baseUrl}/candidates/${id}/cv`, formData, getConfig())
+  return response.data
+}
 
 export default {
   signUpCandidate,
@@ -36,5 +40,6 @@ export default {
   updateCandidateProfile,
   setToken,
   destroyToken,
-  getConfig
+  getConfig,
+  uploadCV
 }

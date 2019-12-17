@@ -15,7 +15,6 @@ const reducer = (state = [], action) => {
       return [...state]
   }
 }
-
 export const initializeCandidates = () => {
   return async dispatch => {
     const candidates = await candidateService.getAllCandidates()
@@ -53,7 +52,6 @@ export const updateCandidate = (data) => {
   return async dispatch => {
     try {
       const updatedCandidate = await candidateService.updateCandidateProfile(data)
-      console.log(updatedCandidate)
       dispatch(setNotification({
         class: 'alert alert-success',
         message: `Candidate ${updatedCandidate.name} updated successfully`
@@ -63,6 +61,30 @@ export const updateCandidate = (data) => {
         type: 'UPDATE_CANDIDATE',
         updatedCandidate
       })
+    } catch (error) {
+      dispatch(setNotification(
+        {
+          class: 'alert alert-danger',
+          message: 'Something went wrong'
+        }
+      ))
+    }
+  }
+}
+export const updateCandidateCV = (formData, id) => {
+  return async dispatch => {
+    try {
+      const updatedCandidate = await candidateService.uploadCV(formData, id)
+      console.log(updatedCandidate)
+      dispatch({
+        type: 'UPDATE_CANDIDATE',
+        updatedCandidate
+      })
+      dispatch(setNotification({
+        class: 'alert alert-success',
+        message: 'CV updated successfully'
+      }))
+
     } catch (error) {
       dispatch(setNotification(
         {
