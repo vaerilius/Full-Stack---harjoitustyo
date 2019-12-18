@@ -12,7 +12,6 @@ import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
 
 {/* <i class="fas fa-file-pdf"></i> */ }
 const Candidate = (props) => {
-  const [test, setTest] = useState({ value: '', copied: false })
 
   if (!props.candidate) {
     return (
@@ -20,6 +19,7 @@ const Candidate = (props) => {
     )
   }
   const copy = (value) => {
+
     props.setNotification(
       {
         class: 'alert alert-success',
@@ -29,9 +29,11 @@ const Candidate = (props) => {
   }
 
   const manageProfileRef = React.createRef()
-  console.log(test)
   return (
     <div className="card my-auto mx-auto" style={{ maxWidth: '480px' }}>
+      <div className="card-header">
+        Candidate
+      </div>
       <div className="row no-gutters">
         <div className="col-md-12">
           <img src={props.candidate.picture} className="card-img" alt="..." />
@@ -47,7 +49,7 @@ const Candidate = (props) => {
                 <li className="list-group-item">
                   Phone: {props.candidate.phone
                     ?
-                    <CopyToClipboard
+                    <CopyToClipboard text={props.candidate.phone}
                       onDoubleClick={() => copy(props.candidate.phone)}>
                       <summary className="text-info">{props.candidate.phone}</summary>
                     </CopyToClipboard>
@@ -55,7 +57,7 @@ const Candidate = (props) => {
                 </li>
                 <li className="list-group-item">
                   Email: {props.candidate.email
-                    ? <CopyToClipboard
+                    ? <CopyToClipboard text={props.candidate.email}
                       onDoubleClick={() => copy(props.candidate.email)}>
                       <summary className="text-info">{props.candidate.email}</summary>
                     </CopyToClipboard>

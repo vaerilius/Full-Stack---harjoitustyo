@@ -22,6 +22,7 @@ const providerSchema = mongoose.Schema({
   jobProvider: Boolean,
   phone: String,
   email: String,
+  company: String,
   description: String,
   jobsProvided: [
     {

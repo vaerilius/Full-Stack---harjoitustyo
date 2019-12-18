@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Togglable from '../../../togglable'
 import ManageProfile from '../../manageProfile'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { setNotification } from '../../../../reducers/notificationReducer'
 
 
 const Provider = (props) => {
@@ -13,32 +15,47 @@ const Provider = (props) => {
   }
   const manageProfileRef = React.createRef()
 
+  const copy = (value) => {
+    props.setNotification(
+      {
+        class: 'alert alert-success',
+        message: `${value} copied to the clickboard.`
+      }
+    )
+  }
 
   return (
     <div className="container">
-      <div className="card my-auto mx-auto" style={{ maxWidth: '320px' }}>
+      <div className="card my-auto mx-auto" style={{ maxWidth: '480px' }}>
+        <div className="card-header">
+         Job provider
+        </div>
         <div className="row no-gutters">
           <img src={props.provider.picture} className="card-img-top" alt="..." />
           <div className="col-md-12">
             <div className="card-body">
               <h5 className="card-title">{props.provider.name}</h5>
               <p className="card-text">{props.provider.description} </p>
+              <ul className="list-group shadow mb-3">
+                <li className="list-group-item">
+                  Phone: {props.provider.phone
+                    ?
+                    <CopyToClipboard text={props.provider.phone}
+                      onDoubleClick={() => copy(props.provider.phone)}>
+                      <summary className="text-info">{props.provider.phone}</summary>
+                    </CopyToClipboard>
+                    : 'Not set'}
+                </li>
+                <li className="list-group-item">
+                  Email: {props.provider.email
+                    ? <CopyToClipboard text={props.provider.email}
+                      onDoubleClick={() => copy(props.provider.email)}>
+                      <summary className="text-info">{props.provider.email}</summary>
+                    </CopyToClipboard>
+                    : 'Not set'}
+                </li>
+              </ul>
 
-              <table className="table table-responsive-md-12">
-                <thead>
-                  <tr>
-                    <th scope="col">Phone</th>
-                    <th scope="col">email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{props.provider.phone ? props.provider.phone : 'Not set'}</td>
-                    <td>{props.provider.email ? props.provider.email : 'Not set'}</td>
-                  </tr>
-                </tbody>
-
-              </table>
               {props.user.id === props.provider.id
                 ? <Togglable
                   buttonLabel='Manage profile'
@@ -88,4 +105,4 @@ const mapStateToProps = (state, ownProps) => {
 
   }
 }
-export default connect(mapStateToProps)(Provider)
+export default connect(mapStateToProps, { setNotification })(Provider)

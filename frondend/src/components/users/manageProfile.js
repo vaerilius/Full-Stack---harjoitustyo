@@ -62,20 +62,25 @@ const ManageProfile = (props) => {
         </div>
         <button type="submit" className="btn btn-primary btn-block">Change</button>
       </form>
-      <form onSubmit={uploadCV} className='mb-4'>
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="inputGroupFileAddon01">CV pdf file</span>
+      {!props.user.jobProvider
+        ?
+        <form onSubmit={uploadCV} className='mb-4'>
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="inputGroupFileAddon01">CV pdf file</span>
+            </div>
+            <div className="custom-file">
+              <input type="file" className="custom-file-input"
+                id="cv" aria-describedby="inputGroupFileAddon01"
+                onChange={(e) => setCV(e.target.files[0])} />
+              <label className="custom-file-label" htmlFor="cv"></label>
+            </div>
           </div>
-          <div className="custom-file">
-            <input type="file" className="custom-file-input"
-              id="cv" aria-describedby="inputGroupFileAddon01"
-              onChange={(e) => setCV(e.target.files[0])} />
-            <label className="custom-file-label" htmlFor="cv"></label>
-          </div>
-        </div>
-        <button type="submit" className="btn btn-primary btn-block">Upload CV</button>
-      </form>
+          <button type="submit" className="btn btn-primary btn-block">Upload CV</button>
+        </form>
+        : null
+      }
+
     </div >
 
   )
