@@ -17,7 +17,7 @@ export const Validator = (fieldValue, setUsernameValidator, setFeedback) => {
       setFeedback('this field min length is 4')
 
     } else {
-      setIsTouched(false)
+      // setIsTouched(false)
       setUsernameValidator('form-control is-valid')
 
     }
