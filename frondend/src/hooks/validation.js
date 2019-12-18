@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const useTest = (type) => {
+export const useForm = (type) => {
   const [value, setValue] = useState('')
   const [className, setClassName] = useState('form-control')
   const [feedback, setFeedback] = useState('test')

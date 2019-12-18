@@ -49,9 +49,9 @@
 | 09.12 | 4 | login, provider, job, candiate tests, issue whwn run all tests |
 | 10.12 | 4 | jest tests, fixing problem when run all tests, bug fixing |
 | 17.12 | 5 | jest jobs tests, frondend work, on upload candidate cv |
-| 18.12 | 4 | frondend: clickboard to content, validator hook && login validator, trying different validators|
+| 18.12 | 5 | frondend: clickboard to content, validator hook && login validator, trying different validators, userForm hook|
 | | | |
-| yht. | 108 | tuntia|
+| yht. | 110 | tuntia|
 
 
 
