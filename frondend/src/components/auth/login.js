@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { useField } from '../../hooks/formHook'
+import { Validator } from '../../hooks/validator'
 import { login } from '../../reducers/userReducer'
 import { Link } from 'react-router-dom'
 
-import { Form } from 'react-bootstrap'
+
+
+// import { Form } from 'react-bootstrap'
 
 
 const Login = (props) => {
@@ -13,26 +16,20 @@ const Login = (props) => {
   const [password, resetPassword] = useField('password')
   const [usernameValidator, setUsernameValidator] = useState('form-control')
   const [passwordValidator, setPasswordValidator] = useState('form-control')
+  const [feedback, setFeedback] = useState('')
+  const [passwordFeedback, setPasswordFeedback] = useState('')
 
-  useEffect(() => {
-    if (username.value.length > 3) {
-      setUsernameValidator('form-control is-valid')
-    } else if (username.value.length > 0) {
-      setUsernameValidator('form-control is-invalid')
-    } else {
-      setUsernameValidator('form-control')
-    }
-  }, [username.value])
-
-  useEffect(() => {
-    if (password.value.length > 3) {
-      setPasswordValidator('form-control is-valid')
-    } else if (password.value.length > 0) {
-      setPasswordValidator('form-control is-invalid')
-    } else {
-      setPasswordValidator('form-control')
-    }
-  }, [password.value])
+  Validator(username.value, setUsernameValidator, setFeedback)
+  Validator(password.value, setPasswordValidator, setPasswordFeedback)
+  // useEffect(() => {
+  //   if (password.value.length > 3) {
+  //     setPasswordValidator('form-control is-valid')
+  //   } else if (password.value.length > 0) {
+  //     setPasswordValidator('form-control is-invalid')
+  //   } else {
+  //     setPasswordValidator('form-control')
+  //   }
+  // }, [password.value])
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -43,6 +40,7 @@ const Login = (props) => {
     })
     resetUsername()
     resetPassword()
+    setFeedback('')
   }
 
   if (props.user) {
@@ -72,7 +70,7 @@ const Login = (props) => {
             <div className="col-sm-9">
               <input {...username} id="username" className={usernameValidator} />
               <div className="invalid-feedback">
-                username min length is 4.
+                {feedback}
               </div>
             </div>
           </div>
@@ -81,7 +79,7 @@ const Login = (props) => {
             <div className="col-sm-9">
               <input {...password}  id="password" className={passwordValidator}/>
               <div className="invalid-feedback">
-                Password min length is 4.
+                {passwordFeedback}
               </div>
             </div>
           </div>

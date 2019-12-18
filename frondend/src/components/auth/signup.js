@@ -15,6 +15,7 @@ const SingUp = (props) => {
   const [checkbox, setCheckBox] = useState(false)
 
 
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const formData = new FormData()
@@ -23,16 +24,6 @@ const SingUp = (props) => {
     formData.append('name', name.value)
     formData.append('password', password.value)
     formData.append('checkbox', checkbox)
-    // console.log(picture)
-
-    // const data = {
-    //   username: username.value,
-    //   password: password.value,
-    //   picture: picture.value,
-    //   name: name.value,
-    //   jobProvider: checkbox
-    // }
-    // data.jobProvider ? props.onSignUpProvider(data) : props.signUpCandidate(data)
     checkbox ? props.onSignUpProvider(formData) : props.signUpCandidate(formData)
 
     resetName()
