@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import useForm from "react-hook-form"
 import { Link } from 'react-router-dom'
 import { useField, useFileField } from '../../hooks/formHook'
+import { Validator } from '../../hooks/validator'
+
 // import { Validator } from '../../hooks/validator'
 import { signUpCandidate } from '../../reducers/candidatesReducer'
 import { onSignUpProvider } from '../../reducers/providersReducer'
@@ -16,15 +18,14 @@ const SingUp = (props) => {
   const [password, resetPassword] = useField('password')
   const [checkbox, setCheckBox] = useState(false)
 
+  const [userNameFeedback, setusernameFeedback] = useState('')
+  const [usernameClassValidator, setUsernameClassValidator] = useState('form-control')
 
-  const [test, setTest] = useState('')
+  const [nameClassValidator, setNameClassValidator] = useState('form-control')
+  const [nameFeedback, setNameFeedback] = useState('form-control')
 
-  // const [userNameFeedback, setusernameFeedback] = useState('')
-  // const [usernameClassValidator, setUsernameClassValidator] = useState('form-control')
-  // const [nameClassValidator, setNameClassValidator] = useState('form-control')
 
-  // Validator(username.value, setUsernameClassValidator, setusernameFeedback)
-  const { register, errors } = useForm()
+  Validator(username.value, setUsernameClassValidator, setusernameFeedback)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -54,32 +55,24 @@ const SingUp = (props) => {
         employees can find open vacancies or if you are representing a job provider,
         you can manage job notifications</p>
 
-        <input
-          name="username"
-          ref={register({
-            required: 'Required',
-            validate: value => value !== "admin" || "Nice try!"
-          })}
-        />
-
         <form onSubmit={handleSubmit}>
           <div className="form-group row">
             <label htmlFor="name" className="col-sm-3 col-form-label">Name</label>
             <div className="col-sm-9">
               <input {...name} className="form-control" id="name" required/>
-
+              {/* <div className="invalid-feedback">
+                {nameFeedback}
+              </div> */}
             </div>
           </div>
           <div className="form-group row">
             <label htmlFor="username" className="col-sm-3 col-form-label">Username</label>
             <div className="col-sm-9">
-              <input {...username} className="form-control" id="username"
-                required
+              <input {...username} className={usernameClassValidator} id="username"
               />
-              {errors.username && errors.username.message}
-              {/* <div className="invalid-feedback">
+              <div className="invalid-feedback">
                 {userNameFeedback}
-              </div> */}
+              </div>
             </div>
           </div>
           <div className="form-group row">
