@@ -45,6 +45,9 @@ const Candidate = (props) => {
             <p className="card-text">{props.candidate.description}</p>
 
             <div className="card-body ">
+              <div className="text-nowrap bd-highlight" >
+                Double click to to copy to clickboard.
+              </div>
               <ul className="list-group shadow">
                 <li className="list-group-item">
                   Phone: {props.candidate.phone

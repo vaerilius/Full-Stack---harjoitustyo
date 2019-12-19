@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Validator } from '../../hooks/validator'
 import { login } from '../../reducers/userReducer'
 import { Link } from 'react-router-dom'
-
-import { useForm } from '../../hooks/validation'
+import { useForm } from '../../hooks/form-input'
 
 const Login = (props) => {
   const [username, resetUsername, changeUsernameClassName, usernameFeedback, changeUsernameFeedback] = useForm('text')

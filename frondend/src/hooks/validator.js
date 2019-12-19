@@ -25,3 +25,25 @@ export const Validator = (fieldValue, setUsernameValidator, setFeedback) => {
 
   return false
 }
+export const FileValidator = (fileData, changeImageFeedback, changeImgClassName) => {
+
+  useEffect(() => {
+    console.log(fileData)
+    if (fileData.file) {
+      if (fileData.file.type.includes('image')) {
+        changeImgClassName('form-control is-valid')
+
+      } else {
+        changeImgClassName('form-control is-invalid')
+        changeImageFeedback('Type of picture must be valid')
+
+      }
+    } else {
+      changeImgClassName('form-control ')
+
+    }
+
+  }, [fileData.file])
+
+  return false
+}

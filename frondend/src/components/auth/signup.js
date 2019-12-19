@@ -1,36 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import useForm from "react-hook-form"
 import { Link } from 'react-router-dom'
-import { useField, useFileField } from '../../hooks/formHook'
-import { Validator } from '../../hooks/validator'
-
-// import { Validator } from '../../hooks/validator'
+// import { useField, useFileField } from '../../hooks/formHook'
+import { useForm, useFileInput } from '../../hooks/form-input'
+import { Validator, FileValidator } from '../../hooks/validator'
 import { signUpCandidate } from '../../reducers/candidatesReducer'
 import { onSignUpProvider } from '../../reducers/providersReducer'
 
 
 const SingUp = (props) => {
-  const [username, resetUsername] = useField('text')
-  const [name, resetName] = useField('text')
+  // const [name, resetName] = useField('text')
   // const [picture, resetPicture] = useFileField('file')
-  const [picture, setPicture] = useState(null)
-  const [password, resetPassword] = useField('password')
+  const [formValid, setFormValid] = useState(true)
   const [checkbox, setCheckBox] = useState(false)
 
-  const [userNameFeedback, setusernameFeedback] = useState('')
-  const [usernameClassValidator, setUsernameClassValidator] = useState('form-control')
+  const [name, resetName, changeNameClassName, nameFeedback, changeNameFeedback] = useForm('text')
+  const [username, resetUsername, changeUsernameClassName, usernameFeedback, changeUsernameFeedback] = useForm('text')
+  const [password, resetPassword, passValidationClass, passwordFeedback, changePasswordFeedback] = useForm('password')
+  // const [checkbox, setCheckBox, checkBoxValidationClass, checkBoxwordFeedback, changeCheckboxFeedback] = useForm('checkbox')
+  const [img, fileData, changeImgFeedback, resetImg, changeImgClassName] = useFileInput('file')
 
-  const [nameClassValidator, setNameClassValidator] = useState('form-control')
-  const [nameFeedback, setNameFeedback] = useState('form-control')
+  Validator(name.value, changeNameClassName, changeNameFeedback)
+  Validator(username.value, changeUsernameClassName, changeUsernameFeedback)
+  Validator(password.value, passValidationClass, changePasswordFeedback)
 
-
-  Validator(username.value, setUsernameClassValidator, setusernameFeedback)
-
+  FileValidator(fileData, changeImgFeedback, changeImgClassName)
+  useEffect(() => {
+    if (
+      img.className.includes('is-valid') &&
+      name.className.includes('is-valid') &&
+      username.className.includes('is-valid') &&
+      password.className.includes('is-valid')) {
+      setFormValid(false)
+    }
+  }, [img.className, name.className, username.className, password.className])
   const handleSubmit = (e) => {
     e.preventDefault()
     const formData = new FormData()
-    formData.append('profileImg', picture)
+    formData.append('profileImg', fileData.file)
     formData.append('username', username.value)
     formData.append('name', name.value)
     formData.append('password', password.value)
@@ -40,7 +47,8 @@ const SingUp = (props) => {
     resetName()
     resetPassword()
     // resetPicture()
-    setPicture(null)
+    // setPicture(null)
+    resetImg(null)
     resetUsername()
     setCheckBox(false)
   }
@@ -59,41 +67,57 @@ const SingUp = (props) => {
           <div className="form-group row">
             <label htmlFor="name" className="col-sm-3 col-form-label">Name</label>
             <div className="col-sm-9">
-              <input {...name} className="form-control" id="name" required/>
-              {/* <div className="invalid-feedback">
+              <input {...name} id="name" />
+              <div className="invalid-feedback">
                 {nameFeedback}
-              </div> */}
+              </div>
             </div>
           </div>
           <div className="form-group row">
             <label htmlFor="username" className="col-sm-3 col-form-label">Username</label>
             <div className="col-sm-9">
-              <input {...username} className={usernameClassValidator} id="username"
+              <input {...username} id="username"
               />
               <div className="invalid-feedback">
-                {userNameFeedback}
+                {usernameFeedback}
               </div>
             </div>
           </div>
           <div className="form-group row">
             <label htmlFor="password" className="col-sm-3 col-form-label">Password</label>
             <div className="col-sm-9">
-              <input {...password} className="form-control" id="password" required/>
+              <input {...password} id="password" />
+              <div className="invalid-feedback">
+                {passwordFeedback}
+              </div>
             </div>
           </div>
-          <div className="form-group row">
-            <label htmlFor="picture" className="col-sm-3 col-form-label">Picture url</label>
+          {/* <div className="form-group row">
+            <label htmlFor="picture" className="col-sm-3 col-form-label">Picture</label>
             <div className="col-sm-9">
               <input
                 label="Picture"
-                required
                 // validators={['required:1']}
                 // errorMessages={['this field is required']}
                 type='file'
                 onChange={(e) => setPicture(e.target.files[0])}
               />
 
-              {/* <input {...picture} className="form-control" id="picture" /> */}
+            </div>
+          </div> */}
+          <div className="form-group row">
+            <label htmlFor="picture1" className="col-sm-3 col-form-label">Picture1</label>
+            <div className="col-sm-9">
+              <input
+                {...img}
+                label="Picture"
+              />
+              <div className="invalid-feedback">
+                {fileData.feedback}
+              </div>
+              <div className="valid-feedback">
+                {fileData.feedback}
+              </div>
             </div>
           </div>
           <div className="form-group">
@@ -109,7 +133,7 @@ const SingUp = (props) => {
               </label>
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">Sign up</button>
+          <button type="submit" className='btn btn-primary' disabled={formValid}>Sign up</button>
         </form>
         <Link to='/'>
           <button type="button" className="btn btn-secondary btn-block mt-3">Back</button>
