@@ -193,5 +193,28 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
   }
 
 })
+jobsRouter.post('/:id/questions', async (request, response, next) => {
+  const body = request.body
+  console.log(body)
+  try {
+    const token = tokenExtractor(request)
+    const decodedToken = jwt.verify(token, config.SECRET)
+
+    let user = await Candidate.findById(decodedToken.id)
+    if (!user) {
+      user = await Provider.findById(decodedToken.id)
+    }
+    // console.log(user.name)
+
+    const updatedJob = await Job.findByIdAndUpdate(request.params.id,
+      { $push: { questions: { questioner: { name: user.name, picture: user.picture }, question: body.question } } },
+      { new: true }
+    )
+    response.json(updatedJob.toJSON())
+  } catch (error) {
+    next(error)
+  }
+
+})
 
 module.exports = jobsRouter
