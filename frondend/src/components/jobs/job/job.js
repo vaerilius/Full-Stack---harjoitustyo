@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { addCandidate } from '../../../reducers/jobReducer'
+import { addCandidate, handleSendMessage } from '../../../reducers/jobReducer'
 import { Link } from 'react-router-dom'
 import Togglable from '../../togglable'
 import ManageJob from './manageJob'
+import { useField } from '../../../hooks/formHook'
 
 const Job = (props) => {
 
   const [lastchange, setlastChange] = useState(null)
   const [createdAt, setCreatedAt] = useState(null)
+  const [message, resetMessage] = useField('text')
 
   useEffect(() => {
     setlastChange(props.job.updatedAt.split('T')[0])
@@ -20,8 +22,19 @@ const Job = (props) => {
 
   if (!props.job) {
     return (
-      <div>loading..</div>
+      <div className="text-center text-white">
+        <p>Loading</p>
+        <div className="spinner-border" role="status">
+        </div>
+      </div>
     )
+  }
+
+  const onSendMessage = (e) => {
+    e.preventDefault()
+    // console.log(message.value)
+    props.handleSendMessage({ question: message.value, jobID: props.job.id })
+    resetMessage('')
   }
 
   const ids = props.job.candidates.map(k => k.id)
@@ -108,13 +121,47 @@ const Job = (props) => {
           last update: {lastchange}
         </div>
       </div>
+      <div className="card m-5 card-hover" style={{ maxWidth: '420px' }}>
+        <div className="card-header">
+          <h4 className="card-title text-center">Questions</h4>
+        </div>
+        <div className="card-body">
+          <form onSubmit={onSendMessage}>
+
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">Message</span>
+              </div>
+              <textarea
+                {...message}
+                className="form-control" aria-label="With textarea"></textarea>
+            </div>
+            <button
+              type="submit" className="btn btn-primary btn-block my-2">send message</button>
+          </form>
+          <ul className="list-group">
+            <li className="list-group-item d-flex justify-content-between align-items-center">
+              Cras justo odio
+              < span className="badge badge-primary badge-pill">14</span>
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center">
+              Dapibus ac facilisis in
+              <span className="badge badge-primary badge-pill">2</span>
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center">
+              Morbi leo risus
+              <span className="badge badge-primary badge-pill">1</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
   )
 }
 const mapStateToProps = (state, ownProps) => {
   // console.log(state.user)
-  console.log(ownProps)
+  // console.log(ownProps)
   const job = state.jobs.find(j => j.id === ownProps.job.id)
   return {
     job,
@@ -125,6 +172,7 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   {
-    addCandidate
+    addCandidate,
+    handleSendMessage
   }
 )(Job)

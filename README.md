@@ -51,9 +51,9 @@
 | 17.12 | 5 | jest jobs tests, frondend work, on upload candidate cv |
 | 18.12 | 5 | frondend: clickboard to content, validator hook && login validator, trying different validators, userForm hook|
 | 19.12 | 3 | frondend: sign up valition|
-| 20.12 | 1 | frondend: reset validation when submit|
+| 20.12 | 3 | frondend: reset validation when submit, job questions, backend:question resource|
 | | | |
-| yht. | 113 | tuntia|
+| yht. | 114 | tuntia|
 
 
 

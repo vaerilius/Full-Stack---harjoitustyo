@@ -13,6 +13,16 @@ const jobSchema = mongoose.Schema({
     required: true,
     minlength: 4
   },
+  questions: [
+    {
+      questioner:
+      {
+        name: String,
+        picture: String
+      },
+      question: String
+    }
+  ],
   candidates: [
     {
       type: mongoose.Schema.Types.ObjectId,

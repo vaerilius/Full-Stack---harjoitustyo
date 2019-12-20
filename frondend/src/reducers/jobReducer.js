@@ -17,6 +17,8 @@ const reducer = (state = [], action) => {
       return [...state]
         .map(job => job.id === action.updatedJob.id
           ? action.updatedJob : job)
+    // case 'ADD_QUESTION':
+    //   return [...state]
     default:
       return state
   }
@@ -132,6 +134,25 @@ export const onUpdateJob = (data) => {
       }))
     }
 
+  }
+}
+export const handleSendMessage = (data) => {
+  return async dispatch => {
+    try {
+      // console.log(data)
+      const question = await jobService.addQuestion(data)
+      console.log(question)
+      // dispatch({
+      //   type: 'ADD_QUESTION',
+      //   data
+      // })
+    } catch (error) {
+      console.log(error)
+      dispatch(setNotification({
+        class: 'alert alert-danger',
+        message: 'Something went wrong'
+      }))
+    }
   }
 }
 
