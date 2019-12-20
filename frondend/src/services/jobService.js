@@ -34,7 +34,7 @@ const handleUpdatedJob = async (data) => {
   return response.data
 }
 const addQuestion = async (data) => {
-  const response = await axios.post(`${baseUrl}/${data.jobID}/questions`, getConfig())
+  const response = await axios.post(`${baseUrl}/${data.jobID}/questions`, data, getConfig())
 
   return response.data
 }

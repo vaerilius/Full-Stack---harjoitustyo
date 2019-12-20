@@ -45,7 +45,7 @@ const Job = (props) => {
   }
 
   const manageJobRef = React.createRef()
-
+  console.log(props.job.questions)
   return (
 
     <div className="container">
@@ -140,18 +140,21 @@ const Job = (props) => {
               type="submit" className="btn btn-primary btn-block my-2">send message</button>
           </form>
           <ul className="list-group">
-            <li className="list-group-item d-flex justify-content-between align-items-center">
-              Cras justo odio
-              < span className="badge badge-primary badge-pill">14</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between align-items-center">
-              Dapibus ac facilisis in
-              <span className="badge badge-primary badge-pill">2</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between align-items-center">
-              Morbi leo risus
-              <span className="badge badge-primary badge-pill">1</span>
-            </li>
+
+            {props.job.questions.map(q =>
+              <li key={q._id} className="list-group-item ">
+                <h5>{q.question}</h5>
+                <div className="d-flex justify-content-between">
+                  < h5>{q.questioner.name}</h5>
+                  <img src={q.questioner.picture}
+                    className="my-auto" style={{ height: '2rem' }} alt={q.questioner.name} />
+                </div>
+
+
+              </li>
+            )}
+
+
           </ul>
         </div>
       </div>

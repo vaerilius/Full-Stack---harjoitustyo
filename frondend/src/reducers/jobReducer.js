@@ -140,14 +140,18 @@ export const handleSendMessage = (data) => {
   return async dispatch => {
     try {
       // console.log(data)
-      const question = await jobService.addQuestion(data)
-      console.log(question)
-      // dispatch({
-      //   type: 'ADD_QUESTION',
-      //   data
-      // })
+      const updatedJob = await jobService.addQuestion(data)
+      console.log(updatedJob)
+      dispatch({
+        type: 'UPDATE_JOB',
+        updatedJob
+      })
+      dispatch(setNotification({
+        class: 'alert alert-success',
+        message: 'The question has been sended succefully'
+      }))
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       dispatch(setNotification({
         class: 'alert alert-danger',
         message: 'Something went wrong'

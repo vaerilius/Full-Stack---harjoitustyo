@@ -117,7 +117,9 @@ jobsRouter.put('/:id', async (request, response, next) => {
         description: request.body.description,
         title: request.body.title
       }, { new: true }
-    ).populate('jobsProvided', { title: 1, company: 1, description: 1 })
+    )
+      .populate('jobProvider', { username: 1, name: 1, picture: 1 })
+      .populate('candidates', { username: 1, name: 1, picture: 1 })
 
     console.log(updatedUser)
     // await updatedUser.save()
@@ -185,7 +187,8 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
       request.params.id,
       { $push: { candidates: user } }, { new: true }
     )
-      .populate('candidates', { username: 1, picture: 1, name: 1 })
+      .populate('jobProvider', { username: 1, name: 1, picture: 1 })
+      .populate('candidates', { username: 1, name: 1, picture: 1 })
 
     response.json(updatedJob.toJSON())
   } catch (error) {
@@ -195,7 +198,6 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
 })
 jobsRouter.post('/:id/questions', async (request, response, next) => {
   const body = request.body
-  console.log(body)
   try {
     const token = tokenExtractor(request)
     const decodedToken = jwt.verify(token, config.SECRET)
@@ -210,6 +212,8 @@ jobsRouter.post('/:id/questions', async (request, response, next) => {
       { $push: { questions: { questioner: { name: user.name, picture: user.picture }, question: body.question } } },
       { new: true }
     )
+      .populate('jobProvider', { username: 1, name: 1, picture: 1 })
+      .populate('candidates', { username: 1, name: 1, picture: 1 })
     response.json(updatedJob.toJSON())
   } catch (error) {
     next(error)
