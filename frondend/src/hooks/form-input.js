@@ -17,8 +17,8 @@ export const useForm = (type) => {
     setFeedback(data)
   }
   const reset = () => {
-    setValue('')
     setClassName('form-control')
+    setValue('')
   }
 
   return [{
@@ -33,7 +33,7 @@ export const useFileInput = (type) => {
   const [file, setFile] = useState(null)
   const [className, setClassName] = useState('form-control')
 
-  const [feedback, setFeedback] = useState('test')
+  const [feedback, setFeedback] = useState('')
 
   const onChange = (e) => {
     // console.log(e.target.files[0])
@@ -52,7 +52,7 @@ export const useFileInput = (type) => {
     type,
     onChange,
     className
-  },  { feedback, file }, changeFeedback, reset, setClassName
+  }, { feedback, file }, changeFeedback, reset, setClassName
 
   ]
 }

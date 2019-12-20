@@ -8,10 +8,10 @@ import { useForm } from '../../hooks/form-input'
 
 const Login = (props) => {
   const [username, resetUsername, changeUsernameClassName, usernameFeedback, changeUsernameFeedback] = useForm('text')
-  const [password, resetPassword, passValidationClass, passwordFeedback, changePasswordFeedback] = useForm('password')
+  const [password, resetPassword, changePasswordClassName, passwordFeedback, changePasswordFeedback] = useForm('password')
 
-  Validator(username.value, changeUsernameClassName, changeUsernameFeedback)
-  Validator(password.value, passValidationClass, changePasswordFeedback)
+  const resetUsernameValidation = Validator(username.value, changeUsernameClassName, changeUsernameFeedback)
+  const resetPasswordValidation = Validator(password.value, changePasswordClassName, changePasswordFeedback)
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -22,6 +22,8 @@ const Login = (props) => {
     })
     resetUsername()
     resetPassword()
+    resetUsernameValidation(false)
+    resetPasswordValidation(false)
 
   }
 
@@ -41,7 +43,7 @@ const Login = (props) => {
           <div className="form-group row">
             <label htmlFor="username" className="col-sm-3 col-form-label">Username</label>
             <div className="col-sm-9">
-              <input {...username} id="username"  />
+              <input {...username} id="username" />
               <div className="invalid-feedback">
                 {usernameFeedback}
               </div>
@@ -50,7 +52,7 @@ const Login = (props) => {
           <div className="form-group row">
             <label htmlFor="password" className="col-sm-3 col-form-label">Password</label>
             <div className="col-sm-9">
-              <input {...password} id="password"  />
+              <input {...password} id="password" />
               <div className="invalid-feedback">
                 {passwordFeedback}
               </div>

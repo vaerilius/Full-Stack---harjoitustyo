@@ -20,9 +20,9 @@ const SingUp = (props) => {
   // const [checkbox, setCheckBox, checkBoxValidationClass, checkBoxwordFeedback, changeCheckboxFeedback] = useForm('checkbox')
   const [img, fileData, changeImgFeedback, resetImg, changeImgClassName] = useFileInput('file')
 
-  Validator(name.value, changeNameClassName, changeNameFeedback)
-  Validator(username.value, changeUsernameClassName, changeUsernameFeedback)
-  Validator(password.value, passValidationClass, changePasswordFeedback)
+  const resetNameValidation = Validator(name.value, changeNameClassName, changeNameFeedback)
+  const resetUsernameValidation = Validator(username.value, changeUsernameClassName, changeUsernameFeedback)
+  const resetPasswordValidation = Validator(password.value, passValidationClass, changePasswordFeedback)
 
   FileValidator(fileData, changeImgFeedback, changeImgClassName)
   useEffect(() => {
@@ -51,6 +51,10 @@ const SingUp = (props) => {
     resetImg(null)
     resetUsername()
     setCheckBox(false)
+    resetNameValidation(false)
+    resetUsernameValidation(false)
+    resetPasswordValidation(false)
+
   }
 
   return (
