@@ -209,7 +209,7 @@ jobsRouter.post('/:id/questions', async (request, response, next) => {
     // console.log(user.name)
 
     const updatedJob = await Job.findByIdAndUpdate(request.params.id,
-      { $push: { questions: { questioner: { name: user.name, picture: user.picture }, question: body.question } } },
+      { $push: { questions: { questioner: { name: user.name, picture: user.picture, id: user.id, jobProvider: user.jobProvider }, question: body.question } } },
       { new: true }
     )
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })

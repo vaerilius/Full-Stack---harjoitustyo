@@ -18,7 +18,9 @@ const jobSchema = mongoose.Schema({
       questioner:
       {
         name: String,
-        picture: String
+        picture: String,
+        id: String,
+        jobProvider: Boolean
       },
       question: String
     }
