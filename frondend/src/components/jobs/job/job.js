@@ -45,7 +45,7 @@ const Job = (props) => {
   }
 
   const manageJobRef = React.createRef()
-  console.log(props.job.questions)
+  // console.log(props.job.questions)
   return (
 
     <div className="container">

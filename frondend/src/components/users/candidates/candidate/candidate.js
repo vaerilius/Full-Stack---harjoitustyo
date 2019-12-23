@@ -68,7 +68,7 @@ const Candidate = (props) => {
                 </li>
                 <li className="list-group-item">
                   <div className="d-flex w-100 justify-content-between">
-                    <div className="my-auto">Here is my CV: </div>
+                    <div className="my-auto">{props.candidate.cv ? 'Here is my CV:' : 'No CV'} </div>
                     <div className="my-auto">
                       <a href={props.candidate.cv} target="_blank" rel="noopener noreferrer">
                         <FontAwesomeIcon

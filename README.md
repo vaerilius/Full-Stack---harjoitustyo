@@ -52,9 +52,9 @@
 | 18.12 | 5 | frondend: clickboard to content, validator hook && login validator, trying different validators, userForm hook|
 | 19.12 | 3 | frondend: sign up valition|
 | 20.12 | 4 | frondend: reset validation when submit, job questions, backend:question resource, model update|
-| 23.12 | 1 | work with job question|
+| 23.12 | 2 | work with job question, styling langing component|
 | | | |
-| yht. | 118 | tuntia|
+| yht. | 119 | tuntia|
 
 
 
