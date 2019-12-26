@@ -1,8 +1,14 @@
 module.exports = {
-  collectCoverageFrom: ["src/**/*.{js,jsx,mjs}"],
-  testMatch: ["<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}", "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"],
-  transform: {
-    "^.+\\.(js|jsx|mjs)$": "<rootDir>/jest-transformer.js"
+  verbose: true,
+  unmockedModulePathPatterns: [
+    "node_modules/react/",
+    "node_modules/enzyme/"
+  ],
+  // testEnvironment: "enzyme",
+  testEnvironmentOptions: {
+    "enzymeAdapter": "react16"
   },
-  transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"]
-};
+  setupFilesAfterEnv: ["<rootDir>enzyme.js"],
+  // transformIgnorePatterns: [],
+  // transform: ''
+}

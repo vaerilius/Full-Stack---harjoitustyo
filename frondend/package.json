@@ -2,16 +2,11 @@
     "name": "job-book",
     "version": "0.1.0",
     "description": "job hunting",
-    "jest": {
-        "modulePaths": ["/shared/vendor/modules"],
-        "moduleFileExtensions": ["js", "jsx"],
-        "moduleDirectories": ["node_modules", "bower_components", "shared"]
-      },
     "scripts": {
         "build": "webpack --mode=production --history-api-fallback",
         "start": "webpack-dev-server --mode=development --history-api-fallback",
         "lint": "eslint .",
-        "test": "jest ",
+        "test": "jest --config ./jest.config.js",
         "test:watch": "npm run test -- --watch",
         "cypress:open": "cypress open"
     },
@@ -31,6 +26,8 @@
         "babel-preset-jest": "^24.9.0",
         "css-loader": "^3.2.0",
         "cypress": "^3.6.1",
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.2",
         "eslint": "^6.6.0",
         "eslint-plugin-jest": "^23.0.4",
         "eslint-plugin-react": "^7.16.0",
