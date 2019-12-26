@@ -473,6 +473,54 @@
 			"response": []
 		},
 		{
+			"name": "login candidate Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhYWEiLCJpZCI6IjVkYTA0NzUyZTc4NWE0MzM3Y2IzMTNjOSIsImlhdCI6MTU3MDc4ODE2M30.8Ex986vPssNBlUQw50pbXa9sXQT3gXxDQRDUk99gNU4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhYSIsImlkIjoiNWQ3NWY5N2Y3ZDZiNDEyZDEwZDg3ZjIwIiwiaWF0IjoxNTY4MDk2MTkyfQ.hZI7_mRB3EgM1PPg6ig0xZT6N7KRH2H3M_0EYZ7B1UE",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"candidate\",\n    \"password\": \"candidate\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "sign up provider",
 			"request": {
 				"auth": {
@@ -669,6 +717,55 @@
 			"response": []
 		},
 		{
+			"name": "question",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhYWphIiwiaWQiOiI1ZGZiMjIzNjk4OTY3ZjEyODZhMDNhNGYiLCJpYXQiOjE1NzY4Mjk2NTZ9.77ta1yPsEiGnyuuOCmV6CBYcG-bhB1-8RkiG9vInz4s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"name\": \"testaaja\",\n        \"age\": 88\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "update job",
 			"request": {
 				"auth": {
@@ -806,6 +903,61 @@
 						"users",
 						"candidates",
 						"5de0c4a262729f3810fc50b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update candidate cv",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNhbmRpZGF0ZSIsImlkIjoiNWRlMGM0YTI2MjcyOWYzODEwZmM1MGJlIiwiaWF0IjoxNTc1MDEyOTEzfQ.69qo7j4OYJUB5jtTTtDlMZsb-xtHJU_sYjcP9tO-uuU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "cv",
+							"type": "file",
+							"src": "/home/vaerilius/Downloads/542606415.pdf"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/users/candidates/5df87ad12632222ee8d95c44/cv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"candidates",
+						"5df87ad12632222ee8d95c44",
+						"cv"
 					]
 				}
 			},

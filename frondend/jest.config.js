@@ -1,14 +1,8 @@
-const { defaults } = require('jest-config');
 module.exports = {
+  collectCoverageFrom: ["src/**/*.{js,jsx,mjs}"],
+  testMatch: ["<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}", "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"],
   transform: {
-    '\\.(js|jsx)?$': 'babel-jest',
+    "^.+\\.(js|jsx|mjs)$": "<rootDir>/jest-transformer.js"
   },
-  bail: 1,
-  verbose: true,
-
-  moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
-  testPathIgnorePatterns: ['/node_modules/', '/build/'],
-  setupFilesAfterEnv: [
-    '@testing-library/react/cleanup-after-each'
-  ]
-}
+  transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"]
+};

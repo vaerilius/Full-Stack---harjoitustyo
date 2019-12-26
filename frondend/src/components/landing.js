@@ -17,7 +17,7 @@ const Landing = ({ user }) => {
         <div className="col-md-6 ">
           <div className="card shadow">
             <h1 className="text-center">Job Book</h1>
-            <img src={bg} class="img-fluid" alt="Responsive image" />
+            <img src={bg} className="img-fluid" alt="Responsive image" />
           </div>
         </div>
         <div className="col-md-6 my-auto">
@@ -25,14 +25,14 @@ const Landing = ({ user }) => {
             <Link to="/signup">
               <div className="card-body font-weight-bold text-center text-uppercase">
                 Sign Up
-            </div>
+              </div>
             </Link>
           </div>
           <div className="card bg-white m-5 shadow">
             <Link to="/login">
               <div className="card-body font-weight-bold text-center text-uppercase">
                 Or Sign In
-            </div>
+              </div>
             </Link>
           </div>
         </div>
