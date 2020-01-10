@@ -26,7 +26,7 @@ const config = (env, argv) => {
       rules: [
         {
           test: /\.(js|jsx)$/,
-          // exclude: /node_modules/,
+          exclude: /node_modules/,
           loader: 'babel-loader',
           query: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -49,6 +49,10 @@ const config = (env, argv) => {
       new webpack.DefinePlugin({
         BACKEND_URL: JSON.stringify(backend_url)
       }),
+      // require('babel-plugin-transform-react-constant-elements'),
+      // require('babel-plugin-transform-react-inline-elements'),
+      // require('babel-plugin-transform-react-remove-prop-types')['default'],
+      // require('babel-plugin-transform-react-pure-class-to-function')
       // new webpack.HotModuleReplacementPlugin(),
       // 'transform-es2015-modules-commonjs'
     ]
