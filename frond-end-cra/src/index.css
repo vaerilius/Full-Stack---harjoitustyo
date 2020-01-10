@@ -1,0 +1,33 @@
+:root {
+  --font-body: 500 1.25rem Helvetica, sans-serif;
+}
+.html {
+  font-size: 16px;
+}
+body {
+  margin: 0;
+  font: var(--font-body);
+
+}
+.bg {
+  background-image: url("./assest/bg.jpg");
+  height: 100vh;
+  width: 100vw;
+  right: 0; left: 0; top: 0; bottom: 0;
+  position: absolute;
+  display: flex;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.card {
+  opacity: 0;
+  transition: transform all 800ms ease, opacity 1 800ms ease;
+  transform: translate(-100%, 0);
+}
+.card.shadow{
+  transform: translate(0, 0);
+  opacity: 1;
+}
+
+
