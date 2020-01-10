@@ -54,7 +54,7 @@
 | 20.12 | 4 | frondend: reset validation when submit, job questions, backend:question resource, model update|
 | 23.12 | 2 | work with job question, styling langing component|
 | 26.12 | 3 | try to setup frondend jest tests|
-| 10.01 | 1 | try to setup frondend jest tests|
+| 10.01 | 2 | try to setup frondend jest tests|
 | | | |
 | yht. | 122 | tuntia|
 

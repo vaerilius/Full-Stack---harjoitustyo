@@ -33,28 +33,23 @@ const config = (env, argv) => {
           },
         },
         {
-          test: /\.css$/,
-          loaders: ['style-loader', 'css-loader'],
+          test: /\.(png|svg|jpg|gif)$/,
+          use: ['file-loader']
         },
-        { test: /\.jsx$/, loader: 'babel-loader',
-        //  exclude: /node_modules/
-        },
-        {
-          test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-          loader: 'url-loader?limit=100000'
-        }
+        { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
+        { test: /\.css$/, use: ['style-loader', 'css-loader'] }
       ],
     },
     plugins: [
       new webpack.DefinePlugin({
         BACKEND_URL: JSON.stringify(backend_url)
       }),
+      new webpack.HotModuleReplacementPlugin()
       // require('babel-plugin-transform-react-constant-elements'),
       // require('babel-plugin-transform-react-inline-elements'),
       // require('babel-plugin-transform-react-remove-prop-types')['default'],
       // require('babel-plugin-transform-react-pure-class-to-function')
       // new webpack.HotModuleReplacementPlugin(),
-      // 'transform-es2015-modules-commonjs'
     ]
   }
 
