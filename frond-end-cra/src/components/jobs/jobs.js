@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
+import { Animation } from '../../hooks/animation'
+
 
 const Jobs = (props) => {
 
@@ -12,7 +14,7 @@ const Jobs = (props) => {
     )
   }
   const newJobRef = React.createRef()
-
+  Animation()
   return (
     <div className="container">
       <div className="card shadow mb-5">

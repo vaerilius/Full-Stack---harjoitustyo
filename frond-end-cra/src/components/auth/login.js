@@ -5,6 +5,8 @@ import { Validator } from '../../hooks/validator'
 import { login } from '../../reducers/userReducer'
 import { Link } from 'react-router-dom'
 import { useForm } from '../../hooks/form-input'
+import { Animation } from '../../hooks/animation'
+
 
 const Login = (props) => {
   const [username, resetUsername, changeUsernameClassName, usernameFeedback, changeUsernameFeedback] = useForm('text')
@@ -32,6 +34,7 @@ const Login = (props) => {
       <Redirect to="/jobs/" />
     )
   }
+  Animation()
 
   return (
 

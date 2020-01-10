@@ -10,6 +10,7 @@ body {
 
 }
 .bg {
+  box-sizing: border-box;
   background-image: url("./assest/bg.jpg");
   height: 100vh;
   width: 100vw;
@@ -20,14 +21,25 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .card {
   opacity: 0;
-  transition: transform all 800ms ease, opacity 1 800ms ease;
+  transition: transform 800ms ease ,opacity 800ms ease;
   transform: translate(-100%, 0);
 }
-.card.shadow{
-  transform: translate(0, 0);
+.card.visible {
   opacity: 1;
+  transform: translate(0, 0);
+
 }
+.card.scale:hover {
+  transform: scale(1.15);
+}
+h1 {
+  text-shadow: 0 1px 2px rgb(106, 106, 206);
+}
+
+
+
 
 

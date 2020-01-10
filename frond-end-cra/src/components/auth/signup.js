@@ -6,6 +6,8 @@ import { useForm, useFileInput } from '../../hooks/form-input'
 import { Validator, FileValidator } from '../../hooks/validator'
 import { signUpCandidate } from '../../reducers/candidatesReducer'
 import { onSignUpProvider } from '../../reducers/providersReducer'
+import { Animation } from '../../hooks/animation'
+
 
 
 const SingUp = (props) => {
@@ -56,7 +58,7 @@ const SingUp = (props) => {
     resetPasswordValidation(false)
 
   }
-
+  Animation()
   return (
 
     <div className="card text-center mt-5">

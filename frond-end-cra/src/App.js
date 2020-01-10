@@ -52,7 +52,7 @@ const App = (props) => {
     <div className="bg">
       <Router>
         <Navbar />
-        <div className="container pt-5 mx-auto ">
+        <div className="container mx-auto my-auto ">
           <div className="row">
             <div className=" col-md-12">
               {props.notification.message
