@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import Togglable from '../../togglable'
 import ManageJob from './manageJob'
 import { useField } from '../../../hooks/formHook'
+import { Animation } from '../../../hooks/animation'
+
 
 const Job = (props) => {
 
@@ -46,18 +48,21 @@ const Job = (props) => {
 
   const manageJobRef = React.createRef()
   // console.log(props.job.questions)
+  Animation()
+
   return (
 
-    <div className="container">
+    <>
+
       <Link to={'/jobs/'}>
         <button type="button"
-          className="btn btn-primary btn-md btn-block">
+          className="btn btn-primary btn-md btn-block mb-5">
           Back to jobs</button>
       </Link>
 
       <div className='row'>
         <div className='col-md-6'>
-          <div className="card m-5 card-hover" style={{ maxWidth: '420px' }}>
+          <div className="card card-hover" >
             <div className="card-header">
               <h4 className="card-title text-center">{props.job.title}</h4>
             </div>
@@ -118,7 +123,7 @@ const Job = (props) => {
           </div>
         </div>
         <div className='col-md-6'>
-          <div className="card m-5 card-hover" style={{ maxWidth: '420px' }}>
+          <div className="card card-hover" >
             <div className="card-header">
               <h4 className="card-title text-center">Questions</h4>
             </div>
@@ -156,7 +161,7 @@ const Job = (props) => {
       </div>
 
 
-    </div>
+    </>
 
   )
 }

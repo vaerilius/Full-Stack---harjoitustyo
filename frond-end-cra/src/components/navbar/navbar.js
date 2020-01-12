@@ -20,7 +20,7 @@ const Navbar = (props) => {
   }
 
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-transparent">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-transparent fixed-top">
       <div className="navbar-brand">Job Book</div>
       {/* tee tähän oma hookki */}
       <button className="navbar-toggler" type="button"

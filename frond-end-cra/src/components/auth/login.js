@@ -38,7 +38,7 @@ const Login = (props) => {
 
   return (
 
-    <div className="card text-center mt-5">
+    <div className="card scale text-center">
       <div className="card-body">
         <h5 className="card-title">Login</h5>
         <p className="card-text">To use application please, login</p>

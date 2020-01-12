@@ -15,7 +15,7 @@ const Landing = ({ user }) => {
   return (
     <>
       <div className="col-md-12">
-        <div className="card shadow scale m-5 ">
+        <div className="card shadow scale  ">
           <h1 className=" display-5 text-center text-uppercase font-weight-bold ">Job Book</h1>
           <img src={bg} className="img-fluid" alt="Responsive image" />
         </div>

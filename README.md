@@ -55,8 +55,9 @@
 | 23.12 | 2 | work with job question, styling langing component|
 | 26.12 | 3 | try to setup frondend jest tests|
 | 10.01 | 7 | try to setup frondend jest tests, new frondend with create-react-app - css animations|
+| 12.01 | 2 |  css animations|
 | | | |
-| yht. | 129 | tuntia|
+| yht. | 131 | tuntia|
 
 
 

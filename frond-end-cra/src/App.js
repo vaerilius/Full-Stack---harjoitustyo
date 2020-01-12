@@ -24,6 +24,7 @@ import {
   Route, Redirect
 } from 'react-router-dom'
 
+
 // const useUsers = (url) => {
 //   const [users, setUsers] = useState([])
 //   useEffect(() => {
@@ -52,7 +53,7 @@ const App = (props) => {
     <div className="bg">
       <Router>
         <Navbar />
-        <div className="container mx-auto my-auto ">
+        <div className="container ">
           <div className="row">
             <div className=" col-md-12">
               {props.notification.message

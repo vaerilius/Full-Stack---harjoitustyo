@@ -16,8 +16,8 @@ const Jobs = (props) => {
   const newJobRef = React.createRef()
   Animation()
   return (
-    <div className="container">
-      <div className="card shadow mb-5">
+    <>
+      <div className="card shadow mb-4">
         <div className="card-body text-center">
           <h2 className="display-5 font-weight-bold">Jobs</h2>
         </div>
@@ -37,7 +37,8 @@ const Jobs = (props) => {
         )
         }
       </div>
-    </div>
+
+    </>
   )
 }
 

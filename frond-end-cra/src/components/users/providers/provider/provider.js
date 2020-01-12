@@ -5,6 +5,7 @@ import Togglable from '../../../togglable'
 import ManageProfile from '../../manageProfile'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { setNotification } from '../../../../reducers/notificationReducer'
+import { Animation } from '../../../../hooks/animation'
 
 
 const Provider = (props) => {
@@ -23,7 +24,7 @@ const Provider = (props) => {
       }
     )
   }
-
+  Animation()
   return (
     <div className="container">
       <div className="card my-auto mx-auto" style={{ maxWidth: '480px' }}>

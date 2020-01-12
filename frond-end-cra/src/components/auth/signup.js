@@ -61,7 +61,7 @@ const SingUp = (props) => {
   Animation()
   return (
 
-    <div className="card text-center mt-5">
+    <div className="card scale text-center ">
 
       <div className="card-body">
         <h5 className="card-title">Sign Up</h5>

@@ -9,6 +9,7 @@ import { setNotification } from '../../../../reducers/notificationReducer'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
+import { Animation } from '../../../../hooks/animation'
 
 {/* <i class="fas fa-file-pdf"></i> */ }
 const Candidate = (props) => {
@@ -29,6 +30,7 @@ const Candidate = (props) => {
   }
 
   const manageProfileRef = React.createRef()
+  Animation()
   return (
     <div className="card my-auto mx-auto" style={{ maxWidth: '480px' }}>
       <div className="card-header">

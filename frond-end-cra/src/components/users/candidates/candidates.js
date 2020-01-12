@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Animation } from '../../../hooks/animation'
 
 const Candidates = (props) => {
   if (!props.candidates) {
@@ -17,9 +18,9 @@ const Candidates = (props) => {
       </div>
     )
   }
-
+  Animation()
   return (
-    <div className="container">
+    <>
       <div className="card shadow mb-4">
         <div className="card-body text-center">
           <h2 className="display-5 font-weight-bold">Candidates</h2>
@@ -44,7 +45,7 @@ const Candidates = (props) => {
         }
       </div>
 
-    </div>
+    </>
   )
 }
 
