@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Togglable from '../../../togglable'
@@ -10,9 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import { Animation } from '../../../../hooks/animation'
 
-{
-  /* <i class="fas fa-file-pdf"></i> */
-}
+
 const Candidate = props => {
   if (!props.candidate) {
     return <h2>loading</h2>

@@ -12,13 +12,13 @@ export const Animation = () => {
   //   }, 300)
   // }, [])
   useEffect(() => {
-    setTimeout(() => {
-      const container = window.document.querySelectorAll('.container')
-      container.forEach(c => {
-        console.log(c.classList)
-        c.classList.add('visible')
-      })
-    }, 300)
+    // setTimeout(() => {
+    const container = window.document.querySelectorAll('.container')
+    container.forEach(c => {
+      // console.log(c.classList)
+      c.classList.add('visible')
+    })
+    // }, 300)
   }, [])
 
   return false

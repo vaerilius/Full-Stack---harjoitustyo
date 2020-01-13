@@ -12,18 +12,13 @@ import Candidates from './components/users/candidates/candidates'
 import Providers from './components/users/providers/providers'
 import Provider from './components/users/providers/provider/provider'
 
-
 import Candidate from './components/users/candidates/candidate/candidate'
 
 import { initializeJobs } from './reducers/jobReducer'
 import { initializeUser } from './reducers/userReducer'
 import { initializeCandidates } from './reducers/candidatesReducer'
 import { initializeProviders } from './reducers/providersReducer'
-import {
-  BrowserRouter as Router,
-  Route, Redirect
-} from 'react-router-dom'
-
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 // const useUsers = (url) => {
 //   const [users, setUsers] = useState([])
@@ -35,8 +30,7 @@ import {
 //   return users
 // }
 
-const App = (props) => {
-
+const App = props => {
   useEffect(() => {
     props.initializeJobs()
     props.initializeCandidates()
@@ -44,49 +38,87 @@ const App = (props) => {
     props.initializeUser()
   }, [])
 
-  const jobById = (id) => props.jobs.find(job => job.id === id)
-  const candidateById = (id) => props.candidates.find(c => c.id === id)
-  const providerById = (id) => props.providers.find(p => p.id === id)
-  // recursion this
+  const jobById = id => props.jobs.find(job => job.id === id)
+  const candidateById = id => props.candidates.find(c => c.id === id)
+  const providerById = id => props.providers.find(p => p.id === id)
 
   return (
-    <div className="bg">
+    <div className='bg'>
       <Router>
         <Navbar />
-        <div className="container ">
-          <div className="row">
-            <div className=" col-md-12 margin">
-              {props.notification.message
-                ? <Notification />
-                : null
-              }
+        <div className='container '>
+          <div className='row'>
+            <div className=' col-md-12 margin'>
+              {props.notification.message ? <Notification /> : null}
 
-              <Route exact path="/" render={() => <Landing />} />
-              <Route exact path="/signup" render={() => <SignUp />} />
-              <Route exact path="/login" render={() => <Login />} />
-              {props.user ? <Route exact path="/jobs" render={() => <Jobs />} />
-                : <Redirect to="/" />}
-              {props.user ? <Route exact path="/jobs/:id" render={({ match }) =>
-                <Job job={jobById(match.params.id)} />
-              } /> : <Redirect to="/" />}
+              {!props.user ? (
+                <Route exact path='/' render={() => <Landing />} />
+              ) : (
+                <Redirect to='/jobs' />
+              )}
+              {!props.user ? (
+                <Route exact path='/signup' render={() => <SignUp />} />
+              ) : (
+                <Redirect to='/jobs' />
+              )}
+              {!props.user ? (
+                <Route exact path='/login' render={() => <Login />} />
+              ) : (
+                <Redirect to='/jobs' />
+              )}
+              {props.user ? (
+                <Route exact path='/jobs' render={() => <Jobs />} />
+              ) : (
+                <Redirect to='/' />
+              )}
+              {props.user ? (
+                <Route
+                  exact
+                  path='/jobs/:id'
+                  render={({ match }) => <Job job={jobById(match.params.id)} />}
+                />
+              ) : (
+                <Redirect to='/' />
+              )}
 
-              {props.user ? <Route exact path="/candidates" render={() => <Candidates />} />
-                : <Redirect to="/" />}
+              {props.user ? (
+                <Route exact path='/candidates' render={() => <Candidates />} />
+              ) : (
+                <Redirect to='/' />
+              )}
 
-              {props.user ? <Route exact path="/candidates/:id" render={({ match }) =>
-                <Candidate candidate={candidateById(match.params.id)} />
-              } /> : <Redirect to="/" />}
-              {props.user ? <Route exact path="/providers" render={() => <Providers />} />
-                : <Redirect to="/" />}
-              {props.user ? <Route exact path="/providers/:id" render={({ match }) =>
-                <Provider provider={providerById(match.params.id)} />
-              } /> : <Redirect to="/" />}
+              {props.user ? (
+                <Route
+                  exact
+                  path='/candidates/:id'
+                  render={({ match }) => (
+                    <Candidate candidate={candidateById(match.params.id)} />
+                  )}
+                />
+              ) : (
+                <Redirect to='/' />
+              )}
+              {props.user ? (
+                <Route exact path='/providers' render={() => <Providers />} />
+              ) : (
+                <Redirect to='/' />
+              )}
+              {props.user ? (
+                <Route
+                  exact
+                  path='/providers/:id'
+                  render={({ match }) => (
+                    <Provider provider={providerById(match.params.id)} />
+                  )}
+                />
+              ) : (
+                <Redirect to='/' />
+              )}
             </div>
           </div>
         </div>
       </Router>
     </div>
-
   )
 }
 const mapStateToProps = state => {
@@ -97,7 +129,6 @@ const mapStateToProps = state => {
     providers: state.providers,
     user: state.user,
     notification: state.notification
-
   }
 }
 

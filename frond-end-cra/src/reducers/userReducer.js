@@ -10,7 +10,7 @@ const reducer = (state = null, action) => {
     case 'INIT_USER':
       return action.loggedUser
     case 'LOGIN_USER':
-      return action.loggedUser
+      return { ...action.user }
     case 'LOGOUT_USER':
       return null
     default:
@@ -36,25 +36,23 @@ export const initializeUser = () => {
 export const login = loginData => {
   return async dispatch => {
     try {
-      const loggedUser = await userService.loginUser(loginData)
-      window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
-      jobService.setToken(loggedUser.token)
-      providerService.setToken(loggedUser.token)
-      candidateService.setToken(loggedUser.token)
-      console.log(loggedUser)
+      const user = await userService.loginUser(loginData)
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      jobService.setToken(user.token)
+      providerService.setToken(user.token)
+      candidateService.setToken(user.token)
+      console.log(user)
 
       dispatch(
         setNotification({
           class: 'alert alert-success',
-          message: `user ${loggedUser.username} signed in successfully`
+          message: `user ${user.username} signed in successfully`
         })
       )
-      if (loggedUser) {
         dispatch({
           type: 'LOGIN_USER',
-          loggedUser: loggedUser
+          user
         })
-      }
 
     } catch (error) {
       console.log(error)

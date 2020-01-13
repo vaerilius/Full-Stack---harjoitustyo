@@ -13,7 +13,7 @@ const NewJob = (props) => {
 
   useEffect(() => {
     props.initializeProviders()
-  }, [props.jobs])
+  }, [props])
 
   const handleSubmit = (e) => {
     e.preventDefault()

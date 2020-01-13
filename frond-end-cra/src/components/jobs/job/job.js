@@ -14,10 +14,10 @@ const Job = props => {
 
   useEffect(() => {
     setlastChange(props.job.updatedAt.split('T')[0])
-  }, [props.job.candidates])
+  }, [props])
   useEffect(() => {
     setCreatedAt(props.job.createdAt.split('T')[0])
-  }, [])
+  }, [props])
 
   if (!props.job) {
     return (

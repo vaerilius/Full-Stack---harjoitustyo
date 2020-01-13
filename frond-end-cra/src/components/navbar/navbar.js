@@ -6,7 +6,6 @@ import { login, logout } from '../../reducers/userReducer'
 const Navbar = (props) => {
 
   const [isToggled, setssToggled] = useState('collapse navbar-collapse')
-  const [userUrl, setUserUrl] = useState('/')
   const toggle = () => {
     setssToggled(isToggled.includes('show') ? 'collapse navbar-collapse ' : 'collapse navbar-collapse show')
     setTimeout(() => {

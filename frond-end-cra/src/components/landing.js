@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Animation } from '../hooks/animation'
 import bg from '../assest/bg.jpeg'
+
 const Landing = ({ user }) => {
   if (user) {
     return <Redirect to='/jobs/' />
@@ -15,7 +16,7 @@ const Landing = ({ user }) => {
           <h1 className=' display-5 text-center text-uppercase font-weight-bold '>
             Job Book
           </h1>
-          <img src={bg} className='img-fluid' alt='Responsive image' />
+          <img src={bg} className='img-fluid' alt='Responsive' />
         </div>
       </div>
       <div className='col-md-12 '>

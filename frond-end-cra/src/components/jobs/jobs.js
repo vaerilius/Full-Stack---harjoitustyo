@@ -8,7 +8,7 @@ import { Animation } from '../../hooks/animation'
 
 const Jobs = (props) => {
 
-  if (!props.jobs) {
+  if (!props.user) {
     return (
       <div>loading..</div>
     )
