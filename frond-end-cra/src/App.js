@@ -20,16 +20,6 @@ import { initializeCandidates } from './reducers/candidatesReducer'
 import { initializeProviders } from './reducers/providersReducer'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
-// const useUsers = (url) => {
-//   const [users, setUsers] = useState([])
-//   useEffect(() => {
-//     axios.get(`${url}/api/users`).then(response => {
-//       setUsers(response.data)
-//     })
-//   }, [url])
-//   return users
-// }
-
 const App = props => {
   useEffect(() => {
     props.initializeJobs()
@@ -37,7 +27,6 @@ const App = props => {
     props.initializeProviders()
     props.initializeUser()
   }, [])
-
   const jobById = id => props.jobs.find(job => job.id === id)
   const candidateById = id => props.candidates.find(c => c.id === id)
   const providerById = id => props.providers.find(p => p.id === id)

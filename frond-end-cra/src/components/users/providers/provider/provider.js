@@ -27,7 +27,7 @@ const Provider = (props) => {
   Animation()
   return (
     <div className="container">
-      <div className="card my-auto mx-auto" style={{ maxWidth: '480px' }}>
+      <div className="card my-auto mx-auto" >
         <div className="card-header">
          Job provider
         </div>
