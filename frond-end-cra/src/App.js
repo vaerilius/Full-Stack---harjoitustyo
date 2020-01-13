@@ -55,7 +55,7 @@ const App = (props) => {
         <Navbar />
         <div className="container ">
           <div className="row">
-            <div className=" col-md-12">
+            <div className=" col-md-12 margin">
               {props.notification.message
                 ? <Notification />
                 : null

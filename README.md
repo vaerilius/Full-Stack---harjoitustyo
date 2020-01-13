@@ -56,8 +56,9 @@
 | 26.12 | 3 | try to setup frondend jest tests|
 | 10.01 | 7 | try to setup frondend jest tests, new frondend with create-react-app - css animations|
 | 12.01 | 2 |  css animations|
+| 13.01 | 1,5 |  css animations - solving login bug|
 | | | |
-| yht. | 131 | tuntia|
+| yht. | 132,5 | tuntia|
 
 
 

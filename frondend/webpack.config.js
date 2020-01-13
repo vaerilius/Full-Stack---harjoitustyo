@@ -6,6 +6,7 @@ const config = (env, argv) => {
   console.log('argv', argv.mode)
 
 
+  const backend_url = 'http://localhost:3001'
 
 
   return {

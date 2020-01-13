@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import userService from '../services/userService'
 import jobService from '../services/jobService'
 import providerService from '../services/providerService'
@@ -29,11 +30,10 @@ export const initializeUser = () => {
         loggedUser
       })
     }
-
   }
 }
 
-export const login = (loginData) => {
+export const login = loginData => {
   return async dispatch => {
     try {
       const loggedUser = await userService.loginUser(loginData)
@@ -41,26 +41,29 @@ export const login = (loginData) => {
       jobService.setToken(loggedUser.token)
       providerService.setToken(loggedUser.token)
       candidateService.setToken(loggedUser.token)
+      console.log(loggedUser)
 
-
-      dispatch({
-        type: 'LOGIN_USER',
-        loggedUser
-      })
-      dispatch(setNotification(
-        {
+      dispatch(
+        setNotification({
           class: 'alert alert-success',
           message: `user ${loggedUser.username} signed in successfully`
-        }
-      ))
+        })
+      )
+      if (loggedUser) {
+        dispatch({
+          type: 'LOGIN_USER',
+          loggedUser: loggedUser
+        })
+      }
+
     } catch (error) {
       console.log(error)
-      dispatch(setNotification(
-        {
+      dispatch(
+        setNotification({
           class: 'alert alert-danger',
           message: 'invalid username or password'
-        }
-      ))
+        })
+      )
     }
   }
 }
@@ -72,13 +75,12 @@ export const logout = () => {
     providerService.destroyToken()
     candidateService.destroyToken()
     dispatch({ type: 'LOGOUT_USER' })
-    dispatch(setNotification(
-      {
+    dispatch(
+      setNotification({
         class: 'alert alert-success',
         message: 'user logged out successfully'
-      }
-    ))
-
+      })
+    )
   }
 }
 export default reducer

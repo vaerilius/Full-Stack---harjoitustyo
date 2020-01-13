@@ -5,7 +5,7 @@ const Notification = (props) => {
 
   return (
 
-    <div className={props.notification.class} role="alert">
+    <div className={props.notification.class } role="alert">
       {props.notification.message}
     </div>
   )
