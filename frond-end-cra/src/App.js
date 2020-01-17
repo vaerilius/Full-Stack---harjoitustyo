@@ -111,7 +111,7 @@ const App = props => {
   )
 }
 const mapStateToProps = state => {
-  console.log(state)
+  // console.log(state)
   return {
     jobs: state.jobs,
     candidates: state.candidates,
