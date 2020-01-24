@@ -9,7 +9,6 @@ import { initializeJobs } from '../../reducers/jobReducer'
 
 const Jobs = ({ user, jobs, initializeJobs }) => {
   useEffect(() => {
-    console.log('hei')
     // muuttuu sockectIOn jälkeen
     // if (jobs.length === 0) {
     initializeJobs()

@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { Validator } from '../../hooks/validator'
 import { login } from '../../reducers/userReducer'
 import { Link } from 'react-router-dom'
@@ -47,9 +46,6 @@ const Login = props => {
     resetPasswordValidation(false)
   }
 
-  if (props.user) {
-    return <Redirect to='/jobs/' />
-  }
   Animation()
 
   return (

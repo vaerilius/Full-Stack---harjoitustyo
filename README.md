@@ -61,6 +61,7 @@
 |   12.01   | 2    | css animations                                                                                                               |
 |   13.01   | 2,5  | css animations - solved login bug                                                                                            |
 |   17.01   | 2,5  | frondend test - problem with redux when run tests                                                                            |
-|   24.01   | 3    | frondend: lazy loading                                                                                                       |
+|   24.01   | 4    | frondend: lazy loading, notification animation                                                                               |
 |           |      |                                                                                                                              |
-|   yht.    | 139  | tuntia                                                                                                                       |
+|   yht.    | 140  | tuntia                                                                                                                       |
+|  puuttuu  | 35h  | tuntia                                                                                                                       |
