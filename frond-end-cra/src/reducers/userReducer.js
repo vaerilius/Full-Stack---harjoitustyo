@@ -41,7 +41,7 @@ export const login = loginData => {
       jobService.setToken(user.token)
       providerService.setToken(user.token)
       candidateService.setToken(user.token)
-      console.log(user)
+      // console.log(user)
 
       dispatch(
         setNotification({
@@ -49,11 +49,10 @@ export const login = loginData => {
           message: `user ${user.username} signed in successfully`
         })
       )
-        dispatch({
-          type: 'LOGIN_USER',
-          user
-        })
-
+      dispatch({
+        type: 'LOGIN_USER',
+        user
+      })
     } catch (error) {
       console.log(error)
       dispatch(

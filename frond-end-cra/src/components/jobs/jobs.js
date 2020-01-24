@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
 import { Animation } from '../../hooks/animation'
 
+import { initializeJobs } from '../../reducers/jobReducer'
+
 const Jobs = props => {
-  if (!props) {
-    return <div>loading..</div>
-  }
+  useEffect(() => {
+    props.initializeJobs()
+  }, [])
 
   const newJobRef = React.createRef()
   Animation()
@@ -41,4 +43,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Jobs)
+export default connect(mapStateToProps, { initializeJobs })(Jobs)

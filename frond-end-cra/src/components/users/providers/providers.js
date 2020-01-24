@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Animation } from '../../../hooks/animation'
+import { initializeProviders } from '../../../reducers/providersReducer'
 
-const Providers = props => {
+const Providers = ({ providers, initializeProviders }) => {
+  useEffect(() => {
+    initializeProviders()
+  }, [initializeProviders])
+
   Animation()
   return (
     <div className='container'>
@@ -13,7 +19,7 @@ const Providers = props => {
         </div>
       </div>
       <div className='list-group'>
-        {props.providers.map(p => (
+        {providers.map(p => (
           <div className='list-group mb-2' key={p.id}>
             <div className='list-group-item list-group-item-action'>
               <Link to={`/providers/${p.id}`}>
@@ -46,4 +52,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Providers)
+export default connect(mapStateToProps, { initializeProviders })(Providers)

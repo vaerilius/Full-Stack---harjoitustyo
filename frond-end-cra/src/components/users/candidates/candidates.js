@@ -1,24 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Animation } from '../../../hooks/animation'
+import { initializeCandidates } from '../../../reducers/candidatesReducer'
 
-const Candidates = props => {
-  if (!props.candidates) {
-    return (
-      <div className='container'>
-        <div className='text-center'>
-          <div
-            style={{ width: '4rem', height: '4rem' }}
-            className='spinner-grow bg-transparent'
-            role='status'
-          >
-            <h2 className=' text-white'>Loading...</h2>
-          </div>
-        </div>
-      </div>
-    )
-  }
+const Candidates = ({ candidates, initializeCandidates }) => {
+  useEffect(() => {
+    initializeCandidates()
+  }, [initializeCandidates])
+
   Animation()
   return (
     <div className='container'>
@@ -28,7 +18,7 @@ const Candidates = props => {
         </div>
       </div>
       <div className='list-group'>
-        {props.candidates.map(c => (
+        {candidates.map(c => (
           <div className='list-group mb-2' key={c.id}>
             <div className='list-group-item list-group-item-action'>
               <Link to={`/candidates/${c.id}`}>
@@ -61,4 +51,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Candidates)
+export default connect(mapStateToProps, { initializeCandidates })(Candidates)

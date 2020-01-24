@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../../hooks/formHook'
 import { addNewJob } from '../../reducers/jobReducer'
-import { initializeProviders } from '../../reducers/providersReducer'
 
 const NewJob = props => {
   const [title, resetTitle] = useField('text')
   const [description, resetDescription] = useField('text')
   const [company, resetCompany] = useField('text')
   const [picture, setPicture] = useState(null)
-
-  useEffect(() => {
-    props.initializeProviders()
-  }, [props])
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -81,6 +76,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-  addNewJob,
-  initializeProviders
+  addNewJob
 })(NewJob)
