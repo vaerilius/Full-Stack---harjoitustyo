@@ -61,6 +61,6 @@
 |   12.01   | 2    | css animations                                                                                                               |
 |   13.01   | 2,5  | css animations - solved login bug                                                                                            |
 |   17.01   | 2,5  | frondend test - problem with redux when run tests                                                                            |
-|   24.01   | 2    | frondend: lazy loading                                                                                                       |
+|   24.01   | 3    | frondend: lazy loading                                                                                                       |
 |           |      |                                                                                                                              |
-|   yht.    | 138  | tuntia                                                                                                                       |
+|   yht.    | 139  | tuntia                                                                                                                       |

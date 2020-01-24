@@ -2,29 +2,27 @@ import React, { useEffect, Suspense, lazy } from 'react'
 import { connect } from 'react-redux'
 
 import Landing from './components/landing'
-import SignUp from './components/auth/signup'
-import Navbar from './components/navbar/navbar'
-import Notification from './components/notification'
-// import Jobs from './components/jobs/jobs'
 import Job from './components/jobs/job/job'
-import Login from './components/auth/login'
-// import Candidates from './components/users/candidates/candidates'
-// import Providers from './components/users/providers/providers'
-import Provider from './components/users/providers/provider/provider'
 
+import Provider from './components/users/providers/provider/provider'
 import Candidate from './components/users/candidates/candidate/candidate'
 
-// import { initializeJobs } from './reducers/jobReducer'
 import { initializeUser } from './reducers/userReducer'
-// import { initializeCandidates } from './reducers/candidatesReducer'
-// import { initializeProviders } from './reducers/providersReducer'
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch
 } from 'react-router-dom'
-// const Landing = lazy(() => import('./components/landing'))
+
+// import SignUp from './components/auth/signup'
+// import Login from './components/auth/login'
+// import Navbar from './components/navbar/navbar'
+const Notification = lazy(() => import('./components/notification'))
+const Navbar = lazy(() => import('./components/navbar/navbar'))
+const SignUp = lazy(() => import('./components/auth/signup'))
+const Login = lazy(() => import('./components/auth/login'))
+
 const Jobs = lazy(() => import('./components/jobs/jobs'))
 const Candidates = lazy(() =>
   import('./components/users/candidates/candidates')
@@ -33,14 +31,10 @@ const Providers = lazy(() => import('./components/users/providers/providers'))
 
 const App = props => {
   useEffect(() => {
-    // props.initializeJobs()
-    // props.initializeCandidates()
-    // props.initializeProviders()
     props.initializeUser()
   }, [])
-  const jobById = id => props.jobs.find(job => job.id === id)
-  const candidateById = id => props.candidates.find(c => c.id === id)
-  const providerById = id => props.providers.find(p => p.id === id)
+
+  const findById = (id, array) => array.find(item => item.id === id)
 
   return (
     <div className='bg'>
@@ -76,6 +70,7 @@ const App = props => {
                 ) : (
                   <Redirect to='/jobs' />
                 )}
+
                 {!props.user ? (
                   <Route exact path='/login' render={() => <Login />} />
                 ) : (
@@ -88,12 +83,39 @@ const App = props => {
                   ) : (
                     <Redirect to='/' />
                   )}
+                  {props.user ? (
+                    <Route
+                      exact
+                      path='/jobs/:id'
+                      render={({ match }) => (
+                        <Job job={findById(match.params.id, props.jobs)} />
+                      )}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
                   {/* candidates */}
                   {props.user ? (
                     <Route
                       exact
                       path='/candidates'
                       render={() => <Candidates />}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
+                  {props.user ? (
+                    <Route
+                      exact
+                      path='/candidates/:id'
+                      render={({ match }) => (
+                        <Candidate
+                          candidate={findById(
+                            match.params.id,
+                            props.candidates
+                          )}
+                        />
+                      )}
                     />
                   ) : (
                     <Redirect to='/' />
@@ -108,43 +130,20 @@ const App = props => {
                   ) : (
                     <Redirect to='/' />
                   )}
+                  {props.user ? (
+                    <Route
+                      exact
+                      path='/providers/:id'
+                      render={({ match }) => (
+                        <Provider
+                          provider={findById(match.params.id, props.providers)}
+                        />
+                      )}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
                 </Switch>
-
-                {props.user ? (
-                  <Route
-                    exact
-                    path='/jobs/:id'
-                    render={({ match }) => (
-                      <Job job={jobById(match.params.id)} />
-                    )}
-                  />
-                ) : (
-                  <Redirect to='/' />
-                )}
-
-                {props.user ? (
-                  <Route
-                    exact
-                    path='/candidates/:id'
-                    render={({ match }) => (
-                      <Candidate candidate={candidateById(match.params.id)} />
-                    )}
-                  />
-                ) : (
-                  <Redirect to='/' />
-                )}
-
-                {props.user ? (
-                  <Route
-                    exact
-                    path='/providers/:id'
-                    render={({ match }) => (
-                      <Provider provider={providerById(match.params.id)} />
-                    )}
-                  />
-                ) : (
-                  <Redirect to='/' />
-                )}
               </div>
             </div>
           </div>
@@ -165,8 +164,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-  // initializeJobs,
-  // initializeCandidates,
   initializeUser
-  // initializeProviders
 })(App)

@@ -8,7 +8,7 @@ export const Animation = () => {
         // console.log(c.classList)
         c.classList.add('visible')
       })
-    }, 300)
+    }, 100)
   }, [])
 
   return false

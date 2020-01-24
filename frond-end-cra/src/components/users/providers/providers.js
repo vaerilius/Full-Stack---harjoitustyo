@@ -7,7 +7,9 @@ import { initializeProviders } from '../../../reducers/providersReducer'
 
 const Providers = ({ providers, initializeProviders }) => {
   useEffect(() => {
+    // if (providers.length === 0) {
     initializeProviders()
+    // }
   }, [initializeProviders])
 
   Animation()

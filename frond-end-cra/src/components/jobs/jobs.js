@@ -7,10 +7,14 @@ import { Animation } from '../../hooks/animation'
 
 import { initializeJobs } from '../../reducers/jobReducer'
 
-const Jobs = props => {
+const Jobs = ({ user, jobs, initializeJobs }) => {
   useEffect(() => {
-    props.initializeJobs()
-  }, [])
+    console.log('hei')
+    // muuttuu sockectIOn jälkeen
+    // if (jobs.length === 0) {
+    initializeJobs()
+    // }
+  }, [initializeJobs])
 
   const newJobRef = React.createRef()
   Animation()
@@ -21,14 +25,14 @@ const Jobs = props => {
           <h2 className='display-5 font-weight-bold'>Jobs</h2>
         </div>
       </div>
-      {props.user.jobProvider ? (
+      {user.jobProvider ? (
         <Togglable buttonLabel='Create new job advertisement' ref={newJobRef}>
           <AddNewJob newJobRef={newJobRef} />
         </Togglable>
       ) : null}
 
       <div className='list-group'>
-        {props.jobs.map(job => (
+        {jobs.map(job => (
           <JobListItem key={job.id} job={job} />
         ))}
       </div>
