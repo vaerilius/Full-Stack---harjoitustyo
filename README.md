@@ -64,5 +64,5 @@
 |   24.01   | 4    | frondend: lazy loading, notification animation                                                                               |
 |   02.02   | 1.5  | frondend: lazy loading issue with single component by id                                                                     |
 |           |      |                                                                                                                              |
-|   yht.    | 140  | tuntia                                                                                                                       |
-|  puuttuu  | 35h  | tuntia                                                                                                                       |
+|   yht.    | 141.5  | tuntia                                                                                                                       |
+|  puuttuu  | 33.5h  | tuntia                                                                                                                       |
