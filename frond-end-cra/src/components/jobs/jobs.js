@@ -6,14 +6,16 @@ import Togglable from '../togglable'
 import { Animation } from '../../hooks/animation'
 
 import { initializeJobs } from '../../reducers/jobReducer'
+import { initializeProviders } from '../../reducers/providersReducer'
 
 const Jobs = ({ user, jobs, initializeJobs }) => {
   useEffect(() => {
     // muuttuu sockectIOn jälkeen
     // if (jobs.length === 0) {
     initializeJobs()
+    initializeProviders()
     // }
-  }, [initializeJobs])
+  }, [initializeJobs, initializeProviders])
 
   const newJobRef = React.createRef()
   Animation()
@@ -46,4 +48,7 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { initializeJobs })(Jobs)
+export default connect(mapStateToProps, {
+  initializeJobs,
+  initializeProviders
+})(Jobs)

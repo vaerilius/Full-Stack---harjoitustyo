@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Landing from './components/landing'
 import Job from './components/jobs/job/job'
 
-import Provider from './components/users/providers/provider/provider'
+// import Provider from './components/users/providers/provider/provider'
 import Candidate from './components/users/candidates/candidate/candidate'
 
 import { initializeUser } from './reducers/userReducer'
@@ -14,10 +14,9 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom'
-
-// import SignUp from './components/auth/signup'
-// import Login from './components/auth/login'
-// import Navbar from './components/navbar/navbar'
+const Provider = React.lazy(() =>
+  import('./components/users/providers/provider/provider')
+)
 const Notification = lazy(() => import('./components/notification'))
 const Navbar = lazy(() => import('./components/navbar/navbar'))
 const SignUp = lazy(() => import('./components/auth/signup'))
@@ -28,6 +27,14 @@ const Candidates = lazy(() =>
   import('./components/users/candidates/candidates')
 )
 const Providers = lazy(() => import('./components/users/providers/providers'))
+
+const WaitingComponent = Component => {
+  return props => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Component {...props} />
+    </Suspense>
+  )
+}
 
 const App = ({ user, initializeUser, jobs, candidates, providers }) => {
   useEffect(() => {
@@ -142,6 +149,9 @@ const App = ({ user, initializeUser, jobs, candidates, providers }) => {
                     <Redirect to='/' />
                   )}
                 </Switch>
+                {/* <Switch>
+                  <Route path='/:id' component={WaitingComponent(Post)} />
+                </Switch> */}
               </div>
             </div>
           </div>

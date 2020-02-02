@@ -31,7 +31,7 @@ body {
   transition: transform 800ms ease;
 }
 .card.scale:hover {
-  transform: scale(1.1);
+  transform: scale(1.025);
 }
 
 h1 {
