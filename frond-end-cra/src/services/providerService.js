@@ -14,8 +14,7 @@ const getConfig = () => ({
   headers: { Authorization: token }
 })
 
-
-const signUpProvider = async (newUser) => {
+const signUpProvider = async newUser => {
   const response = await axios.post(`${baseUrl}/providers`, newUser)
   return response.data
 }
@@ -24,8 +23,12 @@ const getAllProviders = async () => {
 
   return response.data
 }
-const updateProviderProfile = async (data) => {
-  const response = await axios.put(`${baseUrl}/providers/${data.id}`, data, getConfig())
+const updateProviderProfile = async data => {
+  const response = await axios.put(
+    `${baseUrl}/providers/${data.id}`,
+    data,
+    getConfig()
+  )
   return response.data
 }
 export default {

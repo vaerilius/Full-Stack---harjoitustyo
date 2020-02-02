@@ -62,7 +62,7 @@
 |   13.01   | 2,5  | css animations - solved login bug                                                                                            |
 |   17.01   | 2,5  | frondend test - problem with redux when run tests                                                                            |
 |   24.01   | 4    | frondend: lazy loading, notification animation                                                                               |
-|   02.02   | 1.5  | frondend: lazy loading issue with single component by id                                                                     |
+|   02.02   | 3    | frondend: lazy loading issue with single component by id, deploy backend, grondend .env setup                                |
 |           |      |                                                                                                                              |
-|   yht.    | 141.5  | tuntia                                                                                                                       |
-|  puuttuu  | 33.5h  | tuntia                                                                                                                       |
+|   yht.    | 143  | tuntia                                                                                                                       |
+|  puuttuu  | 32h  | tuntia                                                                                                                       |
