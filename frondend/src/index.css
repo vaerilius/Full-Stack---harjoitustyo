@@ -19,6 +19,7 @@ body {
   background-size: cover;
 }
 .container {
+  /* margin: 0; */
   opacity: 0;
   transition: transform 800ms ease, opacity 800ms ease;
   transform: translate(-100%, 0);
@@ -26,6 +27,9 @@ body {
 .container.visible {
   opacity: 1;
   transform: translate(0, 0);
+}
+.row {
+  /* margin: 0; */
 }
 .card {
   transition: transform 800ms ease;

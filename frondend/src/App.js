@@ -28,14 +28,6 @@ const Candidates = lazy(() =>
 )
 const Providers = lazy(() => import('./components/users/providers/providers'))
 
-const WaitingComponent = Component => {
-  return props => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Component {...props} />
-    </Suspense>
-  )
-}
-
 const App = ({ user, initializeUser, jobs, candidates, providers }) => {
   useEffect(() => {
     initializeUser()

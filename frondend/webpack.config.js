@@ -6,10 +6,10 @@ const config = (env, argv) => {
   console.log('argv', argv.mode)
 
   const backend_url =
-    argv.mode === 'development'
+    argv.mode === 'production'
       ? 'https://vaerilius-job-book.herokuapp.com'
-      : 'https://vaerilius-job-book.herokuapp.com'
-  // ? 'http://localhost:3001/'
+      : 'http://localhost:3001/'
+
   return {
     entry: ['@babel/polyfill', './src/index.js'],
     output: {
