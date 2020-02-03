@@ -8,8 +8,9 @@ const reducer = (state = [], action) => {
     case 'SIGNUP_PROVIDER':
       return [...state, action.createdProvider]
     case 'UPDATE_PROVIDER':
-      return [...state]
-        .map(p => p.id === action.updatedProvider.id ? action.updatedProvider : p)
+      return [...state].map(p =>
+        p.id === action.updatedProvider.id ? action.updatedProvider : p
+      )
     default:
       return [...state]
   }
@@ -24,7 +25,7 @@ export const initializeProviders = () => {
     })
   }
 }
-export const onSignUpProvider = (data) => {
+export const onSignUpProvider = data => {
   return async dispatch => {
     try {
       const createdProvider = await providerservice.signUpProvider(data)
@@ -32,24 +33,24 @@ export const onSignUpProvider = (data) => {
         type: 'SIGNUP_PROVIDER',
         createdProvider
       })
-      dispatch(setNotification(
-        {
+      dispatch(
+        setNotification({
           class: 'alert alert-success',
           message: `user: ${createdProvider.username} signed Up successfully`
-        }
-      ))
+        })
+      )
     } catch (error) {
-      dispatch(setNotification(
-        {
+      dispatch(
+        setNotification({
           class: 'alert alert-danger',
           message: 'ValidationError'
-        }
-      ))
+        })
+      )
     }
   }
 }
 
-export const updateProvider = (data) => {
+export const updateProvider = data => {
   return async dispatch => {
     try {
       const updatedProvider = await providerservice.updateProviderProfile(data)
@@ -59,19 +60,19 @@ export const updateProvider = (data) => {
         type: 'UPDATE_PROVIDER',
         updatedProvider
       })
-      dispatch(setNotification(
-        {
+      dispatch(
+        setNotification({
           class: 'alert alert-success',
           message: `user: ${updatedProvider.username} updated successfully`
-        }
-      ))
+        })
+      )
     } catch (error) {
-      dispatch(setNotification(
-        {
+      dispatch(
+        setNotification({
           class: 'alert alert-danger',
           message: 'ValidationError'
-        }
-      ))
+        })
+      )
     }
   }
 }

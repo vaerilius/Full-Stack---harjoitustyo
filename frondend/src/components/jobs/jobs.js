@@ -1,51 +1,54 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
+import { Animation } from '../../hooks/animation'
 
-const Jobs = (props) => {
+import { initializeJobs } from '../../reducers/jobReducer'
+import { initializeProviders } from '../../reducers/providersReducer'
 
-  if (!props.jobs) {
-    return (
-      <div>loading..</div>
-    )
-  }
+const Jobs = ({ user, jobs, initializeJobs }) => {
+  useEffect(() => {
+    // muuttuu sockectIOn jälkeen
+    // if (jobs.length === 0) {
+    initializeJobs()
+    initializeProviders()
+    // }
+  }, [initializeJobs, initializeProviders])
+
   const newJobRef = React.createRef()
-
+  Animation()
   return (
-    <div className="container">
-      <div className="card shadow mb-5">
-        <div className="card-body text-center">
-          <h2 className="display-5 font-weight-bold">Jobs</h2>
+    <div className='container'>
+      <div className='card shadow '>
+        <div className='card-body text-center'>
+          <h2 className='display-5 font-weight-bold'>Jobs</h2>
         </div>
       </div>
-      {props.user.jobProvider
-        ? <Togglable
-          buttonLabel='Create new job advertisement'
-          ref={newJobRef}>
+      {user.jobProvider ? (
+        <Togglable buttonLabel='Create new job advertisement' ref={newJobRef}>
           <AddNewJob newJobRef={newJobRef} />
         </Togglable>
-        : null
-      }
+      ) : null}
 
-      <div className="list-group">
-        {props.jobs.map(job =>
+      <div className='list-group'>
+        {jobs.map(job => (
           <JobListItem key={job.id} job={job} />
-        )
-        }
+        ))}
       </div>
     </div>
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     jobs: state.jobs,
     user: state.user
   }
 }
 
-export default connect(
-  mapStateToProps
-)(Jobs)
+export default connect(mapStateToProps, {
+  initializeJobs,
+  initializeProviders
+})(Jobs)

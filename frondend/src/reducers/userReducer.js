@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import userService from '../services/userService'
 import jobService from '../services/jobService'
 import providerService from '../services/providerService'
@@ -9,7 +10,7 @@ const reducer = (state = null, action) => {
     case 'INIT_USER':
       return action.loggedUser
     case 'LOGIN_USER':
-      return action.loggedUser
+      return { ...action.user }
     case 'LOGOUT_USER':
       return null
     default:
@@ -29,38 +30,37 @@ export const initializeUser = () => {
         loggedUser
       })
     }
-
   }
 }
 
-export const login = (loginData) => {
+export const login = loginData => {
   return async dispatch => {
     try {
-      const loggedUser = await userService.loginUser(loginData)
-      window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
-      jobService.setToken(loggedUser.token)
-      providerService.setToken(loggedUser.token)
-      candidateService.setToken(loggedUser.token)
+      const user = await userService.loginUser(loginData)
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      jobService.setToken(user.token)
+      providerService.setToken(user.token)
+      candidateService.setToken(user.token)
+      // console.log(user)
 
-
+      dispatch(
+        setNotification({
+          class: 'alert alert-success',
+          message: `user ${user.username} signed in successfully`
+        })
+      )
       dispatch({
         type: 'LOGIN_USER',
-        loggedUser
+        user
       })
-      dispatch(setNotification(
-        {
-          class: 'alert alert-success',
-          message: `user ${loggedUser.username} signed in successfully`
-        }
-      ))
     } catch (error) {
       console.log(error)
-      dispatch(setNotification(
-        {
+      dispatch(
+        setNotification({
           class: 'alert alert-danger',
           message: 'invalid username or password'
-        }
-      ))
+        })
+      )
     }
   }
 }
@@ -72,13 +72,12 @@ export const logout = () => {
     providerService.destroyToken()
     candidateService.destroyToken()
     dispatch({ type: 'LOGOUT_USER' })
-    dispatch(setNotification(
-      {
+    dispatch(
+      setNotification({
         class: 'alert alert-success',
         message: 'user logged out successfully'
-      }
-    ))
-
+      })
+    )
   }
 }
 export default reducer

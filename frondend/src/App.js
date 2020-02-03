@@ -1,91 +1,163 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense, lazy } from 'react'
 import { connect } from 'react-redux'
+
 import Landing from './components/landing'
-import SignUp from './components/auth/signup'
-
-import Navbar from './components/navbar/navbar'
-import Notification from './components/notification'
-import Jobs from './components/jobs/jobs'
 import Job from './components/jobs/job/job'
-import Login from './components/auth/login'
-import Candidates from './components/users/candidates/candidates'
-import Providers from './components/users/providers/providers'
-import Provider from './components/users/providers/provider/provider'
 
-
+// import Provider from './components/users/providers/provider/provider'
 import Candidate from './components/users/candidates/candidate/candidate'
 
-import { initializeJobs } from './reducers/jobReducer'
 import { initializeUser } from './reducers/userReducer'
-import { initializeCandidates } from './reducers/candidatesReducer'
-import { initializeProviders } from './reducers/providersReducer'
 import {
   BrowserRouter as Router,
-  Route, Redirect
+  Route,
+  Redirect,
+  Switch
 } from 'react-router-dom'
+const Provider = React.lazy(() =>
+  import('./components/users/providers/provider/provider')
+)
+const Notification = lazy(() => import('./components/notification'))
+const Navbar = lazy(() => import('./components/navbar/navbar'))
+const SignUp = lazy(() => import('./components/auth/signup'))
+const Login = lazy(() => import('./components/auth/login'))
 
-// const useUsers = (url) => {
-//   const [users, setUsers] = useState([])
-//   useEffect(() => {
-//     axios.get(`${url}/api/users`).then(response => {
-//       setUsers(response.data)
-//     })
-//   }, [url])
-//   return users
-// }
+const Jobs = lazy(() => import('./components/jobs/jobs'))
+const Candidates = lazy(() =>
+  import('./components/users/candidates/candidates')
+)
+const Providers = lazy(() => import('./components/users/providers/providers'))
 
-const App = (props) => {
+const WaitingComponent = Component => {
+  return props => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Component {...props} />
+    </Suspense>
+  )
+}
 
+const App = ({ user, initializeUser, jobs, candidates, providers }) => {
   useEffect(() => {
-    props.initializeJobs()
-    props.initializeCandidates()
-    props.initializeProviders()
-    props.initializeUser()
-  }, [])
+    initializeUser()
+  }, [initializeUser])
 
-  const jobById = (id) => props.jobs.find(job => job.id === id)
-  const candidateById = (id) => props.candidates.find(c => c.id === id)
-  const providerById = (id) => props.providers.find(p => p.id === id)
-  // recursion this
+  const findById = (id, array) => array.find(item => item.id === id)
 
   return (
-    <div className="bg">
+    <div className='bg'>
       <Router>
-        <Navbar />
-        <div className="container pt-5 mx-auto ">
-          <div className="row">
-            <div className=" col-md-12">
-              {props.notification.message
-                ? <Notification />
-                : null
-              }
+        <Suspense
+          fallback={
+            <div className='container'>
+              <div className='text-center'>
+                <div
+                  style={{ width: '4rem', height: '4rem' }}
+                  className='spinner-grow bg-transparent'
+                  role='status'
+                >
+                  <h2 className=' text-white'>Loading...</h2>
+                </div>
+              </div>
+            </div>
+          }
+        >
+          <Navbar />
+          <Notification />
 
-              <Route exact path="/" render={() => <Landing />} />
-              <Route exact path="/signup" render={() => <SignUp />} />
-              <Route exact path="/login" render={() => <Login />} />
-              {props.user ? <Route exact path="/jobs" render={() => <Jobs />} />
-                : <Redirect to="/" />}
-              {props.user ? <Route exact path="/jobs/:id" render={({ match }) =>
-                <Job job={jobById(match.params.id)} />
-              } /> : <Redirect to="/" />}
+          <div className='container '>
+            <div className='row'>
+              <div className=' col-md-12 margin'>
+                {/* {notification.message ? <Notification /> : null} */}
+                {!user ? (
+                  <Route exact path='/' render={() => <Landing />} />
+                ) : (
+                  <Redirect to='/jobs' />
+                )}
+                {!user ? (
+                  <Route exact path='/signup' render={() => <SignUp />} />
+                ) : (
+                  <Redirect to='/jobs' />
+                )}
 
-              {props.user ? <Route exact path="/candidates" render={() => <Candidates />} />
-                : <Redirect to="/" />}
-
-              {props.user ? <Route exact path="/candidates/:id" render={({ match }) =>
-                <Candidate candidate={candidateById(match.params.id)} />
-              } /> : <Redirect to="/" />}
-              {props.user ? <Route exact path="/providers" render={() => <Providers />} />
-                : <Redirect to="/" />}
-              {props.user ? <Route exact path="/providers/:id" render={({ match }) =>
-                <Provider provider={providerById(match.params.id)} />
-              } /> : <Redirect to="/" />}
+                {!user ? (
+                  <Route exact path='/login' render={() => <Login />} />
+                ) : (
+                  <Redirect to='/jobs' />
+                )}
+                <Switch>
+                  {/* jobs */}
+                  {user ? (
+                    <Route exact path='/jobs' render={() => <Jobs />} />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
+                  {user ? (
+                    <Route
+                      exact
+                      path='/jobs/:id'
+                      render={({ match }) => (
+                        <Job job={findById(match.params.id, jobs)} />
+                      )}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
+                  {/* candidates */}
+                  {user ? (
+                    <Route
+                      exact
+                      path='/candidates'
+                      render={() => <Candidates />}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
+                  {user ? (
+                    <Route
+                      exact
+                      path='/candidates/:id'
+                      render={({ match }) => (
+                        <Candidate
+                          candidate={findById(match.params.id, candidates)}
+                        />
+                      )}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
+                  {/* providers */}
+                  {user ? (
+                    <Route
+                      exact
+                      path='/providers'
+                      render={() => <Providers />}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
+                  {user ? (
+                    <Route
+                      exact
+                      path='/providers/:id'
+                      render={({ match }) => (
+                        <Provider
+                          provider={findById(match.params.id, providers)}
+                        />
+                      )}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
+                </Switch>
+                {/* <Switch>
+                  <Route path='/:id' component={WaitingComponent(Post)} />
+                </Switch> */}
+              </div>
             </div>
           </div>
-        </div>
+        </Suspense>
       </Router>
     </div>
-
   )
 }
 const mapStateToProps = state => {
@@ -96,13 +168,9 @@ const mapStateToProps = state => {
     providers: state.providers,
     user: state.user,
     notification: state.notification
-
   }
 }
 
 export default connect(mapStateToProps, {
-  initializeJobs,
-  initializeCandidates,
-  initializeUser,
-  initializeProviders
+  initializeUser
 })(App)

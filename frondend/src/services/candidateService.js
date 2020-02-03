@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = `${ BACKEND_URL }/api/users`
+const baseUrl = `${BACKEND_URL}/api/users`
 
 let token = null
 
@@ -15,8 +15,7 @@ const getConfig = () => ({
   headers: { Authorization: token }
 })
 
-
-const signUpCandidate = async (newUser) => {
+const signUpCandidate = async newUser => {
   const response = await axios.post(`${baseUrl}/candidates`, newUser)
   return response.data
 }
@@ -25,12 +24,20 @@ const getAllCandidates = async () => {
 
   return response.data
 }
-const updateCandidateProfile = async (data) => {
-  const response = await axios.put(`${baseUrl}/candidates/${data.id}`, data, getConfig())
+const updateCandidateProfile = async data => {
+  const response = await axios.put(
+    `${baseUrl}/candidates/${data.id}`,
+    data,
+    getConfig()
+  )
   return response.data
 }
 const uploadCV = async (formData, id) => {
-  const response = await axios.post(`${baseUrl}/candidates/${id}/cv`, formData, getConfig())
+  const response = await axios.post(
+    `${baseUrl}/candidates/${id}/cv`,
+    formData,
+    getConfig()
+  )
   return response.data
 }
 

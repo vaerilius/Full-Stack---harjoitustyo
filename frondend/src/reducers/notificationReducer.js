@@ -1,6 +1,7 @@
-
-const reducer = (state = { class: 'alert alert-primary', message: null }, action) => {
-
+const reducer = (
+  state = { class: 'alert alert-primary', message: null },
+  action
+) => {
   switch (action.type) {
     case 'SET_NOTIFICATION':
       return action.notification
@@ -9,7 +10,10 @@ const reducer = (state = { class: 'alert alert-primary', message: null }, action
   }
 }
 
-export const setNotification = (notification) => {
+export const setNotification = notification => {
+  // notification.class += ' visable'
+  // console.log(notification)
+
   return async dispatch => {
     dispatch({
       type: 'SET_NOTIFICATION',
@@ -20,7 +24,7 @@ export const setNotification = (notification) => {
         type: 'SET_NOTIFICATION',
         notification: { class: 'alert alert-primary', message: null }
       })
-    }, 4000)
+    }, 5000)
   }
 }
 

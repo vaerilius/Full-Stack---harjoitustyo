@@ -6,7 +6,6 @@ import { login, logout } from '../../reducers/userReducer'
 const Navbar = (props) => {
 
   const [isToggled, setssToggled] = useState('collapse navbar-collapse')
-  const [userUrl, setUserUrl] = useState('/')
   const toggle = () => {
     setssToggled(isToggled.includes('show') ? 'collapse navbar-collapse ' : 'collapse navbar-collapse show')
     setTimeout(() => {
@@ -20,7 +19,7 @@ const Navbar = (props) => {
   }
 
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-transparent">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-transparent ">
       <div className="navbar-brand">Job Book</div>
       {/* tee tähän oma hookki */}
       <button className="navbar-toggler" type="button"
