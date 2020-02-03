@@ -173,6 +173,11 @@ jobsRouter.delete('/:id', async (request, response, next) => {
     await user.save()
     await Job.deleteOne({ _id: request.params.id })
 
+    io.getIO().emit('jobs', {
+      action: 'DELETE',
+      jobID: request.params.id
+    })
+
     response.status(204).json({
       message: 'job removed'
     })
@@ -209,6 +214,11 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
     )
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })
       .populate('candidates', { username: 1, name: 1, picture: 1 })
+
+    io.getIO().emit('jobs', {
+      action: 'ADD_CANDIDATE',
+      updatedJob
+    })
 
     response.json(updatedJob.toJSON())
   } catch (error) {

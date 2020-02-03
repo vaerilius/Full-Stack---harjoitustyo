@@ -49,11 +49,7 @@ const App = ({
 
   useEffect(() => {
     socket.on('jobs', data => {
-      const isJobCreated = jobs.find(j => j.id == data.job.id)
-      console.log(data)
-      if (data.action === 'CREATE' && isJobCreated === undefined) {
-        handlePolling(data.job)
-      }
+      handlePolling(data)
     })
   }, [handlePolling])
 
