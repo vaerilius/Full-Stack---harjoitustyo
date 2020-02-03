@@ -203,6 +203,12 @@ export const handlePolling = data => {
         updatedJob: data.updatedJob
       })
     }
+    if (data.action === 'UPDATE_JOB') {
+      dispatch({
+        type: 'UPDATE_JOB',
+        updatedJob: data.updatedJob
+      })
+    }
   }
 }
 

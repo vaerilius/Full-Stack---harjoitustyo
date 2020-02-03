@@ -48,6 +48,7 @@ jobsRouter.get('/:id', async (req, res, next) => {
     const job = await Job.findById(req.params.id)
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })
       .populate('candidates', { username: 1, name: 1, picture: 1 })
+      .sort({ createdAt: -1 })
     if (job) {
       res.json(job.toJSON())
     } else {
@@ -114,6 +115,7 @@ jobsRouter.put('/:id', async (request, response, next) => {
     }
 
     const job = await Job.findById(request.params.id)
+    const provider = await Provider.findById(decodedToken.id)
 
     const newJob = {
       ...job.toJSON(),
@@ -127,21 +129,20 @@ jobsRouter.put('/:id', async (request, response, next) => {
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })
       .populate('candidates', { username: 1, name: 1, picture: 1 })
 
-    const updatedUser = await Provider.findByIdAndUpdate(
-      decodedToken.id,
-      {
-        company: request.body.company,
-        description: request.body.description,
-        title: request.body.title
-      },
-      { new: true }
-    )
-      .populate('jobProvider', { username: 1, name: 1, picture: 1 })
-      .populate('candidates', { username: 1, name: 1, picture: 1 })
+    provider.jobsProvided.map(j => {
+      if (j.id === updatedJob.id) {
+        j.title = request.body.title
+        j.description = request.body.description
+        j.company = request.body.company
+      }
+    })
 
-    console.log(updatedUser)
-    // await updatedUser.save()
+    provider.save()
 
+    io.getIO().emit('jobs', {
+      action: 'UPDATE_JOB',
+      updatedJob
+    })
     response.json(updatedJob)
   } catch (error) {
     next(error)
@@ -256,6 +257,12 @@ jobsRouter.post('/:id/questions', async (request, response, next) => {
     )
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })
       .populate('candidates', { username: 1, name: 1, picture: 1 })
+
+    io.getIO().emit('jobs', {
+      action: 'UPDATE_JOB',
+      updatedJob
+    })
+
     response.json(updatedJob.toJSON())
   } catch (error) {
     next(error)
