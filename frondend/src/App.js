@@ -1,5 +1,7 @@
 import React, { useEffect, Suspense, lazy } from 'react'
 import { connect } from 'react-redux'
+import io from '../socket-client'
+import { handlePolling } from './reducers/jobReducer'
 
 import Landing from './components/landing'
 import Job from './components/jobs/job/job'
@@ -28,10 +30,32 @@ const Candidates = lazy(() =>
 )
 const Providers = lazy(() => import('./components/users/providers/providers'))
 
-const App = ({ user, initializeUser, jobs, candidates, providers }) => {
+const App = ({
+  user,
+  initializeUser,
+  handlePolling,
+  jobs,
+  candidates,
+  providers
+}) => {
+  const socket = io.init('http://localhost:3001')
+
   useEffect(() => {
     initializeUser()
+    socket.on('connection', msg => {
+      console.log(msg)
+    })
   }, [initializeUser])
+
+  useEffect(() => {
+    socket.on('jobs', data => {
+      const isJobCreated = jobs.find(j => j.id == data.job.id)
+      console.log(data)
+      if (data.action === 'CREATE' && isJobCreated === undefined) {
+        handlePolling(data.job)
+      }
+    })
+  }, [handlePolling])
 
   const findById = (id, array) => array.find(item => item.id === id)
 
@@ -164,5 +188,6 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-  initializeUser
+  initializeUser,
+  handlePolling
 })(App)

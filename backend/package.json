@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js",
-    "watch": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node app.js",
+    "watch": "cross-env NODE_ENV=development nodemon app.js",
     "test": "cross-env NODE_ENV=test jest --watch --verbose",
     "lint": "eslint .",
-    "start:test": "cross-env NODE_ENV=test node index.js"
+    "start:test": "cross-env NODE_ENV=test node app.js"
   },
   "author": "Timo Tamminen",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "mongoose-unique-validator": "^2.0.3",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
+    "socket.io": "^2.3.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

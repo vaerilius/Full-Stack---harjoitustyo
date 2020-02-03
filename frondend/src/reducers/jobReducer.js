@@ -6,17 +6,20 @@ const reducer = (state = [], action) => {
     case 'INIT_JOBS':
       return [...action.jobs]
     case 'CREATE_JOB':
+      if (state.find(j => j.id === action.newJob.id)) {
+        return [...state]
+      }
       return [...state, action.newJob]
     case 'ADD_CANDIDATE':
-      return [...state]
-        .map(job => job.id === action.updatedJob.id
-          ? action.updatedJob : job)
+      return [...state].map(job =>
+        job.id === action.updatedJob.id ? action.updatedJob : job
+      )
     case 'REMOVE_JOB':
       return [...state].filter(job => job.id !== action.jobID)
     case 'UPDATE_JOB':
-      return [...state]
-        .map(job => job.id === action.updatedJob.id
-          ? action.updatedJob : job)
+      return [...state].map(job =>
+        job.id === action.updatedJob.id ? action.updatedJob : job
+      )
     // case 'ADD_QUESTION':
     //   return [...state]
     default:
@@ -32,66 +35,75 @@ export const initializeJobs = () => {
         type: 'INIT_JOBS',
         jobs
       })
-
     } catch (error) {
       console.log(error.message)
-      dispatch(setNotification({
-        class: 'alert alert-danger',
-        message: error.message
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-danger',
+          message: error.message
+        })
+      )
     }
-
   }
 }
-export const addNewJob = (inputData) => {
+export const addNewJob = inputData => {
   return async dispatch => {
     try {
       const newJob = await jobService.createNewJob(inputData)
+
       dispatch({
         type: 'CREATE_JOB',
         newJob
       })
-      dispatch(setNotification({
-        class: 'alert alert-success',
-        message: `Job ${newJob.title} added to job list`
-      }))
-
+      dispatch(
+        setNotification({
+          class: 'alert alert-success',
+          message: `Job ${newJob.title} added to job list`
+        })
+      )
     } catch (error) {
-      dispatch(setNotification({
-        class: 'alert alert-danger',
-        message: 'Something went wrong, try again please!'
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-danger',
+          message: 'Something went wrong, try again please!'
+        })
+      )
     }
-
   }
 }
 
 export const addCandidate = (userID, jobID) => {
   return async dispatch => {
     try {
-
-      const updatedJob = await jobService.pushCandidate({
-        candidateID: userID
-      }, jobID)
+      const updatedJob = await jobService.pushCandidate(
+        {
+          candidateID: userID
+        },
+        jobID
+      )
 
       dispatch({
         type: 'ADD_CANDIDATE',
         updatedJob
       })
-      dispatch(setNotification({
-        class: 'alert alert-success',
-        message: 'Now you are candidate of this job, good luck'
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-success',
+          message: 'Now you are candidate of this job, good luck'
+        })
+      )
     } catch (error) {
-      dispatch(setNotification({
-        class: 'alert alert-danger',
-        message: 'Something went wrong!'
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-danger',
+          message: 'Something went wrong!'
+        })
+      )
     }
   }
 }
 
-export const removeJobAdversement = (jobID) => {
+export const removeJobAdversement = jobID => {
   return async dispatch => {
     try {
       await jobService.handleRemoveJobAdversement(jobID)
@@ -99,22 +111,24 @@ export const removeJobAdversement = (jobID) => {
         type: 'REMOVE_JOB',
         jobID
       })
-      dispatch(setNotification({
-        class: 'alert alert-success',
-        message: 'Job has been removed from job list'
-      }))
-
+      dispatch(
+        setNotification({
+          class: 'alert alert-success',
+          message: 'Job has been removed from job list'
+        })
+      )
     } catch (error) {
       console.error(error.message)
-      dispatch(setNotification({
-        class: 'alert alert-danger',
-        message: 'Job has been removed already'
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-danger',
+          message: 'Job has been removed already'
+        })
+      )
     }
   }
 }
-export const onUpdateJob = (data) => {
-
+export const onUpdateJob = data => {
   return async dispatch => {
     try {
       const updatedJob = await jobService.handleUpdatedJob(data)
@@ -123,42 +137,57 @@ export const onUpdateJob = (data) => {
         type: 'UPDATE_JOB',
         updatedJob
       })
-      dispatch(setNotification({
-        class: 'alert alert-success',
-        message: 'Job has been updated succefully'
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-success',
+          message: 'Job has been updated succefully'
+        })
+      )
     } catch (error) {
-      dispatch(setNotification({
-        class: 'alert alert-danger',
-        message: 'Something went wrong'
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-danger',
+          message: 'Something went wrong'
+        })
+      )
     }
-
   }
 }
-export const handleSendMessage = (data) => {
+export const handleSendMessage = data => {
   return async dispatch => {
     try {
       // console.log(data)
       const updatedJob = await jobService.addQuestion(data)
-      console.log(updatedJob)
+      // console.log(updatedJob)
       dispatch({
         type: 'UPDATE_JOB',
         updatedJob
       })
-      dispatch(setNotification({
-        class: 'alert alert-success',
-        message: 'The question has been sended succefully'
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-success',
+          message: 'The question has been sended succefully'
+        })
+      )
     } catch (error) {
       // console.log(error)
-      dispatch(setNotification({
-        class: 'alert alert-danger',
-        message: 'Something went wrong'
-      }))
+      dispatch(
+        setNotification({
+          class: 'alert alert-danger',
+          message: 'Something went wrong'
+        })
+      )
     }
   }
 }
-
+export const handlePolling = data => {
+  return async dispatch => {
+    // console.log(data)
+    dispatch({
+      type: 'CREATE_JOB',
+      newJob: data
+    })
+  }
+}
 
 export default reducer

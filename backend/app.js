@@ -22,6 +22,16 @@ mongoose
   })
   .then(() => {
     logger.info('connected to MongoDB')
+    const server = app.listen(config.PORT || 3001, () => {
+      console.log(`Server running on port ${config.PORT}`)
+    })
+
+    const io = require('./socket').init(server)
+
+    io.on('connection', socket => {
+      console.log('Client connected')
+      socket.emit('connection', `user ${socket.id} connected`)
+    })
   })
   .catch(error => {
     logger.error('error connection to MongoDB:', error.message)

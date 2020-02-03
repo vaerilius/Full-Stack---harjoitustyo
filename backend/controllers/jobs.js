@@ -1,6 +1,7 @@
 const config = require('../utils/config')
 const jobsRouter = require('express').Router()
 const { tokenExtractor } = require('../utils/middleware')
+const io = require('../socket')
 
 const Job = require('../models/job')
 const Candidate = require('../models/candidate')
@@ -21,9 +22,16 @@ const upload = multer({
     s3: AWS.s3,
     bucket: process.env.AWS_BUCKET_NAME,
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    key: function (req, file, cb) {
-      console.log(file.mimetype.split('/')[1])
-      imageName = 'jobs/' + uuidv4() + '-' + file.originalname.toLowerCase().split(' ').join('-');
+    key: function(req, file, cb) {
+      // console.log(file.mimetype.split('/')[1])
+      imageName =
+        'jobs/' +
+        uuidv4() +
+        '-' +
+        file.originalname
+          .toLowerCase()
+          .split(' ')
+          .join('-')
       cb(null, imageName)
     }
   })
@@ -34,7 +42,6 @@ jobsRouter.get('/', async (request, response) => {
     .populate('jobProvider', { username: 1, name: 1, picture: 1 })
     .populate('candidates', { username: 1, name: 1, picture: 1 })
   response.json(jobs.map(job => job.toJSON()))
-
 })
 jobsRouter.get('/:id', async (req, res, next) => {
   try {
@@ -51,44 +58,54 @@ jobsRouter.get('/:id', async (req, res, next) => {
   }
 })
 
-jobsRouter.post('/', upload.single('jobImg'), async (request, response, next) => {
-  // const body = request.body
+jobsRouter.post(
+  '/',
+  upload.single('jobImg'),
+  async (request, response, next) => {
+    // const body = request.body
 
-  try {
-    const job = new Job({
-      ...request.body,
-      picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`
-    })
-    imageName = ''
+    try {
+      const job = new Job({
+        ...request.body,
+        picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`
+      })
+      imageName = ''
 
-    const token = tokenExtractor(request)
-    const decodedToken = jwt.verify(token, config.SECRET)
-    if (!token || !decodedToken) {
-      return response.status(401).json({ error: 'token missing or invalid' })
+      const token = tokenExtractor(request)
+      const decodedToken = jwt.verify(token, config.SECRET)
+      if (!token || !decodedToken) {
+        return response.status(401).json({ error: 'token missing or invalid' })
+      }
+      const user = await Provider.findById(decodedToken.id)
+
+      if (!user) {
+        response
+          .status(401)
+          .json({ error: 'Only job provider can add job advertisement' })
+      }
+
+      job.jobProvider = user.id
+      await job.save()
+
+      user.jobsProvided = [...user.jobsProvided, job]
+      await user.save()
+
+      const result = await Job.findById(job.id).populate('jobProvider', {
+        username: 1,
+        name: 1
+      })
+      io.getIO().emit('jobs', {
+        action: 'CREATE',
+        job: result
+      })
+      response.status(201).json(result)
+    } catch (error) {
+      next(error)
     }
-    const user = await Provider.findById(decodedToken.id)
-
-    if (!user) {
-      response.status(401).json({ error: 'Only job provider can add job advertisement' })
-    }
-
-    job.jobProvider = user.id
-    await job.save()
-
-    user.jobsProvided = [...user.jobsProvided, job]
-    await user.save()
-
-    const result = await Job.findById(job.id)
-      .populate('jobProvider', { username: 1, name: 1 })
-
-    response.status(201).json(result)
-  } catch (error) {
-    next(error)
   }
-})
+)
 
 jobsRouter.put('/:id', async (request, response, next) => {
-
   try {
     const token = tokenExtractor(request)
     const decodedToken = jwt.verify(token, config.SECRET)
@@ -104,19 +121,20 @@ jobsRouter.put('/:id', async (request, response, next) => {
       description: request.body.description,
       company: request.body.company
     }
-    const updatedJob = await Job.findByIdAndUpdate(
-      request.params.id,
-      newJob,
-      { new: true })
+    const updatedJob = await Job.findByIdAndUpdate(request.params.id, newJob, {
+      new: true
+    })
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })
       .populate('candidates', { username: 1, name: 1, picture: 1 })
 
-    const updatedUser = await Provider.findByIdAndUpdate(decodedToken.id,
+    const updatedUser = await Provider.findByIdAndUpdate(
+      decodedToken.id,
       {
         company: request.body.company,
         description: request.body.description,
         title: request.body.title
-      }, { new: true }
+      },
+      { new: true }
     )
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })
       .populate('candidates', { username: 1, name: 1, picture: 1 })
@@ -128,11 +146,9 @@ jobsRouter.put('/:id', async (request, response, next) => {
   } catch (error) {
     next(error)
   }
-
 })
 
 jobsRouter.delete('/:id', async (request, response, next) => {
-
   try {
     const token = tokenExtractor(request)
     const decodedToken = jwt.verify(token, config.SECRET)
@@ -149,7 +165,9 @@ jobsRouter.delete('/:id', async (request, response, next) => {
       return response.status(401).json({ error: 'wrong token' })
     }
 
-    user.jobsProvided = user.jobsProvided.map(j => j.toString() !== request.params.id ? j : null)
+    user.jobsProvided = user.jobsProvided.map(j =>
+      j.toString() !== request.params.id ? j : null
+    )
     user.jobsProvided = user.jobsProvided.filter(j => j !== null)
 
     await user.save()
@@ -158,14 +176,13 @@ jobsRouter.delete('/:id', async (request, response, next) => {
     response.status(204).json({
       message: 'job removed'
     })
-
   } catch (error) {
     next(error)
   }
 })
 
 jobsRouter.post('/:id/candidates', async (request, response, next) => {
-  const body = request.body
+  // const body = request.body
 
   try {
     const token = tokenExtractor(request)
@@ -175,8 +192,10 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
     // console.log(job);
     // console.log(user);
 
-    if (user.interestingJobs.includes(job.id) || job.candidates.includes(user.id)) {
-
+    if (
+      user.interestingJobs.includes(job.id) ||
+      job.candidates.includes(user.id)
+    ) {
       return response.status(400).json({ error: 'allready added' })
     }
 
@@ -185,7 +204,8 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
     await user.save()
     const updatedJob = await Job.findByIdAndUpdate(
       request.params.id,
-      { $push: { candidates: user } }, { new: true }
+      { $push: { candidates: user } },
+      { new: true }
     )
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })
       .populate('candidates', { username: 1, name: 1, picture: 1 })
@@ -194,7 +214,6 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
   } catch (error) {
     next(error)
   }
-
 })
 jobsRouter.post('/:id/questions', async (request, response, next) => {
   const body = request.body
@@ -208,8 +227,21 @@ jobsRouter.post('/:id/questions', async (request, response, next) => {
     }
     // console.log(user.name)
 
-    const updatedJob = await Job.findByIdAndUpdate(request.params.id,
-      { $push: { questions: { questioner: { name: user.name, picture: user.picture, id: user.id, jobProvider: user.jobProvider }, question: body.question } } },
+    const updatedJob = await Job.findByIdAndUpdate(
+      request.params.id,
+      {
+        $push: {
+          questions: {
+            questioner: {
+              name: user.name,
+              picture: user.picture,
+              id: user.id,
+              jobProvider: user.jobProvider
+            },
+            question: body.question
+          }
+        }
+      },
       { new: true }
     )
       .populate('jobProvider', { username: 1, name: 1, picture: 1 })
@@ -218,7 +250,6 @@ jobsRouter.post('/:id/questions', async (request, response, next) => {
   } catch (error) {
     next(error)
   }
-
 })
 
 module.exports = jobsRouter
