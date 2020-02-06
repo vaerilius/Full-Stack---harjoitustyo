@@ -55,14 +55,14 @@ const App = ({
     })
   }, [handleJobPolling])
   useEffect(() => {
-    if (user) {
-      socket.on('users', data => {
+    socket.on('users', data => {
+      if (user) {
         if (user.id !== data.updatedUser.id) {
           handleUsersPolling(data)
         }
-      })
-    }
-  }, [handleUsersPolling])
+      }
+    })
+  }, [handleUsersPolling, user])
 
   const findById = (id, array) => array.find(item => item.id === id)
 

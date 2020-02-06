@@ -183,32 +183,10 @@ export const handleSendMessage = data => {
 export const handleJobPolling = data => {
   return async dispatch => {
     // console.log(data)
-
-    if (data.action === 'CREATE') {
-      dispatch({
-        type: 'CREATE_JOB',
-        newJob: data.job
-      })
-    }
-
-    if (data.action === 'DELETE') {
-      dispatch({
-        type: 'REMOVE_JOB',
-        jobID: data.jobID
-      })
-    }
-    if (data.action === 'ADD_CANDIDATE') {
-      dispatch({
-        type: 'ADD_CANDIDATE',
-        updatedJob: data.updatedJob
-      })
-    }
-    if (data.action === 'UPDATE_JOB') {
-      dispatch({
-        type: 'UPDATE_JOB',
-        updatedJob: data.updatedJob
-      })
-    }
+    dispatch({
+      type: data.action,
+      newJob: data.job
+    })
   }
 }
 

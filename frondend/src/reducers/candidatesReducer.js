@@ -104,14 +104,13 @@ export const updateCandidateCV = (formData, id) => {
 
 export const handleUsersPolling = data => {
   console.log(data)
-
   return async dispatch => {
-    if (data.action === 'UPDATE_CANDIDATE') {
-      dispatch({
-        type: 'UPDATE_CANDIDATE',
-        updatedCandidate: data.updatedUser
-      })
-    }
+    console.log(data)
+
+    dispatch({
+      type: data.action,
+      updatedCandidate: data.updatedUser
+    })
   }
 }
 
