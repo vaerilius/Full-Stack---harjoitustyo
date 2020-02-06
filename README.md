@@ -64,6 +64,7 @@
 |   24.01   | 4    | frondend: lazy loading, notification animation                                                                               |
 |   02.02   | 3    | frondend: lazy loading issue with single component by id, deploy backend, grondend .env setup                                |
 |   03.02   | 7    | frondend: deploy frondend(aws), delete create-react-app, socket.io (jobs)                                                    |
+|   06.02   | 3    | socket.io and styling                                                                                                        |
 |           |      |                                                                                                                              |
-|   yht.    | 150  | tuntia                                                                                                                       |
-|  puuttuu  | 26h  | tuntia                                                                                                                       |
+|   yht.    | 153  | tuntia                                                                                                                       |
+|  puuttuu  | 23h  | tuntia                                                                                                                       |
