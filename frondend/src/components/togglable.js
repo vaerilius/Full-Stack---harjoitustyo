@@ -1,4 +1,3 @@
-
 import React, { useState, useImperativeHandle } from 'react'
 
 const Togglable = React.forwardRef((props, ref) => {
@@ -17,11 +16,12 @@ const Togglable = React.forwardRef((props, ref) => {
     }
   })
   return (
-    <div className="mb-4">
+    <div className=''>
       <div style={hideWhenVisible}>
         <button
-          className="btn btn-primary btn-block"
-          onClick={toggleVisibility}>
+          className='btn btn-primary btn-block'
+          onClick={toggleVisibility}
+        >
           {props.buttonLabel}
         </button>
       </div>
@@ -29,8 +29,11 @@ const Togglable = React.forwardRef((props, ref) => {
       <div style={showWhenVisible}>
         {props.children}
         <button
-          className="btn btn-primary btn-block"
-          onClick={toggleVisibility}>Cancel</button>
+          className='btn btn-primary btn-block'
+          onClick={toggleVisibility}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   )

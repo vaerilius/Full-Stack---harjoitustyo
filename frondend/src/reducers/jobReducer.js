@@ -180,7 +180,7 @@ export const handleSendMessage = data => {
     }
   }
 }
-export const handlePolling = data => {
+export const handleJobPolling = data => {
   return async dispatch => {
     // console.log(data)
 

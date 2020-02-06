@@ -1,4 +1,5 @@
 const config = require('../utils/config')
+const io = require('../socket')
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const multer = require('multer')
@@ -20,33 +21,41 @@ const upload = multer({
     s3: AWS.s3,
     bucket: process.env.AWS_BUCKET_NAME,
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    key: function (req, file, cb) {
+    key: function(req, file, cb) {
       console.log(file.mimetype.split('/')[1])
-      imageName = 'users/' + uuidv4() + '-' + file.originalname.toLowerCase().split(' ').join('-')
+      imageName =
+        'users/' +
+        uuidv4() +
+        '-' +
+        file.originalname
+          .toLowerCase()
+          .split(' ')
+          .join('-')
       cb(null, imageName)
     }
   })
 })
 
 usersRouter.get('/providers', async (request, response, next) => {
-
   try {
-    const providers = await Provider.find({})
-
-      .populate('jobsProvided', { title: 1, description: 1, company: 1 })
+    const providers = await Provider.find({}).populate('jobsProvided', {
+      title: 1,
+      description: 1,
+      company: 1
+    })
     // .populate('candidates', { username: 1, name: 1, picture: 1, })
     // ei toimi, korjaa tämä
     response.json(providers.map(p => p.toJSON()))
   } catch (error) {
     next(error)
   }
-
 })
 usersRouter.get('/providers/:id', async (req, res, next) => {
   try {
-    const user = await Provider.findById(req.params.id)
-      .populate('jobsProvided',
-        { title: 1, description: 1, company: 1 })
+    const user = await Provider.findById(req.params.id).populate(
+      'jobsProvided',
+      { title: 1, description: 1, company: 1 }
+    )
     if (user) {
       res.json(user.toJSON())
     } else {
@@ -67,8 +76,9 @@ usersRouter.put('/providers/:id', async (req, res, next) => {
     user.email = req.body.email
     user.description = req.body.description
 
-    const updatedUser = await Provider.findByIdAndUpdate(req.params.id, user, { new: true })
-      .populate('jobsProvided', { title: 1, description: 1, company: 1 })
+    const updatedUser = await Provider.findByIdAndUpdate(req.params.id, user, {
+      new: true
+    }).populate('jobsProvided', { title: 1, description: 1, company: 1 })
 
     res.json(updatedUser.toJSON())
   } catch (error) {
@@ -84,9 +94,14 @@ usersRouter.put('/candidates/:id', async (req, res, next) => {
     user.email = req.body.email
     user.description = req.body.description
 
-    const updatedUser = await Candidate.findByIdAndUpdate(req.params.id, user, { new: true })
-      .populate('interestingJobs',
-        { title: 1, description: 1, company: 1 })
+    const updatedUser = await Candidate.findByIdAndUpdate(req.params.id, user, {
+      new: true
+    }).populate('interestingJobs', { title: 1, description: 1, company: 1 })
+
+    io.getIO().emit('users', {
+      action: 'UPDATE_CANDIDATE',
+      updatedUser
+    })
 
     res.json(updatedUser.toJSON())
   } catch (error) {
@@ -95,24 +110,23 @@ usersRouter.put('/candidates/:id', async (req, res, next) => {
 })
 
 usersRouter.get('/candidates', async (request, response, next) => {
-
   try {
-    const users = await Candidate
-      .find({})
-      .populate('interestingJobs',
-        { title: 1, description: 1, company: 1 })
+    const users = await Candidate.find({}).populate('interestingJobs', {
+      title: 1,
+      description: 1,
+      company: 1
+    })
 
     response.json(users.map(u => u.toJSON()))
   } catch (error) {
     next(error)
   }
-
 })
 usersRouter.get('/candidates/:id', async (req, res, next) => {
   try {
-    const user = await Candidate.findById(req.params.id)
-      .populate('interestingJobs',
-        { title: 1, description: 1, company: 1 })
+    const user = await Candidate.findById(
+      req.params.id
+    ).populate('interestingJobs', { title: 1, description: 1, company: 1 })
 
     if (user) {
       res.json(user.toJSON())
@@ -124,94 +138,105 @@ usersRouter.get('/candidates/:id', async (req, res, next) => {
   }
 })
 
+usersRouter.post(
+  '/providers',
+  upload.single('profileImg'),
+  async (request, response, next) => {
+    try {
+      const body = request.body
+      if (!body.password) {
+        return response.status(401).json({ error: 'invalid signup data' })
+      }
 
+      const saltRounds = 10
+      const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
-usersRouter.post('/providers', upload.single('profileImg'), async (request, response, next) => {
+      const user = new Provider({
+        username: body.username,
+        name: body.name,
+        passwordHash,
+        picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
+        jobProvider: body.checkbox,
+        phone: null,
+        email: null,
+        content: null
+      })
+      imageName = ''
 
-  try {
-    const body = request.body
-    if (!body.password) {
-      return response.status(401).json({ error: 'invalid signup data' })
+      const savedUser = await user.save()
+      // console.log(savedUser)
+      response.json(savedUser)
+    } catch (exception) {
+      next(exception)
     }
-
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(body.password, saltRounds)
-
-    const user = new Provider({
-      username: body.username,
-      name: body.name,
-      passwordHash,
-      picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
-      jobProvider: body.checkbox,
-      phone: null,
-      email: null,
-      content: null
-    })
-    imageName = ''
-
-    const savedUser = await user.save()
-    // console.log(savedUser)
-    response.json(savedUser)
-  } catch (exception) {
-    next(exception)
   }
-})
-usersRouter.post('/candidates', upload.single('profileImg'), async (request, response, next) => {
-  try {
-    const body = request.body
-    // console.log(body)
+)
+usersRouter.post(
+  '/candidates',
+  upload.single('profileImg'),
+  async (request, response, next) => {
+    try {
+      const body = request.body
+      // console.log(body)
 
-    const saltRounds = 10
+      const saltRounds = 10
 
-    const passwordHash = await bcrypt.hash(body.password, saltRounds)
-    if (body.password.length < 4) {
-      return response.status(400).json({ error: 'password too short, min length is 4' })
+      const passwordHash = await bcrypt.hash(body.password, saltRounds)
+      if (body.password.length < 4) {
+        return response
+          .status(400)
+          .json({ error: 'password too short, min length is 4' })
+      }
+      if (!body.checkbox) {
+        return response
+          .status(400)
+          .json({ error: 'Only candidate can signup here' })
+      }
+      if (body.checkbox === undefined) {
+        return response.status(400).json({ error: 'checkBox must be tagged' })
+      }
+
+      const user = new Candidate({
+        username: body.username,
+        name: body.name,
+        passwordHash,
+        picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
+        jobProvider: body.checkbox,
+        phone: null,
+        email: null,
+        status: null
+      })
+
+      const savedUser = await user.save()
+
+      response.json(savedUser)
+    } catch (exception) {
+      next(exception)
     }
-    if (!body.checkbox) {
-      return response.status(400).json({ error: 'Only candidate can signup here' })
-    }
-    if (body.checkbox === undefined) {
-      return response.status(400).json({ error: 'checkBox must be tagged' })
-    }
-
-    const user = new Candidate({
-      username: body.username,
-      name: body.name,
-      passwordHash,
-      picture: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}`,
-      jobProvider: body.checkbox,
-      phone: null,
-      email: null,
-      status: null
-
-    })
-
-    const savedUser = await user.save()
-
-    response.json(savedUser)
-  } catch (exception) {
-    next(exception)
   }
-})
+)
 
-usersRouter.post('/candidates/:id/cv', upload.single('cv'), async (req, res, next) => {
-  try {
-    const token = tokenExtractor(req)
-    const decodedToken = jwt.verify(token, config.SECRET)
+usersRouter.post(
+  '/candidates/:id/cv',
+  upload.single('cv'),
+  async (req, res, next) => {
+    try {
+      const token = tokenExtractor(req)
+      const decodedToken = jwt.verify(token, config.SECRET)
 
-    const updatedCandidate = await Candidate
-      .findByIdAndUpdate(
+      const updatedCandidate = await Candidate.findByIdAndUpdate(
         decodedToken.id,
-        { $set: { 'cv': `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}` } },
-        { new: true })
-      .populate('interestingJobs', { title: 1 })
+        {
+          $set: { cv: `${process.env.AWS_UPLOADED_FILE_URL_LINK}/${imageName}` }
+        },
+        { new: true }
+      ).populate('interestingJobs', { title: 1 })
 
-    res.json(updatedCandidate.toJSON())
-
-  } catch (error) {
-    next(error)
+      res.json(updatedCandidate.toJSON())
+    } catch (error) {
+      next(error)
+    }
   }
-
-})
+)
 
 module.exports = usersRouter

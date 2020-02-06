@@ -1,7 +1,8 @@
 import React, { useEffect, Suspense, lazy } from 'react'
 import { connect } from 'react-redux'
 import io from '../socket-client'
-import { handlePolling } from './reducers/jobReducer'
+import { handleJobPolling } from './reducers/jobReducer'
+import { handleUsersPolling } from './reducers/candidatesReducer'
 
 import Landing from './components/landing'
 import Job from './components/jobs/job/job'
@@ -25,15 +26,16 @@ const SignUp = lazy(() => import('./components/auth/signup'))
 const Login = lazy(() => import('./components/auth/login'))
 
 const Jobs = lazy(() => import('./components/jobs/jobs'))
-const Candidates = lazy(() =>
-  import('./components/users/candidates/candidates')
-)
+import Candidates from './components/users/candidates/candidates'
+// const Candidates = lazy(() =>
+//   import('./components/users/candidates/candidates')
+// )
 const Providers = lazy(() => import('./components/users/providers/providers'))
 
 const App = ({
   user,
   initializeUser,
-  handlePolling,
+  handleJobPolling,
   jobs,
   candidates,
   providers
@@ -49,9 +51,18 @@ const App = ({
 
   useEffect(() => {
     socket.on('jobs', data => {
-      handlePolling(data)
+      handleJobPolling(data)
     })
-  }, [handlePolling])
+  }, [handleJobPolling])
+  useEffect(() => {
+    if (user) {
+      socket.on('users', data => {
+        if (user.id !== data.updatedUser.id) {
+          handleUsersPolling(data)
+        }
+      })
+    }
+  }, [handleUsersPolling])
 
   const findById = (id, array) => array.find(item => item.id === id)
 
@@ -185,5 +196,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   initializeUser,
-  handlePolling
+  handleJobPolling,
+  handleUsersPolling
 })(App)

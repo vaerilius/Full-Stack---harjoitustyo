@@ -7,20 +7,19 @@ import { Animation } from '../../hooks/animation'
 
 import { initializeJobs } from '../../reducers/jobReducer'
 import { initializeProviders } from '../../reducers/providersReducer'
+import { initializeCandidates } from '../../reducers/candidatesReducer'
 
-const Jobs = ({ user, jobs, initializeJobs }) => {
+const Jobs = ({ user, jobs, initializeJobs, initializeCandidates }) => {
   useEffect(() => {
-    // muuttuu sockectIOn jälkeen
-    // if (jobs.length === 0) {
     initializeJobs()
     initializeProviders()
-    // }
-  }, [initializeJobs, initializeProviders])
+    initializeCandidates()
+  }, [initializeJobs, initializeProviders, initializeCandidates])
 
   const newJobRef = React.createRef()
   Animation()
   return (
-    <div className='container'>
+    <div className='container '>
       <div className='card shadow '>
         <div className='card-body text-center'>
           <h2 className='display-5 font-weight-bold'>Jobs</h2>
@@ -50,5 +49,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   initializeJobs,
-  initializeProviders
+  initializeProviders,
+  initializeCandidates
 })(Jobs)

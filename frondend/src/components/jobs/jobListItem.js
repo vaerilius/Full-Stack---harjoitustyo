@@ -6,20 +6,17 @@ const JobListItem = ({ job }) => {
   const JobCreatedAT = datePalaces[0]
   // console.log(job)
   return (
-    <div className="list-group mb-4 shadow" >
-      <div className="list-group-item list-group-item-action">
+    <div className='list-group my-4 shadow'>
+      <div className='list-group-item list-group-item-action'>
         <Link to={`/jobs/${job.id}`}>
-          <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">{job.title}</h5>
+          <div className='d-flex w-100 justify-content-between'>
+            <h5 className='mb-1'>{job.title}</h5>
             <p> published: {JobCreatedAT}</p>
           </div>
-          <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">Company: {job.company}</h5>
+          <div className='d-flex w-100 justify-content-between'>
+            <h5 className='mb-1'>Company: {job.company}</h5>
             <p> Candidates: {job.candidates.length}</p>
-
-
           </div>
-
         </Link>
       </div>
     </div>
