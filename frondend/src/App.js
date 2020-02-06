@@ -76,7 +76,7 @@ const App = ({
           <Navbar />
           <Notification />
 
-          <div className='container '>
+          <div className='container page'>
             <div className='row'>
               <div className=' col-md-12 margin'>
                 {/* {notification.message ? <Notification /> : null} */}

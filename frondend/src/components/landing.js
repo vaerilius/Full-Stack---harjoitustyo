@@ -13,21 +13,21 @@ const Landing = ({ user }) => {
     <div className='container '>
       <div className='col-md-12'>
         <div className='card shadow scale  '>
-          <h1 className=' display-5 text-center text-uppercase font-weight-bold '>
+          <h1 className=' py-2 display-5 text-center text-uppercase font-weight-bold '>
             Job Book
           </h1>
           <img src={bg} className='img-fluid' alt='Responsive' />
         </div>
       </div>
       <div className='col-md-12 '>
-        <div className='card bg-white m-5 shadow scale'>
+        <div className='card bg-white my-5 shadow scale'>
           <Link to='/signup'>
             <div className='card-body font-weight-bold text-center text-uppercase'>
               Sign Up
             </div>
           </Link>
         </div>
-        <div className='card bg-white m-5 shadow scale'>
+        <div className='card bg-white  shadow scale'>
           <Link to='/login'>
             <div className='card-body font-weight-bold text-center text-uppercase '>
               Or Sign In

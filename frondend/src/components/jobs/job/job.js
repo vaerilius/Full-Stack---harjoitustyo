@@ -54,8 +54,8 @@ const Job = props => {
         </button>
       </Link> */}
 
-      <div className='row'>
-        <div className='col-sm-6 my-3'>
+      <div className='row m-0 p-0'>
+        <div className='col-sm-6 mb-3'>
           <div className='card card-hover'>
             <div className='card-header'>
               <h4 className='card-title text-center'>{props.job.title}</h4>
@@ -118,7 +118,7 @@ const Job = props => {
             </div>
           </div>
         </div>
-        <div className='col-sm-6 my-3'>
+        <div className='col-sm-6 mb-3'>
           <div className='card card-hover'>
             <div className='card-header'>
               <h4 className='card-title text-center'>Questions</h4>

@@ -1,6 +1,6 @@
 :root {
   --font-body: 500 1.25rem Helvetica, sans-serif;
-  --layout-margin: 7rem;
+  --layout-margin: 3rem;
 }
 .html {
   font-size: 16px;
@@ -18,18 +18,24 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .container {
   /* margin: 0; */
+  margin: var(--layout-margin) auto;
   opacity: 0;
   transition: transform 800ms ease, opacity 800ms ease;
   transform: translate(-100%, 0);
 }
 .container.visible {
+  padding: 0;
+  margin: 0 auto;
   opacity: 1;
   transform: translate(0, 0);
 }
 .row {
-  /* margin: 0; */
+  margin: 0;
+  flex: 1;
+  align-self: center;
 }
 .card {
   transition: transform 800ms ease;
@@ -41,8 +47,14 @@ body {
 h1 {
   text-shadow: 0 1px 2px rgb(106, 106, 206);
 }
-.margin {
-  margin: var(--layout-margin) auto;
+.col-md-12 {
+  /* margin: var(--layout-margin) 0; */
+  margin: 0;
+  padding: 0;
+}
+.col-md-12.margin {
+  /* margin: var(--layout-margin) 0; */
+  margin: 0;
 }
 .alert.alert-primary {
   opacity: 0;
@@ -63,3 +75,9 @@ h1 {
 }
 
 /* alert alert-primary */
+.container.visible.page {
+  margin: 4rem auto;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
