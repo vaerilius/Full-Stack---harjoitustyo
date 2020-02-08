@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "description": "job hunting",
   "scripts": {
+    "start-mongo": "sudo service mongod start",
+    "start-backend": "cd .. && cd backend && npm run watch",
     "build": "webpack --mode=production --history-api-fallback",
     "start": "webpack-dev-server --mode=development --history-api-fallback",
     "deploy": "aws s3 sync build/ s3://job-book --acl public-read",

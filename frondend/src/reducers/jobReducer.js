@@ -6,19 +6,19 @@ const reducer = (state = [], action) => {
     case 'INIT_JOBS':
       return [...action.jobs]
     case 'CREATE_JOB':
-      if (state.find(j => j.id === action.newJob.id)) {
+      if (state.find(j => j.id === action.object.id)) {
         return [...state]
       }
-      return [...state, action.newJob]
+      return [...state, action.object]
     case 'ADD_CANDIDATE':
       return [...state].map(job =>
-        job.id === action.updatedJob.id ? action.updatedJob : job
+        job.id === action.object.id ? action.object : job
       )
     case 'REMOVE_JOB':
-      return [...state].filter(job => job.id !== action.jobID)
+      return [...state].filter(job => job.id !== action.object)
     case 'UPDATE_JOB':
       return [...state].map(job =>
-        job.id === action.updatedJob.id ? action.updatedJob : job
+        job.id === action.object.id ? action.object : job
       )
     // case 'ADD_QUESTION':
     //   return [...state]
@@ -53,7 +53,7 @@ export const addNewJob = inputData => {
 
       dispatch({
         type: 'CREATE_JOB',
-        newJob
+        object: newJob
       })
       dispatch(
         setNotification({
@@ -84,7 +84,7 @@ export const addCandidate = (userID, jobID) => {
 
       dispatch({
         type: 'ADD_CANDIDATE',
-        updatedJob
+        object: updatedJob
       })
       dispatch(
         setNotification({
@@ -109,7 +109,7 @@ export const removeJobAdversement = jobID => {
       await jobService.handleRemoveJobAdversement(jobID)
       dispatch({
         type: 'REMOVE_JOB',
-        jobID
+        object: jobID
       })
       dispatch(
         setNotification({
@@ -135,7 +135,7 @@ export const onUpdateJob = data => {
 
       dispatch({
         type: 'UPDATE_JOB',
-        updatedJob
+        object: updatedJob
       })
       dispatch(
         setNotification({
@@ -161,7 +161,7 @@ export const handleSendMessage = data => {
       // console.log(updatedJob)
       dispatch({
         type: 'UPDATE_JOB',
-        updatedJob
+        object: updatedJob
       })
       dispatch(
         setNotification({
@@ -182,10 +182,9 @@ export const handleSendMessage = data => {
 }
 export const handleJobPolling = data => {
   return async dispatch => {
-    // console.log(data)
     dispatch({
       type: data.action,
-      newJob: data.job
+      object: data.object
     })
   }
 }

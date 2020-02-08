@@ -5,11 +5,11 @@ import { Animation } from '../../../hooks/animation'
 import { initializeCandidates } from '../../../reducers/candidatesReducer'
 
 const Candidates = ({ candidates, initializeCandidates }) => {
-  // useEffect(() => {
-  //   // if (candidates.length === 0) {
-  //   initializeCandidates()
-  //   // }
-  // }, [initializeCandidates])
+  useEffect(() => {
+    // if (candidates.length === 0) {
+    initializeCandidates()
+    // }
+  }, [initializeCandidates])
 
   Animation()
   return (

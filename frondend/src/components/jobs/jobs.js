@@ -13,7 +13,7 @@ const Jobs = ({ user, jobs, initializeJobs, initializeCandidates }) => {
   useEffect(() => {
     initializeJobs()
     initializeProviders()
-    initializeCandidates()
+    // initializeCandidates()
   }, [initializeJobs, initializeProviders, initializeCandidates])
 
   const newJobRef = React.createRef()

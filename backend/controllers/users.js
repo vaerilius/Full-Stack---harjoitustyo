@@ -100,7 +100,7 @@ usersRouter.put('/candidates/:id', async (req, res, next) => {
 
     io.getIO().emit('users', {
       action: 'UPDATE_CANDIDATE',
-      updatedUser
+      object: updatedUser
     })
 
     res.json(updatedUser.toJSON())
@@ -123,11 +123,11 @@ usersRouter.get('/candidates', async (request, response, next) => {
   }
 })
 usersRouter.get('/candidates/:id', async (req, res, next) => {
+  console.log(req.body)
   try {
     const user = await Candidate.findById(
       req.params.id
     ).populate('interestingJobs', { title: 1, description: 1, company: 1 })
-
     if (user) {
       res.json(user.toJSON())
     } else {

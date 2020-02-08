@@ -6,9 +6,12 @@ const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_CANDIDATES':
       return [...action.candidates]
+    case 'INIT_CANDIDATE':
+      return [...state, action.candidate]
     case 'SIGNUP_CANDIDATE':
       return [...state, action.createdCandidate]
     case 'UPDATE_CANDIDATE':
+      console.log(action)
       return [...state].map(p =>
         p.id === action.updatedCandidate.id ? action.updatedCandidate : p
       )
@@ -25,6 +28,21 @@ export const initializeCandidates = () => {
     })
   }
 }
+
+export const getCandidate = id => {
+  console.log(id)
+
+  return async dispatch => {
+    console.log(id)
+    const candidate = await candidateService.getCandidateByID(id)
+    console.log(candidate)
+    dispatch({
+      type: 'INIT_CANDIDATE',
+      candidate
+    })
+  }
+}
+
 export const signUpCandidate = data => {
   return async dispatch => {
     try {
@@ -80,7 +98,7 @@ export const updateCandidateCV = (formData, id) => {
   return async dispatch => {
     try {
       const updatedCandidate = await candidateService.uploadCV(formData, id)
-      console.log(updatedCandidate)
+      // console.log(updatedCandidate)
       dispatch({
         type: 'UPDATE_CANDIDATE',
         updatedCandidate
@@ -103,14 +121,8 @@ export const updateCandidateCV = (formData, id) => {
 }
 
 export const handleUsersPolling = data => {
-  console.log(data)
   return async dispatch => {
-    console.log(data)
-
-    dispatch({
-      type: data.action,
-      updatedCandidate: data.updatedUser
-    })
+    dispatch(data)
   }
 }
 

@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 :root {
-  --font-body: 500 1.25rem Helvetica, sans-serif;
+  --font-body: 500 1.25rem 'Open Sans', Helvetica, sans-serif;
   --layout-margin: 3rem;
 }
 .html {
@@ -24,13 +25,13 @@ body {
   margin: var(--layout-margin) auto;
   opacity: 0;
   transition: transform 800ms ease, opacity 800ms ease;
-  transform: translate(-100%, 0);
+  transform: translate(-100%, 0) scale(0);
 }
 .container.visible {
   padding: 0;
   margin: 0 auto;
   opacity: 1;
-  transform: translate(0, 0);
+  transform: translate(0, 0) scale(1);
 }
 .row {
   margin: 0;

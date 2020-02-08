@@ -97,7 +97,7 @@ jobsRouter.post(
       })
       io.getIO().emit('jobs', {
         action: 'CREATE',
-        job: result
+        object: result
       })
       response.status(201).json(result)
     } catch (error) {
@@ -141,7 +141,7 @@ jobsRouter.put('/:id', async (request, response, next) => {
 
     io.getIO().emit('jobs', {
       action: 'UPDATE_JOB',
-      updatedJob
+      object: updatedJob
     })
     response.json(updatedJob)
   } catch (error) {
@@ -176,7 +176,7 @@ jobsRouter.delete('/:id', async (request, response, next) => {
 
     io.getIO().emit('jobs', {
       action: 'DELETE',
-      jobID: request.params.id
+      object: request.params.id
     })
 
     response.status(204).json({
@@ -218,7 +218,7 @@ jobsRouter.post('/:id/candidates', async (request, response, next) => {
 
     io.getIO().emit('jobs', {
       action: 'ADD_CANDIDATE',
-      updatedJob
+      object: updatedJob
     })
 
     response.json(updatedJob.toJSON())
@@ -260,7 +260,7 @@ jobsRouter.post('/:id/questions', async (request, response, next) => {
 
     io.getIO().emit('jobs', {
       action: 'UPDATE_JOB',
-      updatedJob
+      object: updatedJob
     })
 
     response.json(updatedJob.toJSON())

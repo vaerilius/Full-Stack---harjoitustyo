@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Togglable from '../../../togglable'
@@ -9,12 +9,13 @@ import { setNotification } from '../../../../reducers/notificationReducer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import { Animation } from '../../../../hooks/animation'
-
+import { getCandidate } from '../../../../reducers/candidatesReducer'
 
 const Candidate = props => {
   if (!props.candidate) {
     return <h2>loading</h2>
   }
+
   const copy = value => {
     props.setNotification({
       class: 'alert alert-success',
@@ -125,12 +126,19 @@ const Candidate = props => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const candidate = state.candidates.find(c => c.id === ownProps.candidate.id)
-  // console.log(candidate)
+  let candidate
+  getCandidate(ownProps.id)
+
+  // setTimeout(() => {
+  //   candidate = state.candidates.find(c => c.id === ownProps.candidate.id)
+  // }, 2000)
 
   return {
-    candidate: candidate,
-    user: state.user
+    candidate: null,
+    user: state.user,
+    id: ownProps.id
   }
 }
-export default connect(mapStateToProps, { setNotification })(Candidate)
+export default connect(mapStateToProps, { setNotification, getCandidate })(
+  Candidate
+)

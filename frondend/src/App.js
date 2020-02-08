@@ -8,7 +8,7 @@ import Landing from './components/landing'
 import Job from './components/jobs/job/job'
 
 // import Provider from './components/users/providers/provider/provider'
-import Candidate from './components/users/candidates/candidate/candidate'
+// import Candidate from './components/users/candidates/candidate/candidate'
 
 import { initializeUser } from './reducers/userReducer'
 import {
@@ -27,9 +27,9 @@ const Login = lazy(() => import('./components/auth/login'))
 
 const Jobs = lazy(() => import('./components/jobs/jobs'))
 import Candidates from './components/users/candidates/candidates'
-// const Candidates = lazy(() =>
-//   import('./components/users/candidates/candidates')
-// )
+const Candidate = lazy(() =>
+  import('./components/users/candidates/candidate/candidate')
+)
 const Providers = lazy(() => import('./components/users/providers/providers'))
 
 const App = ({
@@ -56,13 +56,9 @@ const App = ({
   }, [handleJobPolling])
   useEffect(() => {
     socket.on('users', data => {
-      if (user) {
-        if (user.id !== data.updatedUser.id) {
-          handleUsersPolling(data)
-        }
-      }
+      handleUsersPolling(data)
     })
-  }, [handleUsersPolling, user])
+  }, [handleUsersPolling])
 
   const findById = (id, array) => array.find(item => item.id === id)
 
@@ -141,6 +137,7 @@ const App = ({
                       path='/candidates/:id'
                       render={({ match }) => (
                         <Candidate
+                          id={match.params.id}
                           candidate={findById(match.params.id, candidates)}
                         />
                       )}
