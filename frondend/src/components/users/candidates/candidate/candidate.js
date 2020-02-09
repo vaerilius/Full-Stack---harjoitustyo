@@ -39,76 +39,73 @@ const Candidate = ({ candidate, getCandidate, user, id }) => {
           <div className='col-md-12'>
             <img src={candidate.picture} className='card-img' alt='...' />
           </div>
+
           <div className='col-md-12'>
+            <div className='card-footer text-muted text-center'>
+              Joined: {candidate.createdAt.split('T')[0]}
+            </div>
             <div className='card-body'>
               <h5 className='card-title'>{candidate.name}</h5>
               <p className='card-text'>{candidate.description}</p>
 
-              <div className='card-body '>
-                <div className='text-nowrap bd-highlight'>
-                  Double click to to copy to clickboard.
-                </div>
-                <ul className='list-group shadow'>
-                  <li className='list-group-item'>
-                    Phone:{' '}
-                    {candidate.phone ? (
-                      <CopyToClipboard
-                        text={candidate.phone}
-                        onDoubleClick={() => copy(candidate.phone)}
-                      >
-                        <summary className='text-info'>
-                          {candidate.phone}
-                        </summary>
-                      </CopyToClipboard>
-                    ) : (
-                      'Not set'
-                    )}
-                  </li>
-                  <li className='list-group-item'>
-                    Email:{' '}
-                    {candidate.email ? (
-                      <CopyToClipboard
-                        text={candidate.email}
-                        onDoubleClick={() => copy(candidate.email)}
-                      >
-                        <summary className='text-info'>
-                          {candidate.email}
-                        </summary>
-                      </CopyToClipboard>
-                    ) : (
-                      'Not set'
-                    )}
-                  </li>
-                  <li className='list-group-item'>
-                    <div className='d-flex w-100 justify-content-between'>
-                      <div className='my-auto'>
-                        {candidate.cv ? 'Here is my CV:' : 'No CV'}{' '}
-                      </div>
-                      <div className='my-auto'>
-                        <a
-                          href={candidate.cv}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                        >
-                          <FontAwesomeIcon icon={faFilePdf} size='2x' />
-                        </a>
-                      </div>
+              <div className='text-nowrap bd-highlight my-3'>
+                Double click to to copy to clickboard.
+              </div>
+              <ul className='list-group shadow'>
+                <li className='list-group-item'>
+                  Phone:{' '}
+                  {candidate.phone ? (
+                    <CopyToClipboard
+                      text={candidate.phone}
+                      onDoubleClick={() => copy(candidate.phone)}
+                    >
+                      <summary className='text-info'>{candidate.phone}</summary>
+                    </CopyToClipboard>
+                  ) : (
+                    'Not set'
+                  )}
+                </li>
+                <li className='list-group-item'>
+                  Email:{' '}
+                  {candidate.email ? (
+                    <CopyToClipboard
+                      text={candidate.email}
+                      onDoubleClick={() => copy(candidate.email)}
+                    >
+                      <summary className='text-info'>{candidate.email}</summary>
+                    </CopyToClipboard>
+                  ) : (
+                    'Not set'
+                  )}
+                </li>
+                <li className='list-group-item'>
+                  <div className='d-flex w-100 justify-content-between'>
+                    <div className='my-auto'>
+                      {candidate.cv ? 'Here is my CV:' : 'No CV'}{' '}
                     </div>
-                  </li>
-                </ul>
-              </div>
-              <div className='card-footer text-muted text-center'>
-                Joined: {candidate.createdAt.split('T')[0]}
-              </div>
+                    <div className='my-auto'>
+                      <a
+                        href={candidate.cv}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <FontAwesomeIcon icon={faFilePdf} size='2x' />
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
-            {user.id === candidate.id ? (
-              <Togglable buttonLabel='Manage profile' ref={manageProfileRef}>
-                <ManageProfile
-                  manageProfileRef={manageProfileRef}
-                  id={user.id}
-                />
-              </Togglable>
-            ) : null}
+            <div className='card-body '>
+              {user.id === candidate.id ? (
+                <Togglable buttonLabel='Manage profile' ref={manageProfileRef}>
+                  <ManageProfile
+                    manageProfileRef={manageProfileRef}
+                    id={user.id}
+                  />
+                </Togglable>
+              ) : null}
+            </div>
           </div>
           <div className='col-md-12'>
             {candidate.interestingJobs.length > 0 ? (

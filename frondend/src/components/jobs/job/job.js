@@ -145,8 +145,9 @@ const Job = props => {
               <ul className='list-group'>
                 {props.job.questions.map(q => (
                   <li key={q._id} className='list-group-item '>
-                    <h5>{q.question}</h5>
-                    <div className='d-flex justify-content-between border-top border-info'>
+                    <div className='d-flex justify-content-between'>
+                      <h5>{q.question}</h5>
+
                       <Link
                         to={
                           !q.questioner.jobProvider
@@ -154,7 +155,7 @@ const Job = props => {
                             : `/providers/${q.questioner.id}`
                         }
                       >
-                        <h5>{q.questioner.name}</h5>
+                        {/* <h5>{q.questioner.name}</h5> */}
                         <img
                           src={q.questioner.picture}
                           className='my-auto rounded-circle'
