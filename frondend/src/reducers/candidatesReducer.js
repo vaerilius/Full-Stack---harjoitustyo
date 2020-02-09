@@ -7,6 +7,9 @@ const reducer = (state = [], action) => {
     case 'INIT_CANDIDATES':
       return [...action.candidates]
     case 'GET_CANDIDATE':
+      if (state.find(c => c.id === action.candidate.id)) {
+        return [...state]
+      }
       return [...state, action.candidate]
     case 'SIGNUP_CANDIDATE':
       return [...state, action.createdCandidate]

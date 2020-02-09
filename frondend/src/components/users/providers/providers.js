@@ -7,10 +7,8 @@ import { initializeProviders } from '../../../reducers/providersReducer'
 
 const Providers = ({ providers, initializeProviders }) => {
   useEffect(() => {
-    // if (providers.length === 0) {
     initializeProviders()
-    // }
-  }, [initializeProviders])
+  }, [])
 
   Animation()
   return (
@@ -38,7 +36,6 @@ const Providers = ({ providers, initializeProviders }) => {
                     alt={p.name}
                   />
                 </div>
-                {/* <p className="mb-1"> Joined: {user.createdAt.split('T')[0]} </p> */}
               </Link>
             </div>
           </div>

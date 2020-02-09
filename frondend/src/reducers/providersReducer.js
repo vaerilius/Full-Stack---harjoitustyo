@@ -5,6 +5,11 @@ const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_PROVIDERS':
       return [...action.providers]
+    case 'GET_PROVIDER':
+      if (state.find(p => p.id === action.provider.id)) {
+        return [...state]
+      }
+      return [...state, action.provider]
     case 'SIGNUP_PROVIDER':
       return [...state, action.createdProvider]
     case 'UPDATE_PROVIDER':
@@ -22,6 +27,15 @@ export const initializeProviders = () => {
     dispatch({
       type: 'INIT_PROVIDERS',
       providers
+    })
+  }
+}
+export const getProvider = id => {
+  return async dispatch => {
+    const provider = await providerservice.getProviderByID(id)
+    dispatch({
+      type: 'GET_PROVIDER',
+      provider
     })
   }
 }

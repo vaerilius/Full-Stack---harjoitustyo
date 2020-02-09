@@ -161,6 +161,7 @@ const App = ({
                       path='/providers/:id'
                       render={({ match }) => (
                         <Provider
+                          id={match.params.id}
                           provider={findById(match.params.id, providers)}
                         />
                       )}

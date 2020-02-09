@@ -6,14 +6,18 @@ import ManageProfile from '../../manageProfile'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { setNotification } from '../../../../reducers/notificationReducer'
 import { Animation } from '../../../../hooks/animation'
-import { initializeProviders } from '../../../../reducers/providersReducer'
+import { getProvider } from '../../../../reducers/providersReducer'
 
-const Provider = ({ setNotification, initializeProviders, provider, user }) => {
+const Provider = ({ setNotification, getProvider, id, provider, user }) => {
   useEffect(() => {
-    initializeProviders()
-  }, [initializeProviders])
+    if (!provider) {
+      getProvider(id)
+    }
+  }, [provider])
+  Animation()
+
   if (!provider) {
-    return <h2>loading</h2>
+    return <h2 className='text-white'>loading</h2>
   }
   const manageProfileRef = React.createRef()
 
@@ -23,7 +27,6 @@ const Provider = ({ setNotification, initializeProviders, provider, user }) => {
       message: `${value} copied to the clickboard.`
     })
   }
-  Animation()
   return (
     <div className='container'>
       <div className='card my-auto mx-auto'>
@@ -106,10 +109,11 @@ const mapStateToProps = (state, ownProps) => {
   const provider = state.providers.find(p => p.id === ownProps.provider.id)
   return {
     provider: provider,
-    user: state.user
+    user: state.user,
+    id: ownProps.id
   }
 }
 export default connect(mapStateToProps, {
   setNotification,
-  initializeProviders
+  getProvider
 })(Provider)

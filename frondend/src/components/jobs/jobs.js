@@ -20,9 +20,9 @@ const Jobs = ({ user, jobs, initializeJobs, initializeCandidates }) => {
   Animation()
   return (
     <div className='container '>
-      <div className='card shadow '>
+      <div className='card shadow mb-4'>
         <div className='card-body text-center'>
-          <h2 className='display-5 font-weight-bold'>Jobs</h2>
+          <h2 className='display-5 font-weight-bold '>Jobs</h2>
         </div>
       </div>
       {user.jobProvider ? (

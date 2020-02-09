@@ -23,6 +23,11 @@ const getAllProviders = async () => {
 
   return response.data
 }
+const getProviderByID = async id => {
+  const response = await axios.get(`${baseUrl}/providers/${id}`)
+
+  return response.data
+}
 const updateProviderProfile = async data => {
   const response = await axios.put(
     `${baseUrl}/providers/${data.id}`,
@@ -37,5 +42,6 @@ export default {
   updateProviderProfile,
   setToken,
   destroyToken,
-  getConfig
+  getConfig,
+  getProviderByID
 }
