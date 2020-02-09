@@ -138,7 +138,7 @@ const App = ({
                       render={({ match }) => (
                         <Candidate
                           id={match.params.id}
-                          candidate={findById(match.params.id, candidates)}
+                          // candidate={findById(match.params.id, candidates)}
                         />
                       )}
                     />

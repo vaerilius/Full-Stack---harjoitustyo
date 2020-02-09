@@ -11,32 +11,38 @@ import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import { Animation } from '../../../../hooks/animation'
 import { getCandidate } from '../../../../reducers/candidatesReducer'
 
-const Candidate = props => {
-  if (!props.candidate) {
+const Candidate = ({ candidate, getCandidate, user, id }) => {
+  useEffect(() => {
+    if (!candidate) {
+      getCandidate(id)
+    }
+  }, [candidate])
+  Animation()
+
+  if (!candidate) {
     return <h2>loading</h2>
   }
 
   const copy = value => {
-    props.setNotification({
+    setNotification({
       class: 'alert alert-success',
       message: `${value} copied to the clickboard.`
     })
   }
 
   const manageProfileRef = React.createRef()
-  Animation()
   return (
     <div className='container'>
       <div className='card my-auto mx-auto' style={{ maxWidth: '480px' }}>
         <div className='card-header'>Candidate</div>
         <div className='row no-gutters'>
           <div className='col-md-12'>
-            <img src={props.candidate.picture} className='card-img' alt='...' />
+            <img src={candidate.picture} className='card-img' alt='...' />
           </div>
           <div className='col-md-12'>
             <div className='card-body'>
-              <h5 className='card-title'>{props.candidate.name}</h5>
-              <p className='card-text'>{props.candidate.description}</p>
+              <h5 className='card-title'>{candidate.name}</h5>
+              <p className='card-text'>{candidate.description}</p>
 
               <div className='card-body '>
                 <div className='text-nowrap bd-highlight'>
@@ -45,13 +51,13 @@ const Candidate = props => {
                 <ul className='list-group shadow'>
                   <li className='list-group-item'>
                     Phone:{' '}
-                    {props.candidate.phone ? (
+                    {candidate.phone ? (
                       <CopyToClipboard
-                        text={props.candidate.phone}
-                        onDoubleClick={() => copy(props.candidate.phone)}
+                        text={candidate.phone}
+                        onDoubleClick={() => copy(candidate.phone)}
                       >
                         <summary className='text-info'>
-                          {props.candidate.phone}
+                          {candidate.phone}
                         </summary>
                       </CopyToClipboard>
                     ) : (
@@ -60,13 +66,13 @@ const Candidate = props => {
                   </li>
                   <li className='list-group-item'>
                     Email:{' '}
-                    {props.candidate.email ? (
+                    {candidate.email ? (
                       <CopyToClipboard
-                        text={props.candidate.email}
-                        onDoubleClick={() => copy(props.candidate.email)}
+                        text={candidate.email}
+                        onDoubleClick={() => copy(candidate.email)}
                       >
                         <summary className='text-info'>
-                          {props.candidate.email}
+                          {candidate.email}
                         </summary>
                       </CopyToClipboard>
                     ) : (
@@ -76,11 +82,11 @@ const Candidate = props => {
                   <li className='list-group-item'>
                     <div className='d-flex w-100 justify-content-between'>
                       <div className='my-auto'>
-                        {props.candidate.cv ? 'Here is my CV:' : 'No CV'}{' '}
+                        {candidate.cv ? 'Here is my CV:' : 'No CV'}{' '}
                       </div>
                       <div className='my-auto'>
                         <a
-                          href={props.candidate.cv}
+                          href={candidate.cv}
                           target='_blank'
                           rel='noopener noreferrer'
                         >
@@ -92,22 +98,22 @@ const Candidate = props => {
                 </ul>
               </div>
               <div className='card-footer text-muted text-center'>
-                Joined: {props.candidate.createdAt.split('T')[0]}
+                Joined: {candidate.createdAt.split('T')[0]}
               </div>
             </div>
-            {props.user.id === props.candidate.id ? (
+            {user.id === candidate.id ? (
               <Togglable buttonLabel='Manage profile' ref={manageProfileRef}>
                 <ManageProfile
                   manageProfileRef={manageProfileRef}
-                  id={props.user.id}
+                  id={user.id}
                 />
               </Togglable>
             ) : null}
           </div>
           <div className='col-md-12'>
-            {props.candidate.interestingJobs.length > 0 ? (
+            {candidate.interestingJobs.length > 0 ? (
               <ul className='list-group list-group-flush'>
-                {props.candidate.interestingJobs.map(jobAd => (
+                {candidate.interestingJobs.map(jobAd => (
                   <li key={jobAd.id} className='list-group-item text-center'>
                     <Link to={`/jobs/${jobAd.id}`}>{jobAd.title}</Link>
                   </li>
@@ -126,15 +132,8 @@ const Candidate = props => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let candidate
-  getCandidate(ownProps.id)
-
-  // setTimeout(() => {
-  //   candidate = state.candidates.find(c => c.id === ownProps.candidate.id)
-  // }, 2000)
-
   return {
-    candidate: null,
+    candidate: state.candidates.find(c => c.id === ownProps.id),
     user: state.user,
     id: ownProps.id
   }

@@ -25,11 +25,7 @@ const getAllCandidates = async () => {
   return response.data
 }
 const getCandidateByID = async id => {
-  console.log(id)
-  // const response = await axios.get(`${baseUrl}/candidates/${id}`)
-  const response = await axios.get(
-    'http://localhost:3001/api/users/candidates/5e37e5d502694c405c0cc63d'
-  )
+  const response = await axios.get(`${baseUrl}/candidates/${id}`)
 
   return response.data
 }

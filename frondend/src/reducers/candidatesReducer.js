@@ -6,12 +6,11 @@ const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_CANDIDATES':
       return [...action.candidates]
-    case 'INIT_CANDIDATE':
+    case 'GET_CANDIDATE':
       return [...state, action.candidate]
     case 'SIGNUP_CANDIDATE':
       return [...state, action.createdCandidate]
     case 'UPDATE_CANDIDATE':
-      console.log(action)
       return [...state].map(p =>
         p.id === action.updatedCandidate.id ? action.updatedCandidate : p
       )
@@ -30,14 +29,11 @@ export const initializeCandidates = () => {
 }
 
 export const getCandidate = id => {
-  console.log(id)
-
   return async dispatch => {
-    console.log(id)
     const candidate = await candidateService.getCandidateByID(id)
-    console.log(candidate)
+    // console.log(candidate)
     dispatch({
-      type: 'INIT_CANDIDATE',
+      type: 'GET_CANDIDATE',
       candidate
     })
   }
