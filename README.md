@@ -66,7 +66,7 @@
 |   03.02   | 7    | frondend: deploy frondend(aws), delete create-react-app, socket.io (jobs)                                                    |
 |   06.02   | 3    | socket.io and styling                                                                                                        |
 |   08.02   | 3    | Issue with update candidate polling                                                                                          |
-|   09.02   | 1    | solved lazyload when get single candidate                                                                                    |
+|   09.02   | 2    | solved lazyload when get single candidate , modify layout                                                                    |
 |           |      |                                                                                                                              |
-|   yht.    | 157  | tuntia                                                                                                                       |
-|  puuttuu  | 19h  | tuntia                                                                                                                       |
+|   yht.    | 158  | tuntia                                                                                                                       |
+|  puuttuu  | 18h  | tuntia                                                                                                                       |
