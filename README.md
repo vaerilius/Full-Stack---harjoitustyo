@@ -65,7 +65,8 @@
 |   02.02   | 3    | frondend: lazy loading issue with single component by id, deploy backend, grondend .env setup                                |
 |   03.02   | 7    | frondend: deploy frondend(aws), delete create-react-app, socket.io (jobs)                                                    |
 |   06.02   | 3    | socket.io and styling                                                                                                        |
-|   08.02   | 2    | Issue with update candidate polling                                                                                          |
+|   08.02   | 3    | Issue with update candidate polling                                                                                          |
+|   09.02   | 1    | solved lazyload when get single candidate                                                                                    |
 |           |      |                                                                                                                              |
-|   yht.    | 155  | tuntia                                                                                                                       |
-|  puuttuu  | 21h  | tuntia                                                                                                                       |
+|   yht.    | 157  | tuntia                                                                                                                       |
+|  puuttuu  | 19h  | tuntia                                                                                                                       |
