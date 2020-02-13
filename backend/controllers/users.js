@@ -100,7 +100,7 @@ usersRouter.put('/candidates/:id', async (req, res, next) => {
 
     io.getIO().emit('users', {
       action: 'UPDATE_CANDIDATE',
-      object: updatedUser
+      payload: updatedUser.toJSON()
     })
 
     res.json(updatedUser.toJSON())

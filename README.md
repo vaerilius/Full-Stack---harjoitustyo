@@ -67,7 +67,7 @@
 |   06.02   | 3    | socket.io and styling                                                                                                        |
 |   08.02   | 3    | Issue with update candidate polling                                                                                          |
 |   09.02   | 2    | solved lazyload when get single candidate , modify layout                                                                    |
-|   13.02   | 1    | sokect jobs modify                                                                                                           |
+|   13.02   | 2    | socket jobs modify, candidate reduce action not work when socket emit a new data                                             |
 |           |      |                                                                                                                              |
-|   yht.    | 151  | tuntia                                                                                                                       |
-|  puuttuu  | 17h  | tuntia                                                                                                                       |
+|   yht.    | 152  | tuntia                                                                                                                       |
+|  puuttuu  | 16h  | tuntia                                                                                                                       |

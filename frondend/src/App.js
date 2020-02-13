@@ -32,35 +32,18 @@ const Candidate = lazy(() =>
 )
 const Providers = lazy(() => import('./components/users/providers/providers'))
 let socket
-const App = ({
-  user,
-  initializeUser,
-  handleJobPolling,
-  jobs,
-  candidates,
-  providers
-}) => {
+const App = ({ user, initializeUser, jobs, providers }) => {
   useEffect(() => {
     socket = io.init('http://localhost:3001')
     socket.on('connection', id => console.log(id))
   }, [])
 
-  // useEffect(() => {
-  //   socket.on('jobs', data => {
-  //     handleJobPolling(data)
-  //   })
-  // }, [handleJobPolling])
-  // useEffect(() => {
-
-  // }, [handleUsersPolling])
-
   useEffect(() => {
     initializeUser()
-  }, [initializeUser])
+  }, [])
 
   const findById = (id, array) => array.find(item => item.id === id)
-  if (user) {
-  }
+
   return (
     <div className='bg'>
       <Router>

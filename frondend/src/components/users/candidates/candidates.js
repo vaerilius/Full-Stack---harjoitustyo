@@ -2,14 +2,21 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Animation } from '../../../hooks/animation'
-import { initializeCandidates } from '../../../reducers/candidatesReducer'
+import {
+  initializeCandidates,
+  handleUsersPolling
+} from '../../../reducers/candidatesReducer'
+import io from '../../../../socket-client'
 
 const Candidates = ({ candidates, initializeCandidates }) => {
   useEffect(() => {
-    // if (candidates.length === 0) {
     initializeCandidates()
-    // }
-  }, [initializeCandidates])
+  }, [])
+  useEffect(() => {
+    io.getIO().on('users', data => {
+      handleUsersPolling(data)
+    })
+  }, [handleUsersPolling])
 
   Animation()
   return (
@@ -53,4 +60,7 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { initializeCandidates })(Candidates)
+export default connect(mapStateToProps, {
+  initializeCandidates,
+  handleUsersPolling
+})(Candidates)

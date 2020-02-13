@@ -14,6 +14,7 @@ const reducer = (state = [], action) => {
     case 'SIGNUP_CANDIDATE':
       return [...state, action.createdCandidate]
     case 'UPDATE_CANDIDATE':
+      console.log(action.updatedCandidate)
       return [...state].map(p =>
         p.id === action.updatedCandidate.id ? action.updatedCandidate : p
       )
@@ -120,8 +121,12 @@ export const updateCandidateCV = (formData, id) => {
 }
 
 export const handleUsersPolling = data => {
+  console.log(data)
   return async dispatch => {
-    dispatch(data)
+    await dispatch({
+      type: data.action,
+      updatedCandidate: data.payload
+    })
   }
 }
 
