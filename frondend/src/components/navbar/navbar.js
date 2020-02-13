@@ -54,6 +54,11 @@ const Navbar = props => {
               <div className='nav-link'>Providers</div>
             </Link>
           </li>
+          <li className='nav-item'>
+            <Link to='/online-users'>
+              <div className='nav-link'>Users</div>
+            </Link>
+          </li>
         </ul>
         <ul className='navbar-nav justify-content-end'>
           <li className='nav-item'>

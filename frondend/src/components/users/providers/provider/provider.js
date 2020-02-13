@@ -106,7 +106,7 @@ const Provider = ({ setNotification, getProvider, id, provider, user }) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const provider = state.providers.find(p => p.id === ownProps.provider.id)
+  const provider = state.providers.find(p => p.id === ownProps.id)
   return {
     provider: provider,
     user: state.user,

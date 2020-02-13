@@ -1,14 +1,9 @@
 import React, { useEffect, Suspense, lazy } from 'react'
 import { connect } from 'react-redux'
 import io from '../socket-client'
-import { handleJobPolling } from './reducers/jobReducer'
-import { handleUsersPolling } from './reducers/candidatesReducer'
+import { initOnlineUsers } from './reducers/OnlineUserReducer'
 
-import Landing from './components/landing'
-import Job from './components/jobs/job/job'
-
-// import Provider from './components/users/providers/provider/provider'
-// import Candidate from './components/users/candidates/candidate/candidate'
+// import Landing from './components/landing'
 
 import { initializeUser } from './reducers/userReducer'
 import {
@@ -17,6 +12,7 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom'
+
 const Provider = React.lazy(() =>
   import('./components/users/providers/provider/provider')
 )
@@ -24,27 +20,29 @@ const Notification = lazy(() => import('./components/notification'))
 const Navbar = lazy(() => import('./components/navbar/navbar'))
 const SignUp = lazy(() => import('./components/auth/signup'))
 const Login = lazy(() => import('./components/auth/login'))
+const Landing = lazy(() => import('./components/landing'))
 
 const Jobs = lazy(() => import('./components/jobs/jobs'))
+const Job = lazy(() => import('./components/jobs/job/job'))
 import Candidates from './components/users/candidates/candidates'
 const Candidate = lazy(() =>
   import('./components/users/candidates/candidate/candidate')
 )
 const Providers = lazy(() => import('./components/users/providers/providers'))
-let socket
 
-socket = io.init('http://localhost:3001')
+const OnlineUsers = lazy(() => import('./components/users/onlineUsers'))
 
-const App = ({ user, initializeUser, jobs, providers }) => {
+let socket = io.init('http://localhost:3001')
+
+const App = ({ user, initializeUser, jobs, providers, initOnlineUsers }) => {
   useEffect(() => {
     socket.on('connection', id => console.log(id))
   }, [])
 
   useEffect(() => {
     initializeUser()
+    initOnlineUsers()
   }, [])
-
-  const findById = (id, array) => array.find(item => item.id === id)
 
   return (
     <div className='bg'>
@@ -98,9 +96,7 @@ const App = ({ user, initializeUser, jobs, providers }) => {
                     <Route
                       exact
                       path='/jobs/:id'
-                      render={({ match }) => (
-                        <Job job={findById(match.params.id, jobs)} />
-                      )}
+                      render={({ match }) => <Job id={match.params.id} />}
                     />
                   ) : (
                     <Redirect to='/' />
@@ -119,17 +115,12 @@ const App = ({ user, initializeUser, jobs, providers }) => {
                     <Route
                       exact
                       path='/candidates/:id'
-                      render={({ match }) => (
-                        <Candidate
-                          id={match.params.id}
-                          // candidate={findById(match.params.id, candidates)}
-                        />
-                      )}
+                      render={({ match }) => <Candidate id={match.params.id} />}
                     />
                   ) : (
                     <Redirect to='/' />
                   )}
-                  {/* providers */}
+
                   {user ? (
                     <Route
                       exact
@@ -143,20 +134,21 @@ const App = ({ user, initializeUser, jobs, providers }) => {
                     <Route
                       exact
                       path='/providers/:id'
-                      render={({ match }) => (
-                        <Provider
-                          id={match.params.id}
-                          provider={findById(match.params.id, providers)}
-                        />
-                      )}
+                      render={({ match }) => <Provider id={match.params.id} />}
+                    />
+                  ) : (
+                    <Redirect to='/' />
+                  )}
+                  {user ? (
+                    <Route
+                      exact
+                      path='/online-users'
+                      render={() => <OnlineUsers />}
                     />
                   ) : (
                     <Redirect to='/' />
                   )}
                 </Switch>
-                {/* <Switch>
-                  <Route path='/:id' component={WaitingComponent(Post)} />
-                </Switch> */}
               </div>
             </div>
           </div>
@@ -178,6 +170,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   initializeUser,
-  handleJobPolling,
-  handleUsersPolling
+  initOnlineUsers
 })(App)

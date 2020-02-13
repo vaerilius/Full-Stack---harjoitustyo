@@ -175,9 +175,7 @@ const Job = props => {
   )
 }
 const mapStateToProps = (state, ownProps) => {
-  // console.log(state.user)
-  // console.log(ownProps)
-  const job = state.jobs.find(j => j.id === ownProps.job.id)
+  const job = state.jobs.find(j => j.id === ownProps.id)
   return {
     job,
     user: state.user
