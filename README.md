@@ -67,7 +67,7 @@
 |   06.02   | 3    | socket.io and styling                                                                                                        |
 |   08.02   | 3    | Issue with update candidate polling                                                                                          |
 |   09.02   | 2    | solved lazyload when get single candidate , modify layout                                                                    |
-|   13.02   | 3    | socket jobs modify, candidate, providers (socket)                                                                            |
+|   13.02   | 5    | socket jobs modify, candidate, providers (socket)                                                                            |
 |           |      |                                                                                                                              |
-|   yht.    | 153  | tuntia                                                                                                                       |
-|  puuttuu  | 15h  | tuntia                                                                                                                       |
+|   yht.    | 155  | tuntia                                                                                                                       |
+|  puuttuu  | 13h  | tuntia                                                                                                                       |
