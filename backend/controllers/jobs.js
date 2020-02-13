@@ -96,7 +96,7 @@ jobsRouter.post(
         name: 1
       })
       io.getIO().emit('jobs', {
-        action: 'CREATE',
+        action: 'CREATE_JOB',
         object: result
       })
       response.status(201).json(result)
