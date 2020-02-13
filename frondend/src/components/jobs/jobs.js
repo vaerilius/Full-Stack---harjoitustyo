@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
@@ -11,14 +12,16 @@ import { initializeProviders } from '../../reducers/providersReducer'
 import { initializeCandidates } from '../../reducers/candidatesReducer'
 
 const Jobs = ({ user, jobs, initializeJobs, handleJobPolling }) => {
-  let socket
   useEffect(() => {
     initializeJobs()
-    io.getIO().on('users', data => {
+  }, [])
+
+  useEffect(() => {
+    io.getIO().on('jobs', data => {
       handleJobPolling(data)
     })
-  }, [])
-  useEffect(() => {}, [handleJobPolling])
+  }, [handleJobPolling])
+
   Animation()
 
   const newJobRef = React.createRef()
