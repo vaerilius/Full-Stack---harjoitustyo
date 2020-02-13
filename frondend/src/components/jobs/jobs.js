@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { addUserToOnline } from './../../reducers/OnlineUserReducer'
 import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
@@ -11,7 +11,13 @@ import { initializeJobs, handleJobPolling } from '../../reducers/jobReducer'
 import { initializeProviders } from '../../reducers/providersReducer'
 import { initializeCandidates } from '../../reducers/candidatesReducer'
 
-const Jobs = ({ user, jobs, initializeJobs, handleJobPolling }) => {
+const Jobs = ({
+  user,
+  jobs,
+  initializeJobs,
+  handleJobPolling,
+  addUserToOnline
+}) => {
   useEffect(() => {
     initializeJobs()
   }, [])
@@ -21,6 +27,17 @@ const Jobs = ({ user, jobs, initializeJobs, handleJobPolling }) => {
       handleJobPolling(data)
     })
   }, [handleJobPolling])
+
+  useEffect(() => {
+    io.getIO().on('userConnected', id => {
+      addUserToOnline(id)
+    })
+
+    // io.emit('connected', id)
+    // io.getIO().on('userConnected', data => {
+    //   console.log(data)
+    // })
+  }, [addUserToOnline])
 
   Animation()
 
@@ -58,5 +75,6 @@ export default connect(mapStateToProps, {
   initializeJobs,
   initializeProviders,
   initializeCandidates,
-  handleJobPolling
+  handleJobPolling,
+  addUserToOnline
 })(Jobs)

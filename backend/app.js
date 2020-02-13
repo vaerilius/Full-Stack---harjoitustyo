@@ -30,8 +30,12 @@ mongoose
 
     io.on('connection', socket => {
       console.log('Client connected')
-      socket.emit('connection', `user ${socket.id} connected`)
+      socket.emit('connection', socket.id)
+      // io.emit('connected', socket.id)
       socket.on('disconnect', () => console.log('user disconnect'))
+    })
+    io.on('connected', id => {
+      io.emit('userConnected', id)
     })
   })
   .catch(error => {
