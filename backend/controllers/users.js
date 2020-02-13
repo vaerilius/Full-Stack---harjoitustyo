@@ -80,6 +80,11 @@ usersRouter.put('/providers/:id', async (req, res, next) => {
       new: true
     }).populate('jobsProvided', { title: 1, description: 1, company: 1 })
 
+    io.getIO().emit('providers', {
+      action: 'UPDATE_PROVIDER',
+      payload: updatedUser
+    })
+
     res.json(updatedUser.toJSON())
   } catch (error) {
     next(error)
@@ -98,9 +103,9 @@ usersRouter.put('/candidates/:id', async (req, res, next) => {
       new: true
     }).populate('interestingJobs', { title: 1, description: 1, company: 1 })
 
-    io.getIO().emit('users', {
+    io.getIO().emit('candidates', {
       action: 'UPDATE_CANDIDATE',
-      payload: updatedUser.toJSON()
+      payload: updatedUser
     })
 
     res.json(updatedUser.toJSON())

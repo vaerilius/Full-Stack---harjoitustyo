@@ -3,12 +3,21 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Animation } from '../../../hooks/animation'
-import { initializeProviders } from '../../../reducers/providersReducer'
+import {
+  initializeProviders,
+  handleUsersPolling
+} from '../../../reducers/providersReducer'
+import io from '../../../../socket-client'
 
-const Providers = ({ providers, initializeProviders }) => {
+const Providers = ({ providers, initializeProviders, handleUsersPolling }) => {
   useEffect(() => {
     initializeProviders()
   }, [])
+  useEffect(() => {
+    io.getIO().on('providers', data => {
+      handleUsersPolling(data)
+    })
+  }, [handleUsersPolling])
 
   Animation()
   return (
@@ -51,4 +60,7 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { initializeProviders })(Providers)
+export default connect(mapStateToProps, {
+  initializeProviders,
+  handleUsersPolling
+})(Providers)

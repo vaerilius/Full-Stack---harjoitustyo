@@ -32,9 +32,11 @@ const Candidate = lazy(() =>
 )
 const Providers = lazy(() => import('./components/users/providers/providers'))
 let socket
+
+socket = io.init('http://localhost:3001')
+
 const App = ({ user, initializeUser, jobs, providers }) => {
   useEffect(() => {
-    socket = io.init('http://localhost:3001')
     socket.on('connection', id => console.log(id))
   }, [])
 

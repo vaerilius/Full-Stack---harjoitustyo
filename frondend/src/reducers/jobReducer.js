@@ -1,6 +1,6 @@
+/* eslint-disable indent */
 import jobService from '../services/jobService'
 import { setNotification } from './notificationReducer'
-import io from '../../socket-client'
 
 const reducer = (state = [], action) => {
   switch (action.type) {

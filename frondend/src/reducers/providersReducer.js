@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import providerservice from '../services/providerService'
 import { setNotification } from './notificationReducer'
 
@@ -88,6 +89,14 @@ export const updateProvider = data => {
         })
       )
     }
+  }
+}
+export const handleUsersPolling = data => {
+  return async dispatch => {
+    await dispatch({
+      type: data.action,
+      updatedProvider: data.payload
+    })
   }
 }
 

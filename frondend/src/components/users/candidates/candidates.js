@@ -8,12 +8,16 @@ import {
 } from '../../../reducers/candidatesReducer'
 import io from '../../../../socket-client'
 
-const Candidates = ({ candidates, initializeCandidates }) => {
+const Candidates = ({
+  candidates,
+  initializeCandidates,
+  handleUsersPolling
+}) => {
   useEffect(() => {
     initializeCandidates()
   }, [])
   useEffect(() => {
-    io.getIO().on('users', data => {
+    io.getIO().on('candidates', data => {
       handleUsersPolling(data)
     })
   }, [handleUsersPolling])
