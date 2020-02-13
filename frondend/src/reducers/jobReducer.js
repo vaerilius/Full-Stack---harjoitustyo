@@ -1,5 +1,6 @@
 import jobService from '../services/jobService'
 import { setNotification } from './notificationReducer'
+import io from '../../socket-client'
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -181,6 +182,7 @@ export const handleSendMessage = data => {
   }
 }
 export const handleJobPolling = data => {
+  console.log(data)
   return async dispatch => {
     dispatch({
       type: data.action,

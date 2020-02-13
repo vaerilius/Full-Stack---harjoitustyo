@@ -4,20 +4,24 @@ import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
 import { Animation } from '../../hooks/animation'
+import io from '../../../socket-client'
 
-import { initializeJobs } from '../../reducers/jobReducer'
+import { initializeJobs, handleJobPolling } from '../../reducers/jobReducer'
 import { initializeProviders } from '../../reducers/providersReducer'
 import { initializeCandidates } from '../../reducers/candidatesReducer'
 
-const Jobs = ({ user, jobs, initializeJobs, initializeCandidates }) => {
+const Jobs = ({ user, jobs, initializeJobs, handleJobPolling }) => {
+  let socket
   useEffect(() => {
     initializeJobs()
-    initializeProviders()
-    // initializeCandidates()
-  }, [initializeJobs, initializeProviders, initializeCandidates])
+    io.getIO().on('users', data => {
+      handleJobPolling(data)
+    })
+  }, [])
+  useEffect(() => {}, [handleJobPolling])
+  Animation()
 
   const newJobRef = React.createRef()
-  Animation()
   return (
     <div className='container '>
       <div className='card shadow mb-4'>
@@ -50,5 +54,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   initializeJobs,
   initializeProviders,
-  initializeCandidates
+  initializeCandidates,
+  handleJobPolling
 })(Jobs)

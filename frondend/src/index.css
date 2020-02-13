@@ -53,10 +53,7 @@ h1 {
   margin: 0;
   padding: 0;
 }
-.col-md-12.margin {
-  /* margin: var(--layout-margin) 0; */
-  margin: 0;
-}
+
 .alert.alert-primary {
   opacity: 0;
   transition: transform 800ms ease, opacity 800ms ease;
@@ -76,8 +73,8 @@ h1 {
 }
 
 /* alert alert-primary */
-.container.visible.page {
-  margin: 4rem auto;
+.page {
+  margin: var(--layout-margin);
   /* display: flex; */
   /* justify-content: center; */
   /* align-items: center; */

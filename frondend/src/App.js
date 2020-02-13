@@ -31,7 +31,7 @@ const Candidate = lazy(() =>
   import('./components/users/candidates/candidate/candidate')
 )
 const Providers = lazy(() => import('./components/users/providers/providers'))
-
+let socket
 const App = ({
   user,
   initializeUser,
@@ -40,28 +40,27 @@ const App = ({
   candidates,
   providers
 }) => {
-  const socket = io.init('http://localhost:3001')
+  useEffect(() => {
+    socket = io.init('http://localhost:3001')
+    socket.on('connection', id => console.log(id))
+  }, [])
+
+  // useEffect(() => {
+  //   socket.on('jobs', data => {
+  //     handleJobPolling(data)
+  //   })
+  // }, [handleJobPolling])
+  // useEffect(() => {
+
+  // }, [handleUsersPolling])
 
   useEffect(() => {
     initializeUser()
-    socket.on('connection', msg => {
-      console.log(msg)
-    })
   }, [initializeUser])
 
-  useEffect(() => {
-    socket.on('jobs', data => {
-      handleJobPolling(data)
-    })
-  }, [handleJobPolling])
-  useEffect(() => {
-    socket.on('users', data => {
-      handleUsersPolling(data)
-    })
-  }, [handleUsersPolling])
-
   const findById = (id, array) => array.find(item => item.id === id)
-
+  if (user) {
+  }
   return (
     <div className='bg'>
       <Router>
@@ -84,7 +83,7 @@ const App = ({
           <Notification />
 
           <div className='container page'>
-            <div className='row'>
+            <div className='row '>
               <div className=' col-md-12 margin'>
                 {/* {notification.message ? <Notification /> : null} */}
                 {!user ? (
