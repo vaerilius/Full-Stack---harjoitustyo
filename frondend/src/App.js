@@ -2,7 +2,7 @@ import React, { useEffect, Suspense, lazy } from 'react'
 import { connect } from 'react-redux'
 
 import { initializeUser } from './reducers/userReducer'
-import { addUserToOnline } from './reducers/OnlineUserReducer'
+import { addUserToOnline, initOnlineUsers } from './reducers/OnlineUserReducer'
 import {
   BrowserRouter as Router,
   Route,
@@ -31,7 +31,8 @@ const OnlineUsers = lazy(() => import('./components/users/onlineUsers'))
 import io from '../socket-client'
 
 io.init('http://localhost:3001')
-const App = ({ user, initializeUser, addUserToOnline }) => {
+
+const App = ({ user, initializeUser, addUserToOnline, initOnlineUsers }) => {
   useEffect(() => {
     initializeUser()
   }, [])
@@ -162,5 +163,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   initializeUser,
-  addUserToOnline
+  addUserToOnline,
+  initOnlineUsers
 })(App)

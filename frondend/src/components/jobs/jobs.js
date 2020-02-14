@@ -32,22 +32,12 @@ const Jobs = ({
   }, [handleJobPolling])
 
   useEffect(() => {
-    io.getIO().on('init', clients => {
-      initOnlineUsers(clients)
-    })
-  }, [initOnlineUsers])
+    io.getIO().emit('join', user)
+  }, [])
 
-  // useEffect(() => {
-  //   io.getIO().on('userConnected', id => {
-  //     addUserToOnline(id)
-  //   })
-
-  // io.emit('connected', id)
-  // io.getIO().on('userConnected', data => {
-  //   console.log(data)
-  // })
-  // }, [addUserToOnline])
-
+  io.getIO().on('userConnected', user => {
+    addUserToOnline(user)
+  })
   Animation()
 
   const newJobRef = React.createRef()

@@ -35,6 +35,12 @@ loginRouter.post('/', async (request, response, next) => {
 
     const token = jwt.sign(userForToken, process.env.SECRET)
 
+    // io.getIO().on('connection', socket => {
+    //   socket.join('jobBook')
+    //   socket.id = user._id
+    //   io.getIO().emit('sign up', socket.id)
+    // })
+
     response.status(200).send({
       token,
       username: user.username,
