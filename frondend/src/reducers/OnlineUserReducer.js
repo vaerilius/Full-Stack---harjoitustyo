@@ -1,36 +1,30 @@
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_ONLINE_USERS':
-      return [...action.onlineUsers]
+      return [...action.clients]
     case 'ADD_ONLINE_USER':
-      return [...state, action.newUser]
+      return [...state, action.userID]
     default:
       return [...state]
   }
 }
 
-export const initOnlineUsers = () => {
+export const initOnlineUsers = clients => {
   return async dispatch => {
-    const onlineUsers = [{ user: 'jee' }, { user: 'joo' }]
     dispatch({
       type: 'INIT_ONLINE_USERS',
-      onlineUsers
+      clients
     })
   }
 }
-export const addUserToOnline = data => {
-  const user = JSON.parse(window.localStorage.getItem('loggedUser'))
-  if (user) {
-    const newUser = {
-      id: data,
-      user: user.id
-    }
-    return async dispatch => {
-      dispatch({
-        type: 'ADD_ONLINE_USER',
-        newUser
-      })
-    }
+export const addUserToOnline = userID => {
+  console.log(userID)
+
+  return async dispatch => {
+    dispatch({
+      type: 'ADD_ONLINE_USER',
+      userID
+    })
   }
 }
 export default reducer

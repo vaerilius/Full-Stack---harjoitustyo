@@ -1,6 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react'
 import { connect } from 'react-redux'
-import io from '../socket-client'
 
 import { initializeUser } from './reducers/userReducer'
 import { addUserToOnline } from './reducers/OnlineUserReducer'
@@ -29,16 +28,12 @@ const Candidate = lazy(() =>
 const Providers = lazy(() => import('./components/users/providers/providers'))
 
 const OnlineUsers = lazy(() => import('./components/users/onlineUsers'))
+import io from '../socket-client'
 
-const socket = io.init('http://localhost:3001')
-
+io.init('http://localhost:3001')
 const App = ({ user, initializeUser, addUserToOnline }) => {
   useEffect(() => {
     initializeUser()
-    socket.on('connection', id => {
-      addUserToOnline(id)
-      socket.emit('connected', id)
-    })
   }, [])
 
   return (

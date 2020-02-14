@@ -27,15 +27,22 @@ mongoose
     })
 
     const io = require('./socket').init(server)
-
     io.on('connection', socket => {
       console.log('Client connected')
-      socket.emit('connection', socket.id)
-      // io.emit('connected', socket.id)
+
+      socket.join('jobBook')
+
+      // io.getIO()
+      //   .to('jobBook')
+      //   .emit('connected', user._id)
+
+      io.in('jobBook').clients((error, clients) => {
+        if (error) throw error
+        console.log(clients) // => [Anw2LatarvGVVXEIAAAD]
+        io.to('jobBook').emit('init', clients)
+      })
+
       socket.on('disconnect', () => console.log('user disconnect'))
-    })
-    io.on('connected', id => {
-      io.emit('userConnected', id)
     })
   })
   .catch(error => {

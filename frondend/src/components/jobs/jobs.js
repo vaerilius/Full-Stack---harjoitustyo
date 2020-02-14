@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { addUserToOnline } from './../../reducers/OnlineUserReducer'
 import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
 import { Animation } from '../../hooks/animation'
 import io from '../../../socket-client'
-
+import {
+  addUserToOnline,
+  initOnlineUsers
+} from '../../reducers/OnlineUserReducer'
 import { initializeJobs, handleJobPolling } from '../../reducers/jobReducer'
 import { initializeProviders } from '../../reducers/providersReducer'
 import { initializeCandidates } from '../../reducers/candidatesReducer'
@@ -16,7 +18,8 @@ const Jobs = ({
   jobs,
   initializeJobs,
   handleJobPolling,
-  addUserToOnline
+  addUserToOnline,
+  initOnlineUsers
 }) => {
   useEffect(() => {
     initializeJobs()
@@ -29,15 +32,21 @@ const Jobs = ({
   }, [handleJobPolling])
 
   useEffect(() => {
-    io.getIO().on('userConnected', id => {
-      addUserToOnline(id)
+    io.getIO().on('init', clients => {
+      initOnlineUsers(clients)
     })
+  }, [initOnlineUsers])
 
-    // io.emit('connected', id)
-    // io.getIO().on('userConnected', data => {
-    //   console.log(data)
-    // })
-  }, [addUserToOnline])
+  // useEffect(() => {
+  //   io.getIO().on('userConnected', id => {
+  //     addUserToOnline(id)
+  //   })
+
+  // io.emit('connected', id)
+  // io.getIO().on('userConnected', data => {
+  //   console.log(data)
+  // })
+  // }, [addUserToOnline])
 
   Animation()
 
@@ -76,5 +85,6 @@ export default connect(mapStateToProps, {
   initializeProviders,
   initializeCandidates,
   handleJobPolling,
-  addUserToOnline
+  addUserToOnline,
+  initOnlineUsers
 })(Jobs)
