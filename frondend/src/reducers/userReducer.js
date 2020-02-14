@@ -4,6 +4,9 @@ import jobService from '../services/jobService'
 import providerService from '../services/providerService'
 import candidateService from '../services/candidateService'
 import { setNotification } from './notificationReducer'
+import { disconnect } from './OnlineUserReducer'
+
+import io from '../../socket-client'
 
 const reducer = (state = null, action) => {
   switch (action.type) {
@@ -65,12 +68,15 @@ export const login = loginData => {
   }
 }
 
-export const logout = () => {
+export const logout = userID => {
   return async dispatch => {
     window.localStorage.removeItem('loggedUser')
     jobService.destroyToken()
     providerService.destroyToken()
     candidateService.destroyToken()
+
+    io.getIO().emit('leave', userID)
+    dispatch(disconnect({ type: 'DISCONNECT', userID }))
     dispatch({ type: 'LOGOUT_USER' })
     dispatch(
       setNotification({

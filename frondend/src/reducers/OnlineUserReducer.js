@@ -1,38 +1,46 @@
+import io from '../../socket-client'
+
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_ONLINE_USERS':
-      return [...action.clients]
+      return [action.onlineUsers]
     case 'ADD_ONLINE_USER':
       return [...state, action.user]
+    case 'DISCONNECT':
+      return [...state].filter(u => u.id !== action.userID)
     default:
       return [...state]
   }
 }
 
-export const initOnlineUsers = (clients, id, user) => {
-  // const loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'))
-  // console.log(loggedUser)
-  const initUser = {
-    id,
-    user
-  }
-  const modifiedArr = clients.map(c => (c === initUser.id ? initUser : c))
+export const initOnlineUsers = () => {
+  let test
+  io.getIO().emit('getUsers')
 
+  io.getIO().on('onlineUsers', data => {
+    test = data
+  })
   return async dispatch => {
     dispatch({
       type: 'INIT_ONLINE_USERS',
-      clients: modifiedArr
+      onlineUsers: test
     })
   }
 }
-export const addUserToOnline = user => {
+export const addUserToOnline = (user, id) => {
+  // console.log(user)
+  user.socketID = id
   console.log(user)
-
   return async dispatch => {
     dispatch({
       type: 'ADD_ONLINE_USER',
       user
     })
+  }
+}
+export const disconnect = data => {
+  return async dispatch => {
+    dispatch(data)
   }
 }
 export default reducer

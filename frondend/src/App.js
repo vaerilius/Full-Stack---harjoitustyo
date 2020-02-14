@@ -30,8 +30,6 @@ const Providers = lazy(() => import('./components/users/providers/providers'))
 const OnlineUsers = lazy(() => import('./components/users/onlineUsers'))
 import io from '../socket-client'
 
-io.init('http://localhost:3001')
-
 const App = ({ user, initializeUser, addUserToOnline, initOnlineUsers }) => {
   useEffect(() => {
     initializeUser()

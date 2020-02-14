@@ -12,6 +12,7 @@ import {
 import { initializeJobs, handleJobPolling } from '../../reducers/jobReducer'
 import { initializeProviders } from '../../reducers/providersReducer'
 import { initializeCandidates } from '../../reducers/candidatesReducer'
+const socket = io.init('http://localhost:3001')
 
 const Jobs = ({
   user,
@@ -19,10 +20,12 @@ const Jobs = ({
   initializeJobs,
   handleJobPolling,
   addUserToOnline,
-  initOnlineUsers
+  initOnlineUsers,
+  onlineUsers
 }) => {
   useEffect(() => {
     initializeJobs()
+    initOnlineUsers()
   }, [])
 
   useEffect(() => {
@@ -32,12 +35,21 @@ const Jobs = ({
   }, [handleJobPolling])
 
   useEffect(() => {
-    io.getIO().emit('join', user)
+    if (user && !onlineUsers.find(u => u.id === user.id)) {
+      addUserToOnline(user, socket.id)
+      const emitUser = user
+      emitUser.socketID = socket.id
+      io.getIO().emit('join', emitUser)
+    }
+  }, [])
+  useEffect(() => {
+    io.getIO().on('userConnected', user => {
+      if (!onlineUsers.find(u => u.id === user.id)) {
+        addUserToOnline(user)
+      }
+    })
   }, [])
 
-  io.getIO().on('userConnected', user => {
-    addUserToOnline(user)
-  })
   Animation()
 
   const newJobRef = React.createRef()
@@ -66,7 +78,8 @@ const Jobs = ({
 const mapStateToProps = state => {
   return {
     jobs: state.jobs,
-    user: state.user
+    user: state.user,
+    onlineUsers: state.onlineUsers
   }
 }
 
