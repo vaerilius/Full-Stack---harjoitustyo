@@ -54,7 +54,7 @@
 |   08.02   | 3    | Issue with update candidate polling                                                                                          |
 |   09.02   | 2    | solved lazyload when get single candidate , modify layout                                                                    |
 |   14.02   | 6    | socket,io online users. problems... (socket)                                                                                 |
-|   15.02   | 2    | problems onlineusers (socket)                                                                                                |
+|   15.02   | 3    | problems onlineusers (socket) - instructions and working hours                                                               |
 |           |      |                                                                                                                              |
-|   yht.    | 160  | tuntia                                                                                                                       |
-|  puuttuu  | 15h  | tuntia                                                                                                                       |
+|   yht.    | 161  | tuntia                                                                                                                       |
+|  puuttuu  | 14h  | tuntia                                                                                                                       |
