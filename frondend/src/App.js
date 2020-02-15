@@ -30,7 +30,13 @@ const Providers = lazy(() => import('./components/users/providers/providers'))
 const OnlineUsers = lazy(() => import('./components/users/onlineUsers'))
 import io from '../socket-client'
 
-const App = ({ user, initializeUser, addUserToOnline, initOnlineUsers }) => {
+const App = ({
+  user,
+  initializeUser,
+  addUserToOnline,
+  initOnlineUsers,
+  onlineUsers
+}) => {
   useEffect(() => {
     initializeUser()
   }, [])
@@ -155,7 +161,8 @@ const mapStateToProps = state => {
     candidates: state.candidates,
     providers: state.providers,
     user: state.user,
-    notification: state.notification
+    notification: state.notification,
+    onlineUsers: state.onlineUsers
   }
 }
 

@@ -89,7 +89,7 @@ const Navbar = props => {
               <div
                 className='nav-link'
                 id='logout'
-                onClick={() => props.logout(props.user.id)}
+                onClick={() => props.logout()}
               >
                 logout
               </div>

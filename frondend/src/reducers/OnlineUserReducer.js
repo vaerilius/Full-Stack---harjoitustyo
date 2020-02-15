@@ -5,6 +5,9 @@ const reducer = (state = [], action) => {
     case 'INIT_ONLINE_USERS':
       return [action.onlineUsers]
     case 'ADD_ONLINE_USER':
+      if (state.find(u => u.socketID === action.user.socketID)) {
+        return [...state]
+      }
       return [...state, action.user]
     case 'DISCONNECT':
       return [...state].filter(u => u.id !== action.userID)
@@ -13,24 +16,10 @@ const reducer = (state = [], action) => {
   }
 }
 
-export const initOnlineUsers = () => {
-  let test
-  io.getIO().emit('getUsers')
-
-  io.getIO().on('onlineUsers', data => {
-    test = data
-  })
-  return async dispatch => {
-    dispatch({
-      type: 'INIT_ONLINE_USERS',
-      onlineUsers: test
-    })
-  }
-}
-export const addUserToOnline = (user, id) => {
-  // console.log(user)
-  user.socketID = id
+export const initOnlineUsers = user => {
   console.log(user)
+  let users
+
   return async dispatch => {
     dispatch({
       type: 'ADD_ONLINE_USER',
@@ -38,6 +27,18 @@ export const addUserToOnline = (user, id) => {
     })
   }
 }
+export const addUserToOnline = user => {
+  user.socketID = io.getIO().id
+
+  io.getIO().emit('join', user)
+  return async dispatch => {
+    dispatch({
+      type: 'ADD_ONLINE_USER',
+      user
+    })
+  }
+}
+
 export const disconnect = data => {
   return async dispatch => {
     dispatch(data)

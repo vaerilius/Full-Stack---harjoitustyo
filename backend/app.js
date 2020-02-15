@@ -29,25 +29,28 @@ mongoose
     const io = require('./socket').init(server)
 
     io.on('connection', socket => {
-      socket.on('join', user => {
-        socket.user = user
-        socket.join('jobBook')
-        // console.log(io.sockets.in('jobBook').sockets)
+      socket.join('jobBook')
+      socket.broadcast.to('jobBook').emit('userConnected', socket.id)
 
-        socket.broadcast.to('jobBook').emit('userConnected', socket.user)
-      })
-      socket.on('leave', () => {
-        socket.broadcast.to('jobBook').emit('userdisconnect', socket.user.id)
-        socket.leave('jobBook')
-      })
+      // socket.on('join', user => {
+      //   socket.join('jobBook')
+      //   socket.broadcast.to('jobBook').emit('userConnected', user)
+      // })
 
-      socket.on('getUsers', () => {
-        io.in('jobBook').clients((error, clients) => {
-          if (error) throw error
-          console.log(clients) // => [Anw2LatarvGVVXEIAAAD]
-          io.emit('onlineusers', clients)
-        })
-      })
+      // socket.on('jobBookUsers', () => {
+      //   console.log('data')
+      //   io.in('jobBook').clients((error, clients) => {
+      //     if (error) throw error
+      //     console.log(clients) // => [Anw2LatarvGVVXEIAAAD]
+      //     io.emit('init-users', clients)
+      //   })
+      // })
+
+      // socket.on('leave', () => {
+      //   socket.broadcast.to('jobBook').emit('userdisconnect', socket.user.id)
+      //   socket.leave('jobBook')
+      // })
+
       socket.on('disconnect', () => console.log('user disconnect'))
     })
   })
