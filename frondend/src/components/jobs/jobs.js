@@ -13,7 +13,6 @@ import { initializeJobs, handleJobPolling } from '../../reducers/jobReducer'
 import { initializeProviders } from '../../reducers/providersReducer'
 import { initializeCandidates } from '../../reducers/candidatesReducer'
 io.init('http://localhost:3001')
-
 const Jobs = ({
   user,
   jobs,
@@ -39,7 +38,14 @@ const Jobs = ({
 
   useEffect(() => {
     if (user && !onlineUsers.find(u => u.socketID === user.socketID)) {
-      addUserToOnline(user)
+      io.getIO().on('users', users => {
+        console.log(users)
+        if (users.find(id => id === user.socketID)) {
+          console.log('hep')
+        }
+        user.socketID
+        addUserToOnline(user)
+      })
     }
   }, [])
 

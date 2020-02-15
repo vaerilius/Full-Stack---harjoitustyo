@@ -29,8 +29,15 @@ mongoose
     const io = require('./socket').init(server)
 
     io.on('connection', socket => {
-      socket.join('jobBook')
-      socket.broadcast.to('jobBook').emit('userConnected', socket.id)
+      // console.log(socket.user)
+      io.clients((error, clients) => {
+        if (error) throw error
+        console.log(clients) // => [Anw2LatarvGVVXEIAAAD]
+        io.emit('users', clients)
+      })
+
+      // socket.broadcast.emit('userConnected', socket.id)
+      // socket.join('jobBook')
 
       // socket.on('join', user => {
       //   socket.join('jobBook')
