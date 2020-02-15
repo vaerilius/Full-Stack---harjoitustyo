@@ -27,38 +27,41 @@ mongoose
     })
 
     const io = require('./socket').init(server)
-
+    const onlineUsers = []
     io.on('connection', socket => {
-      // console.log(socket.user)
-      io.clients((error, clients) => {
-        if (error) throw error
-        console.log(clients) // => [Anw2LatarvGVVXEIAAAD]
-        io.emit('users', clients)
-      })
-
       // socket.broadcast.emit('userConnected', socket.id)
       // socket.join('jobBook')
-
-      // socket.on('join', user => {
-      //   socket.join('jobBook')
-      //   socket.broadcast.to('jobBook').emit('userConnected', user)
+      // io.in('jobBook').clients((error, clients) => {
+      //   if (error) throw error
+      //   console.log(clients, socket.id) // => [Anw2LatarvGVVXEIAAAD]
       // })
+      socket.on('join', user => {
+        socket.join('jobBook', () => {
+          // let rooms = Object.keys(socket.rooms)
+          const isOnline = onlineUsers.find(u => u.id == user.id)
+          if (!isOnline) {
+            onlineUsers.push(user)
+          }
+          console.log(onlineUsers)
+
+          // console.log(rooms, 'user rooms') // [ <socket.id>, 'room 237' ]
+          io.to('jobBook').emit('init', [...onlineUsers])
+        })
+      })
 
       // socket.on('jobBookUsers', () => {
       //   console.log('data')
-      //   io.in('jobBook').clients((error, clients) => {
-      //     if (error) throw error
-      //     console.log(clients) // => [Anw2LatarvGVVXEIAAAD]
-      //     io.emit('init-users', clients)
-      //   })
+
       // })
 
-      // socket.on('leave', () => {
-      //   socket.broadcast.to('jobBook').emit('userdisconnect', socket.user.id)
-      //   socket.leave('jobBook')
-      // })
+      socket.on('leave', id => {
+        onlineUsers.filter(u => u.id !== id)
+        io.to('jobBook').emit('init', [...onlineUsers])
+      })
 
-      socket.on('disconnect', () => console.log('user disconnect'))
+      socket.on('disconnect', () => {
+        // onlineUsers.f
+      })
     })
   })
   .catch(error => {

@@ -29,17 +29,24 @@ const Providers = lazy(() => import('./components/users/providers/providers'))
 
 const OnlineUsers = lazy(() => import('./components/users/onlineUsers'))
 import io from '../socket-client'
+io.init('http://localhost:3001')
 
-const App = ({
-  user,
-  initializeUser,
-  addUserToOnline,
-  initOnlineUsers,
-  onlineUsers
-}) => {
+const App = ({ user, initializeUser, initOnlineUsers }) => {
   useEffect(() => {
     initializeUser()
+    io.getIO().on('init', users => {
+      initOnlineUsers(users)
+    })
   }, [])
+  useEffect(() => {
+    if (user) {
+      user.socketID = io.getIO().id
+      io.getIO().emit('join', user)
+    }
+    if (user === null) {
+      io.getIO().emit('leave', io.getIO().id)
+    }
+  }, [user])
 
   return (
     <div className='bg'>

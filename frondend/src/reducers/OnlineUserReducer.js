@@ -3,7 +3,7 @@ import io from '../../socket-client'
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_ONLINE_USERS':
-      return [action.onlineUsers]
+      return [...action.users]
     case 'ADD_ONLINE_USER':
       if (state.find(u => u.socketID === action.user.socketID)) {
         return [...state]
@@ -16,14 +16,11 @@ const reducer = (state = [], action) => {
   }
 }
 
-export const initOnlineUsers = user => {
-  console.log(user)
-  let users
-
+export const initOnlineUsers = users => {
   return async dispatch => {
     dispatch({
-      type: 'ADD_ONLINE_USER',
-      user
+      type: 'INIT_ONLINE_USERS',
+      users
     })
   }
 }

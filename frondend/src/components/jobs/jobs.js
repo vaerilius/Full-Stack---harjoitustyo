@@ -5,29 +5,11 @@ import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
 import { Animation } from '../../hooks/animation'
 import io from '../../../socket-client'
-import {
-  addUserToOnline,
-  initOnlineUsers
-} from '../../reducers/OnlineUserReducer'
+
 import { initializeJobs, handleJobPolling } from '../../reducers/jobReducer'
-import { initializeProviders } from '../../reducers/providersReducer'
-import { initializeCandidates } from '../../reducers/candidatesReducer'
-io.init('http://localhost:3001')
-const Jobs = ({
-  user,
-  jobs,
-  initializeJobs,
-  handleJobPolling,
-  addUserToOnline,
-  initOnlineUsers,
-  onlineUsers
-}) => {
+const Jobs = ({ user, jobs, initializeJobs, handleJobPolling }) => {
   useEffect(() => {
     initializeJobs()
-    io.getIO().on('userConnected', user => {
-      // initOnlineUsers(user)
-      io.getIO().emit('jobBookUsers')
-    })
   }, [])
 
   useEffect(() => {
@@ -35,19 +17,6 @@ const Jobs = ({
       handleJobPolling(data)
     })
   }, [handleJobPolling])
-
-  useEffect(() => {
-    if (user && !onlineUsers.find(u => u.socketID === user.socketID)) {
-      io.getIO().on('users', users => {
-        console.log(users)
-        if (users.find(id => id === user.socketID)) {
-          console.log('hep')
-        }
-        user.socketID
-        addUserToOnline(user)
-      })
-    }
-  }, [])
 
   Animation()
 
@@ -77,16 +46,11 @@ const Jobs = ({
 const mapStateToProps = state => {
   return {
     jobs: state.jobs,
-    user: state.user,
-    onlineUsers: state.onlineUsers
+    user: state.user
   }
 }
 
 export default connect(mapStateToProps, {
   initializeJobs,
-  initializeProviders,
-  initializeCandidates,
-  handleJobPolling,
-  addUserToOnline,
-  initOnlineUsers
+  handleJobPolling
 })(Jobs)
