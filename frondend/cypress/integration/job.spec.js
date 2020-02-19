@@ -15,14 +15,13 @@ describe('When create new job ad', function() {
   })
 
   describe('when addition a new job ad', function() {
-    it('when add  new job ad', async () => {
-      // let items = 0
-      // cy.get('.list-group-item')
-      //   .contains('some')
-      //   .then((some, i) => {
-      //     items = i
-      //   })
-
+    it('when add  new job ad', () => {
+      let items = 0
+      cy.get('.list-group-item').each(($li, index, $lis) => {
+        console.log($lis.length)
+        items = $lis.length
+      })
+      cy.wait(500)
       cy.contains('Create new job advertisement').click()
       cy.get('#title')
         .type('some title')
@@ -48,10 +47,9 @@ describe('When create new job ad', function() {
       })
 
       cy.contains('Submit').click()
+      cy.await(500)
 
-      cy.get('.list-group-item')
-        .contains('some')
-        .then(some => console.log(some))
+      cy.get('.list-group-item').should('have.length', items + 1)
     })
   })
 })
