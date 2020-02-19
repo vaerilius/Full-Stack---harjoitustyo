@@ -34,7 +34,6 @@ export const initializeCandidates = () => {
 export const getCandidate = id => {
   return async dispatch => {
     const candidate = await candidateService.getCandidateByID(id)
-    // console.log(candidate)
     dispatch({
       type: 'GET_CANDIDATE',
       candidate
@@ -97,7 +96,6 @@ export const updateCandidateCV = (formData, id) => {
   return async dispatch => {
     try {
       const updatedCandidate = await candidateService.uploadCV(formData, id)
-      // console.log(updatedCandidate)
       dispatch({
         type: 'UPDATE_CANDIDATE',
         updatedCandidate

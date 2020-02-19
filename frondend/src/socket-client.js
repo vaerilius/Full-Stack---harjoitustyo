@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 let io
 
-module.exports = {
+export default {
   init: client => {
     io = require('socket.io-client')(client)
     return io

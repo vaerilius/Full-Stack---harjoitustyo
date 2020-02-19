@@ -1,13 +1,13 @@
 import React from 'react'
-import { render, fireEvent, waitForElement } from '@testing-library/react'
+import { render, waitForElement } from '@testing-library/react'
 import { Provider } from 'react-redux'
-import configureStore from 'redux-mock-store'
+// import configureStore from 'redux-mock-store'
 import Landing from './landing'
 import App from '../App'
 import store from '../store'
 
-const middlewares = []
-const mockStore = configureStore(middlewares)
+// const middlewares = []
+// const mockStore = configureStore(middlewares)
 
 describe('Testpage Component', () => {
   let component
@@ -21,7 +21,6 @@ describe('Testpage Component', () => {
     )
   })
   it('should render without throwing an error', async () => {
-    //  await waitForElement(() => component.getByText('Job sBook'))
     expect(component.container).toHaveTextContent('Job Book')
     expect(component.container).toHaveTextContent('Sign Up')
     expect(component.container).toHaveTextContent('Or Sign In')

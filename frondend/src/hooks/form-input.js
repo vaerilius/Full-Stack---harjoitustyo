@@ -1,19 +1,17 @@
 import { useState } from 'react'
 
-export const useForm = (type) => {
-
+export const useForm = type => {
   const [value, setValue] = useState('')
   const [className, setClassName] = useState('form-control')
   const [feedback, setFeedback] = useState('test')
 
-  const onChange = (event) => {
-
+  const onChange = event => {
     setValue(event.target.value)
   }
-  const changeClassName = (data) => {
+  const changeClassName = data => {
     setClassName(data)
   }
-  const changeFeedback = (data) => {
+  const changeFeedback = data => {
     setFeedback(data)
   }
   const reset = () => {
@@ -21,26 +19,31 @@ export const useForm = (type) => {
     setValue('')
   }
 
-  return [{
-    className,
-    type,
-    value,
-    onChange,
-  }, reset, changeClassName, feedback, changeFeedback]
+  return [
+    {
+      className,
+      type,
+      value,
+      onChange
+    },
+    reset,
+    changeClassName,
+    feedback,
+    changeFeedback
+  ]
 }
 
-export const useFileInput = (type) => {
+export const useFileInput = type => {
   const [file, setFile] = useState(null)
   const [className, setClassName] = useState('form-control')
 
   const [feedback, setFeedback] = useState('')
 
-  const onChange = (e) => {
-    // console.log(e.target.files[0])
+  const onChange = e => {
     setFile(e.target.files[0])
   }
 
-  const changeFeedback = (data) => {
+  const changeFeedback = data => {
     setFeedback(data)
   }
   const reset = () => {
@@ -48,11 +51,15 @@ export const useFileInput = (type) => {
     setClassName('form-control')
   }
 
-  return [{
-    type,
-    onChange,
-    className
-  }, { feedback, file }, changeFeedback, reset, setClassName
-
+  return [
+    {
+      type,
+      onChange,
+      className
+    },
+    { feedback, file },
+    changeFeedback,
+    reset,
+    setClassName
   ]
 }

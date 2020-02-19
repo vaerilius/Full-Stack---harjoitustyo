@@ -6,7 +6,7 @@ import {
   initializeCandidates,
   handleUsersPolling
 } from '../../../reducers/candidatesReducer'
-import io from '../../../../socket-client'
+import io from '../../../socket-client'
 
 const Candidates = ({
   candidates,
@@ -48,7 +48,6 @@ const Candidates = ({
                     alt={c.name}
                   />
                 </div>
-                {/* <p className="mb-1"> Joined: {user.createdAt.split('T')[0]} </p> */}
               </Link>
             </div>
           </div>

@@ -2,7 +2,7 @@ import React, { useEffect, Suspense, lazy } from 'react'
 import { connect } from 'react-redux'
 
 import { initializeUser } from './reducers/userReducer'
-import { addUserToOnline, initOnlineUsers } from './reducers/OnlineUserReducer'
+import { initOnlineUsers } from './reducers/OnlineUserReducer'
 import {
   BrowserRouter as Router,
   Route,
@@ -29,22 +29,21 @@ const Providers = lazy(() => import('./components/users/providers/providers'))
 
 const OnlineUsers = lazy(() => import('./components/users/onlineUsers'))
 
-import io from '../socket-client'
+import io from './socket-client'
 let socket = io.init(BACKEND_URL)
 
 const App = ({ user, initializeUser, initOnlineUsers }) => {
   useEffect(() => {
     initializeUser()
-    io.getIO().on('init', users => {
-      console.log('onlineUsers initialize')
-      initOnlineUsers(users)
-    })
   }, [])
 
   useEffect(() => {
     if (user && socket) {
       user.socketID = io.getIO().id
       io.getIO().emit('join', user)
+      io.getIO().on('init', users => {
+        initOnlineUsers(users)
+      })
     }
 
     if (!user) {
@@ -76,7 +75,6 @@ const App = ({ user, initializeUser, initOnlineUsers }) => {
           <div className='container page'>
             <div className='row '>
               <div className=' col-md-12 margin'>
-                {/* {notification.message ? <Notification /> : null} */}
                 {!user ? (
                   <Route exact path='/' render={() => <Landing />} />
                 ) : (
@@ -109,7 +107,6 @@ const App = ({ user, initializeUser, initOnlineUsers }) => {
                   ) : (
                     <Redirect to='/' />
                   )}
-                  {/* candidates */}
                   {user ? (
                     <Route
                       exact
@@ -179,6 +176,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   initializeUser,
-  addUserToOnline,
   initOnlineUsers
 })(App)

@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Animation } from '../../hooks/animation'
 import { Link } from 'react-router-dom'
-import { initOnlineUsers } from '../../reducers/OnlineUserReducer'
 
 const OnlineUsers = ({ onlineUsers }) => {
   Animation()

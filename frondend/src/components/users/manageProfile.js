@@ -11,7 +11,6 @@ const ManageProfile = props => {
   const [phone, resetPhone] = useField('text')
   const [description, resetDescription] = useField('text')
   const [email, resetEmail] = useField('email')
-  // const [picture, setPicture] = useState(null)
   const [cv, setCV] = useState(null)
 
   const handleSubmit = e => {
@@ -32,7 +31,6 @@ const ManageProfile = props => {
     resetPhone()
     resetEmail()
     resetDescription()
-    // setPicture(null)
   }
 
   const uploadCV = e => {

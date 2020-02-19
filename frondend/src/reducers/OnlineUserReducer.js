@@ -1,4 +1,5 @@
-import io from '../../socket-client'
+/* eslint-disable indent */
+import io from '../socket-client'
 
 const reducer = (state = [], action) => {
   switch (action.type) {

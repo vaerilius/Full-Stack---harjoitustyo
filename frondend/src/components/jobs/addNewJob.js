@@ -18,12 +18,6 @@ const NewJob = props => {
     formData.append('company', company.value)
     formData.append('description', description.value)
 
-    // const newJob = {
-    //   title: title.value,
-    //   company: company.value,
-    //   description: description.value
-    // }
-    // props.addNewJob(newJob)
     props.addNewJob(formData)
 
     props.newJobRef.current.toggleVisibility()
@@ -55,8 +49,6 @@ const NewJob = props => {
       <div className='form-group'>
         <input
           label='Picture'
-          // validators={['required:1']}
-          // errorMessages={['this field is required']}
           type='file'
           onChange={e => setPicture(e.target.files[0])}
         />

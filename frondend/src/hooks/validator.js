@@ -24,7 +24,6 @@ export const FileValidator = (
   changeImgClassName
 ) => {
   useEffect(() => {
-    // console.log(fileData)
     if (fileData.file) {
       if (fileData.file.type.includes('image')) {
         changeImgClassName('form-control is-valid')

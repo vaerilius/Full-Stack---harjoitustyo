@@ -5,7 +5,6 @@ export const Animation = () => {
     setTimeout(() => {
       const container = window.document.querySelectorAll('.container')
       container.forEach(c => {
-        // console.log(c.classList)
         c.classList.add('visible')
       })
     }, 100)

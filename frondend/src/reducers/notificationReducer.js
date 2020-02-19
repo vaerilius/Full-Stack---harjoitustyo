@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const reducer = (
   state = { class: 'alert alert-primary', message: null },
   action
@@ -11,9 +12,6 @@ const reducer = (
 }
 
 export const setNotification = notification => {
-  // notification.class += ' visable'
-  // console.log(notification)
-
   return async dispatch => {
     dispatch({
       type: 'SET_NOTIFICATION',

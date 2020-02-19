@@ -69,7 +69,6 @@ export const updateProvider = data => {
   return async dispatch => {
     try {
       const updatedProvider = await providerservice.updateProviderProfile(data)
-      // console.log(updatedProvider)
 
       dispatch({
         type: 'UPDATE_PROVIDER',

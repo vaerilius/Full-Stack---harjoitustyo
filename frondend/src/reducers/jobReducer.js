@@ -21,8 +21,6 @@ const reducer = (state = [], action) => {
       return [...state].map(job =>
         job.id === action.object.id ? action.object : job
       )
-    // case 'ADD_QUESTION':
-    //   return [...state]
     default:
       return state
   }
@@ -157,9 +155,7 @@ export const onUpdateJob = data => {
 export const handleSendMessage = data => {
   return async dispatch => {
     try {
-      // console.log(data)
       const updatedJob = await jobService.addQuestion(data)
-      // console.log(updatedJob)
       dispatch({
         type: 'UPDATE_JOB',
         object: updatedJob
@@ -171,7 +167,6 @@ export const handleSendMessage = data => {
         })
       )
     } catch (error) {
-      // console.log(error)
       dispatch(
         setNotification({
           class: 'alert alert-danger',
@@ -182,7 +177,6 @@ export const handleSendMessage = data => {
   }
 }
 export const handleJobPolling = data => {
-  console.log(data)
   return async dispatch => {
     dispatch({
       type: data.action,

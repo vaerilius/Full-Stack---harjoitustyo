@@ -27,7 +27,6 @@ mongoose
     })
 
     const io = require('./socket').init(server)
-    // const onlineUsers = []
     let users = []
 
     io.on('connection', socket => {

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
 
 import { connect } from 'react-redux'
@@ -7,7 +8,7 @@ import {
   initializeProviders,
   handleUsersPolling
 } from '../../../reducers/providersReducer'
-import io from '../../../../socket-client'
+import io from '../../../socket-client'
 
 const Providers = ({ providers, initializeProviders, handleUsersPolling }) => {
   useEffect(() => {

@@ -1,6 +1,6 @@
+/* eslint-disable no-undef */
 const path = require('path')
 const webpack = require('webpack')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const config = (env, argv) => {
   console.log('argv', argv.mode)
@@ -28,7 +28,6 @@ const config = (env, argv) => {
       rules: [
         {
           test: /\.(js|jsx)$/,
-          // exclude: /node_modules/,
           loader: 'babel-loader',
           query: {
             presets: ['@babel/preset-env', '@babel/preset-react']
@@ -41,7 +40,6 @@ const config = (env, argv) => {
         {
           test: /\.jsx$/,
           loader: 'babel-loader'
-          //  exclude: /node_modules/
         },
         {
           test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
@@ -53,8 +51,6 @@ const config = (env, argv) => {
       new webpack.DefinePlugin({
         BACKEND_URL: JSON.stringify(backend_url)
       })
-      // new webpack.HotModuleReplacementPlugin(),
-      // 'transform-es2015-modules-commonjs'
     ]
   }
 }

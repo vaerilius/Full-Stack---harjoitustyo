@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-// import { useField, useFileField } from '../../hooks/formHook'
 import { useForm, useFileInput } from '../../hooks/form-input'
 import { Validator, FileValidator } from '../../hooks/validator'
 import { signUpCandidate } from '../../reducers/candidatesReducer'
@@ -9,8 +8,6 @@ import { onSignUpProvider } from '../../reducers/providersReducer'
 import { Animation } from '../../hooks/animation'
 
 const SingUp = props => {
-  // const [name, resetName] = useField('text')
-  // const [picture, resetPicture] = useFileField('file')
   const [formValid, setFormValid] = useState(true)
   const [checkbox, setCheckBox] = useState(false)
 
@@ -35,7 +32,6 @@ const SingUp = props => {
     passwordFeedback,
     changePasswordFeedback
   ] = useForm('password')
-  // const [checkbox, setCheckBox, checkBoxValidationClass, checkBoxwordFeedback, changeCheckboxFeedback] = useForm('checkbox')
   const [
     img,
     fileData,
@@ -85,8 +81,7 @@ const SingUp = props => {
 
     resetName()
     resetPassword()
-    // resetPicture()
-    // setPicture(null)
+
     resetImg(null)
     resetUsername()
     setCheckBox(false)
@@ -133,19 +128,7 @@ const SingUp = props => {
                 <div className='invalid-feedback'>{passwordFeedback}</div>
               </div>
             </div>
-            {/* <div className="form-group row">
-            <label htmlFor="picture" className="col-sm-3 col-form-label">Picture</label>
-            <div className="col-sm-9">
-              <input
-                label="Picture"
-                // validators={['required:1']}
-                // errorMessages={['this field is required']}
-                type='file'
-                onChange={(e) => setPicture(e.target.files[0])}
-              />
 
-            </div>
-          </div> */}
             <div className='form-group row'>
               <label htmlFor='picture1' className='col-sm-3 col-form-label'>
                 Picture1

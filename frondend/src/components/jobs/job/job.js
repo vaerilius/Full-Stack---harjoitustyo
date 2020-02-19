@@ -30,7 +30,6 @@ const Job = props => {
 
   const onSendMessage = e => {
     e.preventDefault()
-    // console.log(message.value)
     props.handleSendMessage({ question: message.value, jobID: props.job.id })
     resetMessage('')
   }
@@ -43,17 +42,10 @@ const Job = props => {
   }
 
   const manageJobRef = React.createRef()
-  // console.log(props.job.questions)
   Animation()
 
   return (
     <div className='container'>
-      {/* <Link to={'/jobs/'}>
-        <button type='button' className='btn btn-primary btn-md btn-block'>
-          Back to jobs
-        </button>
-      </Link> */}
-
       <div className='row m-0 p-0'>
         <div className='col-md-6 mb-4'>
           <div className='card card-hover'>
@@ -155,7 +147,6 @@ const Job = props => {
                             : `/providers/${q.questioner.id}`
                         }
                       >
-                        {/* <h5>{q.questioner.name}</h5> */}
                         <img
                           src={q.questioner.picture}
                           className='my-auto rounded-circle'

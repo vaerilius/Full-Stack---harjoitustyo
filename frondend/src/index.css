@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 :root {
   --font-body: 500 1.25rem 'Open Sans', Helvetica, sans-serif;
-  --layout-margin: 3rem;
+  --layout-margin: 1rem;
 }
 .html {
   font-size: 16px;
@@ -21,10 +21,9 @@ body {
 }
 
 .container {
-  /* margin: 0; */
   margin: var(--layout-margin) auto;
   opacity: 0;
-  transition: transform 800ms ease, opacity 800ms ease;
+  transition: transform 500ms ease, opacity 500ms ease;
   transform: translate(-100%, 0) scale(0);
 }
 .container.visible {
@@ -38,18 +37,11 @@ body {
   flex: 1;
   align-self: center;
 }
-.card {
-  transition: transform 800ms ease;
-}
-.card.scale:hover {
-  transform: scale(1.025);
-}
 
 h1 {
   text-shadow: 0 1px 2px rgb(106, 106, 206);
 }
 .col-md-12 {
-  /* margin: var(--layout-margin) 0; */
   margin: 0;
   padding: 0;
 }
@@ -72,12 +64,24 @@ h1 {
   transform: translate(-100%, 0), translate(scale(0));
 }
 
-/* alert alert-primary */
 .page {
   margin: var(--layout-margin);
-  /* margin: 5rem; */
-
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
 }
+/* 
+a .card-body:active {
+  animation: click 300ms ease;
+}
+
+@keyframes click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    background-color: cornflowerblue;
+    transform: scale(5);
+  }
+  100% {
+    background-color: white;
+    transform: scale(1);
+  }
+} */

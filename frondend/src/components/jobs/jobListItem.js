@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 const JobListItem = ({ job }) => {
   const datePalaces = job.createdAt.split('T')
   const JobCreatedAT = datePalaces[0]
-  // console.log(job)
   return (
     <div className='list-group my-4 shadow'>
       <div className='list-group-item list-group-item-action'>

@@ -4,7 +4,7 @@ import JobListItem from './jobListItem'
 import AddNewJob from './addNewJob'
 import Togglable from '../togglable'
 import { Animation } from '../../hooks/animation'
-import io from '../../../socket-client'
+import io from '../../socket-client'
 
 import { initializeJobs, handleJobPolling } from '../../reducers/jobReducer'
 const Jobs = ({ user, jobs, initializeJobs, handleJobPolling }) => {
