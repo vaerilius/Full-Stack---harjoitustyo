@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "job hunting",
   "scripts": {
-    "start-mongo": "sudo service mongod start",
-    "stop-mongo": "sudo service mongod stop",
-    "status-mongo": "sudo service mongod status",
+    "start-mongo": "service mongod start",
+    "stop-mongo": "service mongod stop",
+    "status-mongo": "service mongod status",
     "start-backend": "cd .. && cd backend && npm run watch",
     "build": "webpack --mode=production --history-api-fallback",
     "start": "webpack-dev-server --mode=development --history-api-fallback",

@@ -28,25 +28,29 @@ const Candidate = lazy(() =>
 const Providers = lazy(() => import('./components/users/providers/providers'))
 
 const OnlineUsers = lazy(() => import('./components/users/onlineUsers'))
+
 import io from '../socket-client'
-io.init('http://localhost:3001')
+let socket = io.init(BACKEND_URL)
 
 const App = ({ user, initializeUser, initOnlineUsers }) => {
   useEffect(() => {
     initializeUser()
     io.getIO().on('init', users => {
+      console.log('onlineUsers initialize')
       initOnlineUsers(users)
     })
   }, [])
+
   useEffect(() => {
-    if (user) {
+    if (user && socket) {
       user.socketID = io.getIO().id
       io.getIO().emit('join', user)
     }
-    if (user === null) {
-      io.getIO().emit('leave', io.getIO().id)
+
+    if (!user) {
+      io.getIO().emit('leave', socket.id)
     }
-  }, [user])
+  }, [user, socket])
 
   return (
     <div className='bg'>

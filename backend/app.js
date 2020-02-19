@@ -27,40 +27,38 @@ mongoose
     })
 
     const io = require('./socket').init(server)
-    const onlineUsers = []
+    // const onlineUsers = []
+    let users = []
+
     io.on('connection', socket => {
-      // socket.broadcast.emit('userConnected', socket.id)
-      // socket.join('jobBook')
-      // io.in('jobBook').clients((error, clients) => {
-      //   if (error) throw error
-      //   console.log(clients, socket.id) // => [Anw2LatarvGVVXEIAAAD]
-      // })
+      console.log('user connected')
+
       socket.on('join', user => {
         socket.join('jobBook', () => {
-          // let rooms = Object.keys(socket.rooms)
-          const isOnline = onlineUsers.find(u => u.id == user.id)
-          if (!isOnline) {
-            onlineUsers.push(user)
-          }
-          console.log(onlineUsers)
+          user.socketID = socket.id
 
-          // console.log(rooms, 'user rooms') // [ <socket.id>, 'room 237' ]
-          io.to('jobBook').emit('init', [...onlineUsers])
+          if (!users.find(u => u.socketID === user.socketID)) {
+            users.push(user)
+          }
+          io.to('jobBook').emit('init', users)
         })
       })
-
-      // socket.on('jobBookUsers', () => {
-      //   console.log('data')
-
-      // })
+      io.to('jobBook').emit('init', users)
 
       socket.on('leave', id => {
-        onlineUsers.filter(u => u.id !== id)
-        io.to('jobBook').emit('init', [...onlineUsers])
+        if (id === socket.id) {
+          users = users.filter(u => u.socketID !== id)
+        }
+
+        io.to('jobBook').emit('init', users)
+        socket.leave('jobBook')
       })
 
       socket.on('disconnect', () => {
-        // onlineUsers.f
+        users = users.filter(u => u.socketID !== socket.id)
+
+        io.to('jobBook').emit('init', users)
+        console.log('user disconnect')
       })
     })
   })
