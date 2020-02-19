@@ -40,22 +40,30 @@ const Navbar = props => {
         <ul className='navbar-nav mr-auto'>
           <li className='nav-item'>
             <Link to='/jobs'>
-              <div className='nav-link'>Jobs</div>
+              <div className='nav-link' id='jobs'>
+                Jobs
+              </div>
             </Link>
           </li>
           <li className='nav-item'>
             <Link to='/candidates'>
-              <div className='nav-link'>Candidates</div>
+              <div className='nav-link' id='candiates'>
+                Candidates
+              </div>
             </Link>
           </li>
           <li className='nav-item'>
             <Link to='/providers'>
-              <div className='nav-link'>Providers</div>
+              <div className='nav-link' id='providers'>
+                Providers
+              </div>
             </Link>
           </li>
           <li className='nav-item'>
             <Link to='/online-users'>
-              <div className='nav-link'>Users</div>
+              <div className='nav-link' id='users'>
+                Users
+              </div>
             </Link>
           </li>
         </ul>

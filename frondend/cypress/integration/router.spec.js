@@ -1,7 +1,23 @@
+const signIn = password => {
+  cy.contains('Or Sign In').click()
+
+  cy.get('#username').type('tttt')
+  cy.get('#password').type(password)
+  cy.contains('sign in').click()
+
+  cy.location().should(loc => {
+    expect(loc.href).to.eq('http://localhost:3000/jobs')
+  })
+}
+const logOut = () => {
+  cy.clearLocalStorage()
+}
+
 describe('react router tests', function() {
   beforeEach(function() {
     cy.visit('http://localhost:3000')
     cy.wait(500)
+    logOut()
   })
 
   describe('test router', () => {
@@ -37,31 +53,34 @@ describe('react router tests', function() {
         expect(loc.href).to.eq('http://localhost:3000/login')
       })
     })
-    describe('When user is going to sgn in', () => {
+    describe('When user is going to sign in', () => {
       it('when sign in with valid data should url to be /jobs', () => {
-        cy.contains('Or Sign In').click()
-
-        cy.get('#username').type('tttt')
-        cy.get('#password').type('tttt')
-        cy.contains('sign in').click()
+        signIn('tttt')
 
         cy.location().should(loc => {
           expect(loc.href).to.eq('http://localhost:3000/jobs')
         })
       })
-      it('when sign in with invalid data should url to be /', () => {
-        cy.contains('Or Sign In').click()
+      // it('when sign in with invalid data should url to be /login', () => {
+      //   signIn('invalidPassword')
 
-        cy.get('#username').type('tttt')
-        cy.get('#password').type('invalid')
-        cy.contains('sign in').click()
+      //   cy.location().should(loc => {
+      //     expect(loc.href).to.eq('http://localhost:3000/')
+      //   })
+      // })
 
-        cy.location().should(loc => {
-          expect(loc.href).to.eq('http://localhost:3000/login')
+      describe('when user is signed in ', () => {
+        beforeEach(() => {
+          signIn('tttt')
+        })
+        it('when navigate to providers should', () => {
+          cy.wait(500)
+          cy.contains('Candidates').click()
+          cy.location().should(loc => {
+            expect(loc.href).to.eq('http://localhost:3000/candidates')
+          })
         })
       })
-
-      
     })
   })
 })
