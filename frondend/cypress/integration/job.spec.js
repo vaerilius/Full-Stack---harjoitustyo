@@ -1,4 +1,3 @@
-const attachFiles = require('cypress-form-data-with-file-upload')
 import 'cypress-file-upload'
 describe('When create new job ad', function() {
   beforeEach(function() {
