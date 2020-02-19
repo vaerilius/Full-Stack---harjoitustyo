@@ -58,4 +58,4 @@
 |   19.02   | 4     | finnished socket.io, style, redeploy backend & frondend.                                                                     |
 |           |       |                                                                                                                              |
 |   yht.    | 166,5 | tuntia                                                                                                                       |
-|  puuttuu  | 18,5h | tuntia                                                                                                                       |
+|  puuttuu  | 8,5h  | tuntia                                                                                                                       |
