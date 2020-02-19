@@ -15,7 +15,7 @@ const OnlineUsers = ({ onlineUsers }) => {
       </div>
       <div className='list-group'>
         {onlineUsers.map(p => (
-          <div className='list-group mb-2' key={p.id}>
+          <div className='list-group mb-3' key={p.id}>
             <div className='list-group-item list-group-item-action'>
               <Link
                 to={`/${p.jobProvider ? 'providers' : 'candidates'}/${p.id}`}

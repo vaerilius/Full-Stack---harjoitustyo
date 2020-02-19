@@ -22,3 +22,7 @@
 
 - Update: Only candidate with same id can update or upload resume to the application
 - Add himself to job ad candidate list
+
+### 4. Online Users
+
+- Online users is shown at Users tab, online users state are handled on server. When you disconnect, refresh or sign in or sign up users are updated.

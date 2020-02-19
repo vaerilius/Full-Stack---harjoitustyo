@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=B612&display=swap');
 :root {
   --font-body: 500 1.25rem 'Open Sans', Helvetica, sans-serif;
   --layout-margin: 1rem;
@@ -21,14 +21,13 @@ body {
 }
 
 .container {
-  margin: var(--layout-margin) auto;
+  /* margin: var(--layout-margin) auto; */
   opacity: 0;
   transition: transform 500ms ease, opacity 500ms ease;
   transform: translate(-100%, 0) scale(0);
 }
 .container.visible {
-  padding: 1rem;
-  margin: auto;
+  /* margin: auto; */
   opacity: 1;
   transform: translate(0, 0) scale(1);
 }
@@ -40,7 +39,7 @@ body {
 }
 
 h1 {
-  text-shadow: 0 1px 2px rgb(106, 106, 206);
+  text-shadow: 0 1px 2px rgba(159, 159, 173, 0.486);
 }
 .col-md-12 {
   margin: 0;
@@ -65,24 +64,19 @@ h1 {
   transform: translate(-100%, 0) scale(0);
 }
 
-.page {
-  margin: var(--layout-margin);
-}
-/* 
-a .card-body:active {
-  animation: click 300ms ease;
+.list-group-item-action:hover,
+.nav-link:hover {
+  animation: click 500ms ease;
 }
 
 @keyframes click {
   0% {
-    transform: scale(1);
+    transform: scale(0.97);
   }
   50% {
-    background-color: cornflowerblue;
-    transform: scale(5);
+    transform: scale(1.03);
   }
   100% {
-    background-color: white;
     transform: scale(1);
   }
-} */
+}

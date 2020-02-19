@@ -47,7 +47,7 @@ const Navbar = props => {
           </li>
           <li className='nav-item'>
             <Link to='/candidates'>
-              <div className='nav-link' id='candiates'>
+              <div className='nav-link' id='candidates'>
                 Candidates
               </div>
             </Link>

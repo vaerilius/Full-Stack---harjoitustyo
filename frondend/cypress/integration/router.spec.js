@@ -73,11 +73,25 @@ describe('react router tests', function() {
         beforeEach(() => {
           signIn('tttt')
         })
-        it('when navigate to providers should', () => {
+        it('when navigate to candidates should', () => {
           cy.wait(500)
-          cy.contains('Candidates').click()
+          cy.get('#candidates').click()
           cy.location().should(loc => {
             expect(loc.href).to.eq('http://localhost:3000/candidates')
+          })
+        })
+        it('when navigate to providers should', () => {
+          cy.wait(500)
+          cy.get('#providers').click()
+          cy.location().should(loc => {
+            expect(loc.href).to.eq('http://localhost:3000/providers')
+          })
+        })
+        it('when navigate to users should', () => {
+          cy.wait(500)
+          cy.get('#users').click()
+          cy.location().should(loc => {
+            expect(loc.href).to.eq('http://localhost:3000/online-users')
           })
         })
       })
