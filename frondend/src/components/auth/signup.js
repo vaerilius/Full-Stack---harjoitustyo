@@ -134,7 +134,7 @@ const SingUp = props => {
                 Picture1
               </label>
               <div className='col-sm-9'>
-                <input {...img} label='Picture' />
+                <input {...img} label='Picture' id='picture' />
                 <div className='invalid-feedback'>{fileData.feedback}</div>
                 <div className='valid-feedback'>{fileData.feedback}</div>
               </div>

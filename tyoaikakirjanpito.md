@@ -55,7 +55,7 @@
 |   09.02   | 2     | solved lazyload when get single candidate , modify layout                                                                    |
 |   14.02   | 6     | socket,io online users. problems... (socket)                                                                                 |
 |   15.02   | 4,5   | problems onlineusers (socket) - instructions and working hours                                                               |
-|   19.02   | 6     | finnished socket.io, style, redeploy backend & frondend.                                                                     |
+|   19.02   | 7     | finnished socket.io, style, redeploy backend & frondend.                                                                     |
 |           |       |                                                                                                                              |
-|   yht.    | 168,5 | tuntia                                                                                                                       |
-|  puuttuu  | 6,5h  | tuntia                                                                                                                       |
+|   yht.    | 169,5 | tuntia                                                                                                                       |
+|  puuttuu  | 5,5h  | tuntia                                                                                                                       |
