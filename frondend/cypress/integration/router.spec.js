@@ -28,5 +28,40 @@ describe('react router tests', function() {
         expect(loc.href).to.eq('http://localhost:3000/signup')
       })
     })
+    it('when navigate to sign in page should..', () => {
+      cy.contains('Or Sign In').click()
+      cy.wait(500)
+      cy.contains('To use application please, login')
+
+      cy.location().should(loc => {
+        expect(loc.href).to.eq('http://localhost:3000/login')
+      })
+    })
+    describe('When user is going to sgn in', () => {
+      it('when sign in with valid data should url to be /jobs', () => {
+        cy.contains('Or Sign In').click()
+
+        cy.get('#username').type('tttt')
+        cy.get('#password').type('tttt')
+        cy.contains('sign in').click()
+
+        cy.location().should(loc => {
+          expect(loc.href).to.eq('http://localhost:3000/jobs')
+        })
+      })
+      it('when sign in with invalid data should url to be /', () => {
+        cy.contains('Or Sign In').click()
+
+        cy.get('#username').type('tttt')
+        cy.get('#password').type('invalid')
+        cy.contains('sign in').click()
+
+        cy.location().should(loc => {
+          expect(loc.href).to.eq('http://localhost:3000/login')
+        })
+      })
+
+      
+    })
   })
 })
