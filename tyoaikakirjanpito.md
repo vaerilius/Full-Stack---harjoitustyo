@@ -57,5 +57,5 @@
 |   15.02   | 4,5   | problems onlineusers (socket) - instructions and working hours                                                               |
 |   19.02   | 9     | finnished socket.io, style, redeploy backend & frondend.                                                                     |
 |           |       |                                                                                                                              |
-|   yht.    | 171,5 | tuntia                                                                                                                       |
-|  puuttuu  | 3,5h  | tuntia                                                                                                                       |
+|   yht.    | 173,5 | tuntia                                                                                                                       |
+|  puuttuu  | 1,5h  | tuntia                                                                                                                       |
