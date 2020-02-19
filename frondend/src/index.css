@@ -32,6 +32,7 @@ body {
   opacity: 1;
   transform: translate(0, 0) scale(1);
 }
+
 .row {
   margin: 0;
   flex: 1;
@@ -48,20 +49,20 @@ h1 {
 
 .alert.alert-primary {
   opacity: 0;
-  transition: transform 800ms ease, opacity 800ms ease;
+  transition: transform 500ms ease, opacity 500ms ease;
   transform: translate(-100%, 0);
 }
 .alert.alert-success,
 .alert.alert-danger {
   opacity: 1;
-  transition: transform 800ms ease, opacity 800ms ease;
+  transition: transform 500ms ease, opacity 500ms ease;
   transform: translate(0, 0);
 }
 .alert.alert-success ~ .alert.alert-primary,
 .alert.alert-danger ~ .alert.alert-primary {
   opacity: 0;
   transition: opacity 800ms ease, transform 800ms ease;
-  transform: translate(-100%, 0), translate(scale(0));
+  transform: translate(-100%, 0) scale(0);
 }
 
 .page {

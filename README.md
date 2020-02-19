@@ -4,7 +4,9 @@
 
 ## Kuvaus sovelluksesta:
 
-#### Sovelluksen tarkoitus on helpottaa työnhakijoita löytämään työtä. Sovelluksessa työnhakijalla on alustavasti omaprofiili ja työnantajat voivat lisätä uusia työpaikkailmoituksia sovellukseen, joissa työnhakija voi lisätä itsensä kyseiseen työpaikkailmoituksen listaan. Työnantaja voi myös poistaa ilmoituksen. Sovellukseen tulee kirjautumis mahdollisuus.
+#### Sovelluksen tarkoitus on helpottaa työnhakijoita löytämään työtä. Sovelluksessa työnhakijalla on omaprofiili ja työnantajat voivat lisätä uusia työpaikkailmoituksia sovellukseen, joissa työnhakija voi lisätä itsensä kyseiseen työpaikkailmoituksen listaan. Työnantaja voi myös poistaa ilmoituksen. Sovellukseen tulee kirjautua, jotta sitä voi käyttää.
+
+##### Sovellus on tehty reaaliaikaiseksi Socket.io:n avulla
 
 ### Frondend: React & Redux
 

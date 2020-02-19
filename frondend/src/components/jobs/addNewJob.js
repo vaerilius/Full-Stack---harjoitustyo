@@ -50,6 +50,7 @@ const NewJob = props => {
         <input
           label='Picture'
           type='file'
+          id='jobFile'
           onChange={e => setPicture(e.target.files[0])}
         />
       </div>
